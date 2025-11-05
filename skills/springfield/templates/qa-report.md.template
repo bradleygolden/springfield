@@ -1,0 +1,45 @@
+# Comic Book Guy's Quality Assessment
+
+## Session Information
+- **Session ID**: {{session_id}}
+- **Task**: {{task_description}}
+- **Evaluation Date**: {{timestamp}}
+- **Iteration**: {{iteration_count}}
+
+## Implementation Review
+
+### Code Quality Analysis
+{{quality_analysis}}
+
+### Completeness Check
+{{completeness_check}}
+
+### Standards Compliance
+{{standards_compliance}}
+
+## Identified Issues
+
+### Critical Issues
+{{critical_issues}}
+
+### Major Issues
+{{major_issues}}
+
+### Minor Issues
+{{minor_issues}}
+
+## Verdict
+
+**Status**: {{verdict}}
+
+### Reasoning
+{{verdict_reasoning}}
+
+### Recommended Action
+{{recommended_action}}
+
+## Kickback History
+{{kickback_history}}
+
+## Final Notes
+{{final_notes}}
