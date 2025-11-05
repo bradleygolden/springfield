@@ -76,6 +76,7 @@ See `skills/springfield/REFERENCE.md` for the full philosophy.
 
 - [Ralph pattern by Geoffrey Huntley](https://ghuntley.com/ralph/)
 - [AI Agents That Matter (arXiv:2510.26887)](https://arxiv.org/abs/2510.26887)
+- [HumanLayer Claude Commands](https://github.com/humanlayer/humanlayer/tree/main/.claude/commands)
 
 ## Disclaimers
 
