@@ -2,7 +2,51 @@
 
 set -euo pipefail
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TEMPLATE="$SCRIPT_DIR/../templates/ralph_instructions.md"
+
+if [[ ! -f "$TEMPLATE" ]]; then
+  echo "Error: Template ralph_instructions.md not found" >&2
+  exit 2
+fi
+
+validate_path() {
+  local path="$1"
+  local canonical=""
+
+  if command -v readlink >/dev/null 2>&1 && readlink -f /dev/null >/dev/null 2>&1; then
+    canonical=$(readlink -f "$path" 2>/dev/null || echo "")
+  elif command -v realpath >/dev/null 2>&1; then
+    canonical=$(realpath "$path" 2>/dev/null || echo "")
+  else
+    case "$path" in
+      */..|*/../*|../*) canonical="" ;;
+      /*) canonical="$path" ;;
+      *) canonical="$(pwd)/$path" ;;
+    esac
+  fi
+
+  if [ -z "$canonical" ]; then
+    echo "Error: Invalid path - must be within project directory" >&2
+    exit 1
+  fi
+
+  case "$canonical" in
+    "$(pwd)"/*) ;;
+    "$(pwd)") ;;
+    *) echo "Error: Invalid path - must be within project directory" >&2; exit 1 ;;
+  esac
+}
+
 RALPH_DIR="${RALPH_DIR:-.springfield}"
+if [ "${RALPH_DIR}" != ".springfield" ]; then
+  validate_path "$RALPH_DIR"
+fi
+
+if [ -n "${1:-}" ]; then
+  validate_path "$1"
+fi
+
 GOAL="${1:-$RALPH_DIR/prompt_debate.md}"
 PROPOSAL="$RALPH_DIR/proposal.md"
 CRITIQUE="$RALPH_DIR/critique.md"
@@ -11,6 +55,16 @@ PROPOSER_MEMORY="$RALPH_DIR/proposer_memory.md"
 COUNTER_MEMORY="$RALPH_DIR/counter_memory.md"
 SLEEP_DURATION="${DEBATE_SLEEP:-15}"
 MAX_ROUNDS="${MAX_DEBATE_ROUNDS:-10}"
+
+if ! [[ "$SLEEP_DURATION" =~ ^[0-9]+$ ]] || [ "$SLEEP_DURATION" -lt 0 ] || [ "$SLEEP_DURATION" -gt 3600 ]; then
+  echo "Error: DEBATE_SLEEP must be 0-3600, got '$SLEEP_DURATION'" >&2
+  exit 1
+fi
+
+if ! [[ "$MAX_ROUNDS" =~ ^[0-9]+$ ]] || [ "$MAX_ROUNDS" -lt 1 ] || [ "$MAX_ROUNDS" -gt 100 ]; then
+  echo "Error: MAX_DEBATE_ROUNDS must be 1-100, got '$MAX_ROUNDS'" >&2
+  exit 1
+fi
 
 mkdir -p "$RALPH_DIR"
 
@@ -35,7 +89,8 @@ while [ $iteration -le $MAX_ROUNDS ]; do
 
   # Proposer creates/refines proposal
   echo "💡 Proposer Agent..."
-  claude --dangerously-skip-permissions --output-format=stream-json --verbose << EOF | npx repomirror visualize
+  {
+  claude --dangerously-skip-permissions --output-format=stream-json --verbose << PROPOSER_EOF
 You are the **Proposer Agent** in a debate loop refining an implementation prompt.
 
 **Context Files:**
@@ -64,14 +119,19 @@ You are the **Proposer Agent** in a debate loop refining an implementation promp
 - Focus on WHAT to build and WHY, not exact HOW (let the implementer decide details)
 
 Now refine the proposal based on all feedback received.
-EOF
+PROPOSER_EOF
+  } | npx repomirror visualize || {
+    echo "❌ Error: Proposer agent (claude or repomirror) failed in round $iteration"
+    exit 1
+  }
 
   echo ""
   sleep 2
 
   # Counter critiques proposal
   echo "🤔 Counter Agent..."
-  claude --dangerously-skip-permissions --output-format=stream-json --verbose << EOF | npx repomirror visualize
+  {
+  claude --dangerously-skip-permissions --output-format=stream-json --verbose << COUNTER_EOF
 You are the **Counter Agent** in a debate loop reviewing implementation prompts.
 
 **Context Files:**
@@ -109,7 +169,11 @@ Then write **"AGREED"** as the FIRST line of \`$CRITIQUE\`, followed by:
 **Important:** Be thorough but fair. The goal is a great prompt, not perfection.
 
 Now critique the proposal.
-EOF
+COUNTER_EOF
+  } | npx repomirror visualize || {
+    echo "❌ Error: Counter agent (claude or repomirror) failed in round $iteration"
+    exit 1
+  }
 
   echo ""
 
@@ -121,31 +185,7 @@ EOF
     echo ""
     echo "📝 Creating final prompt.md..."
     cp "$PROPOSAL" "$FINAL"
-
-    cat >> "$FINAL" << 'RALPH_INSTRUCTIONS'
-
----
-
-## 🤖 Ralph Loop Instructions
-
-**Never ask questions.** Make reasonable decisions based on the plan above and project conventions.
-
-**Each iteration:**
-1. Implement one small piece
-2. Update scratchpad.md with progress (in your session directory)
-3. Commit working code
-
-**When 100% done:**
-1. Run `mix precommit` and fix issues
-2. Create completion.md summarizing:
-   - What was accomplished
-   - Final state of the implementation
-   - Any remaining TODOs or future work
-   - Total commits made
-3. This signals completion to Ralph
-
-Start implementing now.
-RALPH_INSTRUCTIONS
+    cat "$TEMPLATE" >> "$FINAL"
 
     echo "✅ prompt.md ready for implementation (with Ralph loop instructions)"
     echo ""
@@ -173,31 +213,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo ""
 echo "📝 Using latest proposal as prompt.md..."
 cp "$PROPOSAL" "$FINAL"
-
-cat >> "$FINAL" << 'RALPH_INSTRUCTIONS'
-
----
-
-## 🤖 Ralph Loop Instructions
-
-**Never ask questions.** Make reasonable decisions based on the plan above and project conventions.
-
-**Each iteration:**
-1. Implement one small piece
-2. Update scratchpad.md with progress (in your session directory)
-3. Commit working code
-
-**When 100% done:**
-1. Run `mix precommit` and fix issues
-2. Create completion.md summarizing:
-   - What was accomplished
-   - Final state of the implementation
-   - Any remaining TODOs or future work
-   - Total commits made
-3. This signals completion to Ralph
-
-Start implementing now.
-RALPH_INSTRUCTIONS
+cat "$TEMPLATE" >> "$FINAL"
 
 echo "⚠️  prompt.md created but agents did not reach agreement"
 echo "   Review manually before proceeding with implementation."

@@ -1,6 +1,6 @@
 ---
-name: ralph
-description: Activate when the terms "Springfield" or "Ralph" are mentioned.
+name: springfield
+description: Activate when the term "Springfield" is mentioned.
 allowed-tools:
   - Bash
   - SlashCommand
@@ -11,17 +11,17 @@ allowed-tools:
   - KillShell
 ---
 
-# Ralph - Autonomous Workflow Orchestration
+# Springfield - Autonomous Workflow Orchestration
 
 *"I'm learnding!"* - Ralph Wiggum
 
-Autonomous implementation system that researches, plans, implements, and validates tasks through distinct phases.
+Multi-phase autonomous workflow system that researches, plans, implements, and validates tasks using specialized characters from Springfield.
 
 Infer the task to implement from the recent conversation context. If unclear, ask the user what task they want Springfield to work on.
 
-## Ralph Philosophy
+## Springfield Philosophy
 
-Ralph is used for autonomous development - eventual consistency through iterative refinement. See [REFERENCE.md](REFERENCE.md) for details.
+Springfield orchestrates autonomous development through eventual consistency and iterative refinement. Each phase is handled by a different character, with Ralph running the implementation loop. See [REFERENCE.md](REFERENCE.md) for the Ralph pattern philosophy.
 
 ## Session Setup
 
@@ -57,11 +57,11 @@ Creates implementation plan. For complex tasks, runs debate workflow for refinem
 
 **Output**: `$SESSION_DIR/prompt.md`
 
-### Phase 4: Homer (Implement)
+### Phase 4: Ralph (Implement)
 ```
-/springfield:homer
+/springfield:ralph
 ```
-Launches autonomous implementation loop in background.
+Launches autonomous implementation loop in background. Ralph iteratively implements the plan through small, persistent steps.
 
 **Monitors**: `$SESSION_DIR/scratchpad.md`, `$SESSION_DIR/completion.md`
 
@@ -75,12 +75,12 @@ Validates implementation quality. Can kickback to earlier phases if issues found
 
 ## Helper Scripts
 
-Springfield has helper scripts in `${CLAUDE_PLUGIN_ROOT}/skills/ralph/scripts/`:
+Springfield has helper scripts in `${CLAUDE_PLUGIN_ROOT}/skills/springfield/scripts/`:
 
 ### ralph.sh - Autonomous Implementation Loop
 Run when implementing tasks autonomously:
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/skills/ralph/scripts/ralph.sh "$SESSION_DIR"
+bash ${CLAUDE_PLUGIN_ROOT}/skills/springfield/scripts/ralph.sh "$SESSION_DIR"
 ```
 
 This script:
@@ -92,7 +92,7 @@ This script:
 ### debate.sh - Debate Refinement Loop
 Run when refining complex plans:
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/skills/ralph/scripts/debate.sh "$SESSION_DIR/prompt_debate.md"
+bash ${CLAUDE_PLUGIN_ROOT}/skills/springfield/scripts/debate.sh "$SESSION_DIR/prompt_debate.md"
 ```
 
 This script:
@@ -123,6 +123,6 @@ Springfield optimizes context window usage:
 QA phase can kickback to any earlier phase:
 - Research issues → Re-run `/springfield:lisa`
 - Design issues → Re-run `/springfield:frink`
-- Implementation issues → Re-run `/springfield:homer`
+- Implementation issues → Re-run `/springfield:ralph`
 
 This creates an eventual consistency model where the system iteratively refines until QA passes.

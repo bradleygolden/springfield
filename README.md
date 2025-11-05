@@ -2,124 +2,81 @@
 
 *"I'm learnding!"* - Ralph Wiggum
 
-Multi-phase autonomous workflow orchestration with debate-driven refinement, inspired by The Simpsons.
+Autonomous workflow orchestration for Claude Code, where cartoon characters do your coding. It's like having the whole town of Springfield working on your project!
 
-## Overview
+## What is this?
 
-Springfield provides a complete workflow system for autonomous code implementation:
+Springfield is a Claude Code plugin that breaks down complex tasks into phases, each handled by a different Simpsons character:
 
-- **Lisa** (`/springfield:lisa`) - Research phase (thorough investigation)
-- **Mayor Quimby** (`/springfield:mayor-quimby`) - Decide complexity
-- **Frink** (`/springfield:frink`) - Plan implementation (with science!)
-- **Homer** (`/springfield:homer`) - Execute implementation (d'oh!)
-- **Comic Book Guy** (`/springfield:comic-book-guy`) - QA validation (worst... or best?)
-- **Ralph** (`/springfield:ralph`) - Main autonomous loop orchestrator
+- **Lisa** 📚 - Does the research (she's the smart one)
+- **Mayor Quimby** 🎩 - Decides if it's simple or complex (he's good at delegating)
+- **Professor Frink** 🔬 - Makes the plan (with the science and the planning, glavin!)
+- **Ralph** 🖍️ - Implements through persistent iteration (I'm learnding!)
+- **Comic Book Guy** 💬 - Reviews the quality ("Worst code ever... or best?")
 
 ## Installation
 
-### From GitHub (Recommended)
-
-Install directly from the repository:
+From GitHub:
 
 ```bash
-/plugin install https://github.com/bradleygolden/springfield.git
+claude
+/plugin marketplace add bradleygolden/springfield
+/plugin install springfield@springfield
 ```
-
-### Local Development
-
-For local testing and development:
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/bradleygolden/springfield.git
-   ```
-
-2. Add as a local marketplace:
-   ```bash
-   /plugin marketplace add ./springfield
-   ```
-
-3. Install the plugin:
-   ```bash
-   /plugin install springfield@springfield-local
-   ```
 
 ## Usage
 
-### Quick Start
-
-Run the full autonomous workflow:
+Just tell Springfield what to do:
 
 ```bash
-/springfield:ralph "add user authentication to the API"
+"springfield help me add user authentication to the API"
 ```
 
-Ralph will automatically execute all phases (Lisa → Mayor Quimby → Frink → Homer → Comic Book Guy).
-
-### Individual Phases
-
-Or run phases individually:
+Springfield runs all phases automatically. Or run them individually:
 
 ```bash
-# 1. Research (Lisa investigates)
-/springfield:lisa "authentication implementation"
-
-# 2. Decide (Mayor Quimby assesses)
-/springfield:mayor-quimby
-
-# 3. Plan (Frink strategizes)
-/springfield:frink
-
-# 4. Implement (Homer builds)
-/springfield:homer
-
-# 5. QA (Comic Book Guy critiques)
-/springfield:comic-book-guy
+/springfield:lisa "authentication"     # Research
+/springfield:mayor-quimby              # Decide complexity
+/springfield:frink                     # Plan
+/springfield:ralph                     # Implement
+/springfield:comic-book-guy            # Review
 ```
 
-## Session Management
+## How it Works
 
-Springfield creates session directories at `.springfield/MM-DD-YYYY-task-name/` containing:
+Springfield creates a `.springfield/` directory with session folders for each task. Inside you'll find:
 
 - `research.md` - Lisa's findings
-- `decision.txt` - Mayor Quimby's complexity assessment
-- `prompt.md` - Frink's implementation plan
-- `scratchpad.md` - Homer's work-in-progress
-- `completion.md` - Homer's completion signal
-- `qa-report.md` - Comic Book Guy's review
+- `decision.txt` - SIMPLE or COMPLEX
+- `prompt.md` - Implementation plan
+- `scratchpad.md` - Ralph's progress notes
+- `completion.md` - "Task complete!" signal
+- `qa-report.md` - Comic Book Guy's verdict
 
-## Features
+For complex tasks, Professor Frink runs a debate loop where two AI perspectives argue until they reach consensus on the best approach.
 
-### Debate Workflow
+## Requirements
 
-For complex tasks, Frink invokes a debate between two perspectives to refine the implementation plan:
+- Claude Code CLI
+- Node.js (for `npx` and `repomirror`)
+- Bash 4.0+
+- Standard Unix tools (mktemp, readlink/realpath)
 
-- Generates `prompt_debate.md` with high-level goals
-- Runs `debate.sh` script for iterative refinement
-- Produces final `prompt.md` for implementation
+## Safety Warning
 
-### Adaptive Loop
-
-Comic Book Guy can kickback to earlier phases if issues are found:
-
-- Research problems → Re-run Lisa
-- Design problems → Re-run Frink
-- Implementation problems → Re-run Homer
-
-### Context Window Management
-
-Springfield optimizes for context efficiency by:
-
-- Breaking large tasks into smaller loops
-- Using read-only subagents to prevent context conflicts
-- Keeping sessions under 40% context window usage
+**Use at your own risk!** This plugin uses `--dangerously-skip-permissions` and executes commands autonomously. Run it in a sandboxed environment or on projects you don't mind experimenting with. Think of it like letting Ralph learn unsupervised - entertaining, but maybe not in production.
 
 ## Philosophy
 
-See `skills/ralph/REFERENCE.md` for the Ralph Wiggum philosophy:
-- Eventual consistency
-- Iterative refinement
-- Autonomous decision-making
+Based on the [Ralph pattern](https://ghuntley.com/ralph/) - eventual consistency through iterative refinement. Ralph might not be the smartest, but he gets there eventually through small, persistent steps.
+
+See `skills/springfield/REFERENCE.md` for the full philosophy.
+
+## Disclaimers
+
+This project uses character names from The Simpsons™ for thematic purposes only. The Simpsons™ is a trademark of 20th Television and Disney. This project is not affiliated with, endorsed by, or connected to The Simpsons, Disney, or 20th Television.
+
+The code works about as well as Springfield's nuclear power plant - it'll get the job done, but don't be surprised if there's the occasional meltdown.
 
 ## License
 
@@ -128,3 +85,5 @@ MIT
 ## Author
 
 Bradley Golden
+
+*"Hi, Super Nintendo Chalmers!"*
