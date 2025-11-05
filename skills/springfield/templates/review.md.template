@@ -1,0 +1,76 @@
+# Plan Review Report
+
+**Reviewer**: Principal Skinner
+**Session**: {{session_id}}
+**Date**: {{timestamp}}
+**Plan Version**: v1
+
+---
+
+## Overall Assessment
+
+{{overall_assessment}}
+
+---
+
+## Detailed Feedback
+
+### Strengths
+{{plan_strengths}}
+
+### Areas for Improvement
+{{areas_for_improvement}}
+
+### Specific Issues
+
+#### Issue 1: {{issue_1_title}}
+**Severity**: High | Medium | Low
+**Description**: {{issue_1_description}}
+**Recommendation**: {{issue_1_recommendation}}
+
+#### Issue 2: {{issue_2_title}}
+**Severity**: High | Medium | Low
+**Description**: {{issue_2_description}}
+**Recommendation**: {{issue_2_recommendation}}
+
+---
+
+## Subtask Review
+
+{{subtask_specific_feedback}}
+
+---
+
+## Technical Concerns
+
+### Architecture
+{{architecture_concerns}}
+
+### Dependencies
+{{dependency_concerns}}
+
+### Error Handling
+{{error_handling_concerns}}
+
+### Testing Strategy
+{{testing_concerns}}
+
+---
+
+## Recommendations for Revision
+
+1. {{recommendation_1}}
+2. {{recommendation_2}}
+3. {{recommendation_3}}
+
+---
+
+## Final Verdict
+
+**Status**: Approved with Revisions | Needs Major Revision | Approved
+
+**Rationale**: {{verdict_rationale}}
+
+---
+
+**Next Steps**: Professor Frink should incorporate this feedback into the final prompt.md before handing off to Ralph.
