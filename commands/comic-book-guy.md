@@ -11,6 +11,11 @@ allowed-tools: Read, Write, Bash, Task, AskUserQuestion, Skill
 
 Validate the implementation quality for the session at $SESSION_DIR.
 
+## Phase Setup
+
+1. **Check chat.md for user messages**: Use chat_last_read from state.json, respond if @comic-book-guy mentioned or no mentions
+2. **Update state.json**: Set phases.comic_book_guy.status = "in_progress", start_time = now
+
 ## Quality Validation Steps
 
 1. **Run Project Quality Checks**
@@ -28,11 +33,13 @@ Validate the implementation quality for the session at $SESSION_DIR.
 
 3. **Generate QA Report**
 
-   Write comprehensive findings to `$SESSION_DIR/qa-report.md`:
+   Write comprehensive findings to `$SESSION_DIR/qa-report.md` using template from `skills/springfield/templates/qa-report.md.template`:
 
    ```markdown
-   ## Status
-   PASS or FAIL
+   # QA Report
+
+   ## Verdict
+   APPROVED | KICK_BACK | ESCALATE
 
    ## Quality Checks Results
    - Test results
@@ -47,17 +54,74 @@ Validate the implementation quality for the session at $SESSION_DIR.
    ## Recommendations
    - Required fixes
    - Suggested improvements
+
+   ## Review Date
+   {{timestamp}}
    ```
 
-4. **Handle Failures**
+4. **Kickback Routing with Limits**
 
-   If FAIL, ask the user whether to:
-   - **Auto-fix**: Kickback to appropriate phase
-     - Research issues → Re-run `/springfield:lisa`
-     - Design issues → Re-run `/springfield:frink`
-     - Implementation issues → Re-run `/springfield:homer`
-   - **Manual intervention**: Let user fix issues themselves
+   **Classification:**
+   - RESEARCH_GAP → Lisa (missing context, incomplete investigation)
+   - DESIGN_ISSUE → Frink (architecture problems, unclear requirements)
+   - IMPLEMENTATION_BUG → Ralph (code bugs, incomplete subtasks)
 
-5. **Report Success**
+   **Routing logic:**
+   ```
+   1. Classify issue type
+   2. target = "lisa"|"frink"|"ralph"|"skinner"
+   3. Read state.json.kickback_counts[target]
+   4. IF kickback_counts[target] >= 2:
+        verdict = "ESCALATE"
+        escalate_to_user()
+      ELSE:
+        verdict = "KICK_BACK"
+        kickback_counts[target] += 1
+        add_kickback_to_history()
+        route_to_character(target)
+   ```
 
-   If PASS, report successful completion!
+5. **Escalation Handling**
+
+   If kickback limit exceeded (count >= 2):
+   ```
+   1. Write to qa-report.md:
+      ## ESCALATION REQUIRED
+      Reason: Exceeded kickback limit for {target}
+      This requires user intervention.
+
+   2. Write to chat.md:
+      **[{timestamp}] COMIC_BOOK_GUY:**
+      Worst. Implementation. Ever.
+      I cannot proceed - this requires your intervention.
+      Reason: {reason}
+      Please review qa-report.md and provide guidance.
+
+   3. Update state.json: status = "blocked", verdict = "ESCALATE"
+   4. EXIT (await user input)
+   ```
+
+6. **User Override**
+
+   User can write to chat.md: "@ralph please continue despite failures"
+   - Ralph logs to state.json.overrides[]
+   - Reset specific kickback count if needed
+   - Continue workflow
+
+7. **Report Success**
+
+   If APPROVED:
+   - Update state.json: status = "complete", verdict = "APPROVED", final_status = "success"
+   - Set phases.comic_book_guy.status = "complete", end_time = now
+   - Report successful completion to user
+   - EXIT with code 0
+
+## Phase Completion
+
+Update state.json atomically:
+- Set phases.comic_book_guy.status = "complete"
+- Set phases.comic_book_guy.end_time = now
+- Set phases.comic_book_guy.verdict = "APPROVED"|"KICK_BACK"|"ESCALATE"
+- Update kickback_counts if routing
+- Add kickback to kickbacks[] array if routing
+- Add transition based on verdict
