@@ -72,6 +72,11 @@ Based on the [Ralph pattern](https://ghuntley.com/ralph/) - eventual consistency
 
 See `skills/springfield/REFERENCE.md` for the full philosophy.
 
+## Sources of Inspiration
+
+- [Ralph pattern by Geoffrey Huntley](https://ghuntley.com/ralph/)
+- [AI Agents That Matter (arXiv:2510.26887)](https://arxiv.org/abs/2510.26887)
+
 ## Disclaimers
 
 This project uses character names from The Simpsons™ for thematic purposes only. The Simpsons™ is a trademark of 20th Television and Disney. This project is not affiliated with, endorsed by, or connected to The Simpsons, Disney, or 20th Television.
