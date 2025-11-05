@@ -58,6 +58,7 @@ For complex tasks, Professor Frink runs a debate loop where two AI perspectives 
 ### Workflow Diagram
 
 ```mermaid
+%%{init: {'theme':'dark','themeVariables': {'darkMode':'true','edgeLabelBackground':'#1e1e1e','labelColor':'#ffffff'}}}%%
 graph TD
     Start([User Task]) --> Lisa[📚 Lisa: Research]
     Lisa --> |research.md| Quimby{🎩 Mayor Quimby: Decide}
@@ -82,13 +83,15 @@ graph TD
     Kickback --> |Design Issue| FrinkSimple
     Kickback --> |Implementation Bug| Ralph
 
-    style Lisa fill:#FFE4B5
-    style Quimby fill:#D8BFD8
-    style FrinkSimple fill:#B0E0E6
-    style FrinkComplex fill:#B0E0E6
-    style Ralph fill:#FFB6C1
-    style ComicBook fill:#98FB98
-    style Done fill:#90EE90
+    style Lisa fill:#FFE4B5,stroke:#333,color:#000
+    style Quimby fill:#D8BFD8,stroke:#333,color:#000
+    style FrinkSimple fill:#B0E0E6,stroke:#333,color:#000
+    style FrinkComplex fill:#B0E0E6,stroke:#333,color:#000
+    style Ralph fill:#FFB6C1,stroke:#333,color:#000
+    style ComicBook fill:#98FB98,stroke:#333,color:#000
+    style Done fill:#90EE90,stroke:#333,color:#000
+
+    linkStyle default stroke:#fff,stroke-width:2px
 ```
 
 ## Requirements
