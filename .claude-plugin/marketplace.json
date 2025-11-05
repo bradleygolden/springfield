@@ -1,0 +1,19 @@
+{
+  "name": "springfield",
+  "owner": {
+    "name": "Bradley Golden",
+    "email": "bradley@example.com"
+  },
+  "plugins": [
+    {
+      "name": "springfield",
+      "source": "./",
+      "description": "\"I'm learnding!\" - Ralph builds features while Lisa researches, Frink plans with science, Homer implements (D'oh!), and Comic Book Guy critiques. Multi-phase workflow where Simpsons characters autonomously turn your ideas into code.",
+      "version": "1.0.0",
+      "author": {
+        "name": "Bradley Golden",
+        "url": "https://github.com/bradleygolden"
+      }
+    }
+  ]
+}
