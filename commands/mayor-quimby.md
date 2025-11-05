@@ -11,6 +11,12 @@ allowed-tools: Read, Write, Bash, Skill
 
 Assess the implementation complexity based on Lisa's research findings at `$SESSION_DIR/research.md`.
 
+## Phase Setup
+
+1. **Check chat.md for user messages**: Use chat_last_read from state.json, respond if @quimby or @mayor-quimby or @mayor mentioned or no mentions
+2. **Update state.json**: Set phases.quimby.status = "in_progress", start_time = now
+3. **Read research.md**: Analyze Lisa's findings
+
 ## Complexity Criteria
 
 **SIMPLE:**
@@ -32,11 +38,21 @@ Assess the implementation complexity based on Lisa's research findings at `$SESS
 Write a clear decision to `$SESSION_DIR/decision.txt`:
 
 ```
-SIMPLE
+Decision: SIMPLE
 or
-COMPLEX
+Decision: COMPLEX
 
 Reasoning: [1-2 sentence explanation of why]
 ```
 
 This decision determines whether Frink creates a simple plan or runs the debate refinement loop.
+
+## Phase Completion
+
+Update state.json atomically:
+- Set phases.quimby.status = "complete"
+- Set phases.quimby.end_time = now
+- Set phases.quimby.complexity = "SIMPLE"|"COMPLEX"
+- Set phases.quimby.output_file = "decision.txt"
+- Add transition: `{"from": "quimby", "to": "frink", "timestamp": "..."}`
+- Invoke next phase: `/springfield:frink`
