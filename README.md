@@ -55,6 +55,45 @@ Springfield creates a `.springfield/` directory with session folders for each ta
 
 For complex tasks, Professor Frink runs a debate loop where two AI perspectives argue until they reach consensus on the best approach.
 
+### Workflow Diagram
+
+```mermaid
+%%{init: {'theme':'dark','themeVariables': {'darkMode':'true','edgeLabelBackground':'#1e1e1e','labelColor':'#ffffff'}}}%%
+graph TD
+    Start([User Task]) --> Lisa[📚 Lisa: Research]
+    Lisa --> |research.md| Quimby{🎩 Mayor Quimby: Decide}
+
+    Quimby --> |SIMPLE| FrinkSimple[🔬 Frink: Simple Plan]
+    Quimby --> |COMPLEX| FrinkComplex[🔬 Frink: Debate Loop]
+
+    FrinkComplex --> |Proposer vs Counter| Consensus{Agents Agree?}
+    Consensus --> |No| FrinkComplex
+    Consensus --> |Yes| FrinkDone[📝 prompt.md]
+
+    FrinkSimple --> |prompt.md| Ralph[🖍️ Ralph: Implement Loop]
+    FrinkDone --> Ralph
+
+    Ralph --> |completion.md| ComicBook[💬 Comic Book Guy: QA]
+
+    ComicBook --> QAResult{Quality Check}
+    QAResult --> |Issues Found| Kickback{What's Wrong?}
+    QAResult --> |Approved| Done([✅ Task Complete])
+
+    Kickback --> |Research Gap| Lisa
+    Kickback --> |Design Issue| FrinkSimple
+    Kickback --> |Implementation Bug| Ralph
+
+    style Lisa fill:#FFE4B5,stroke:#333,color:#000
+    style Quimby fill:#D8BFD8,stroke:#333,color:#000
+    style FrinkSimple fill:#B0E0E6,stroke:#333,color:#000
+    style FrinkComplex fill:#B0E0E6,stroke:#333,color:#000
+    style Ralph fill:#FFB6C1,stroke:#333,color:#000
+    style ComicBook fill:#98FB98,stroke:#333,color:#000
+    style Done fill:#90EE90,stroke:#333,color:#000
+
+    linkStyle default stroke:#fff,stroke-width:2px
+```
+
 ## Requirements
 
 - Claude Code CLI
