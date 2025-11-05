@@ -13,8 +13,65 @@ Validate the implementation quality for the session at $SESSION_DIR.
 
 ## Phase Setup
 
-1. **Check chat.md for user messages**: Use chat_last_read from state.json, respond if @comic-book-guy mentioned or no mentions
+1. **Check chat.md for user messages**: See Chat Interface Integration section below
 2. **Update state.json**: Set phases.comic_book_guy.status = "in_progress", start_time = now
+
+## Chat Interface Integration
+
+### Check for User Messages
+
+At the start of the QA phase, check chat.md for user input:
+
+1. **Read chat.md:**
+   ```bash
+   CHAT_FILE="$SESSION_DIR/chat.md"
+   if [ ! -f "$CHAT_FILE" ]; then
+     # Initialize from template if missing
+     cp skills/springfield/templates/chat.md.template "$CHAT_FILE"
+   fi
+   ```
+
+2. **Parse for mentions:**
+   ```bash
+   # Extract timestamp of last read message from state.json
+   LAST_READ=$(jq -r '.chat_last_read // "1970-01-01 00:00:00"' "$STATE_FILE")
+
+   # Find new messages mentioning this character or @all
+   NEW_MESSAGES=$(awk -v last="$LAST_READ" -v char="comic-book-guy" '
+     /^\*\*\[.*\] (USER|user):\*\*/ {
+       timestamp = $0
+       sub(/.*\[/, "", timestamp)
+       sub(/\].*/, "", timestamp)
+       if (timestamp > last) {
+         getline content
+         if (content ~ /@all/ || content ~ "@"char) {
+           print timestamp "|" content
+         }
+       }
+     }
+   ' "$CHAT_FILE")
+   ```
+
+3. **Respond if mentioned:**
+   ```bash
+   if [ -n "$NEW_MESSAGES" ]; then
+     # Extract the actual message content
+     MESSAGE=$(echo "$NEW_MESSAGES" | tail -1 | cut -d'|' -f2-)
+
+     # Log that we saw it
+     TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
+     echo "**[$TIMESTAMP] comic-book-guy:** I saw your message: \"$MESSAGE\"" >> "$CHAT_FILE"
+
+     # Update last_read in state.json
+     CURRENT_TIME=$(date "+%Y-%m-%d %H:%M:%S")
+     TMP_STATE=$(mktemp)
+     jq --arg time "$CURRENT_TIME" '.chat_last_read = $time' "$STATE_FILE" > "$TMP_STATE"
+     mv "$TMP_STATE" "$STATE_FILE"
+
+     # Comic Book Guy can re-evaluate with user's context
+     echo "User message detected in chat.md - Worst. Request. Ever. But I shall consider it."
+   fi
+   ```
 
 ## Quality Validation Steps
 
@@ -115,6 +172,14 @@ Validate the implementation quality for the session at $SESSION_DIR.
    - Set phases.comic_book_guy.status = "complete", end_time = now
    - Report successful completion to user
    - EXIT with code 0
+
+## Self-Reflection
+
+Before finalizing qa-report.md, ask yourself:
+- Did I evaluate fairly based on the spec?
+- Are my criticisms specific with file:line references?
+- Did I verify my claims (not just assume)?
+- Is my PASS/FAIL verdict justified?
 
 ## Phase Completion
 

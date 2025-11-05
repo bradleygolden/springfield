@@ -17,9 +17,66 @@ Review Professor Frink's implementation plan for the session at $SESSION_DIR.
 
 ## Phase Setup
 
-1. **Check chat.md for user messages**: Use chat_last_read from state.json, respond if @skinner mentioned or no mentions
+1. **Check chat.md for user messages**: See Chat Interface Integration section below
 2. **Update state.json**: Set phases.skinner.status = "in_progress", start_time = now
 3. **Read inputs**: `$SESSION_DIR/plan-v1.md`, `$SESSION_DIR/research.md`, `$SESSION_DIR/decision.txt`
+
+## Chat Interface Integration
+
+### Check for User Messages
+
+At the start of the review phase, check chat.md for user input:
+
+1. **Read chat.md:**
+   ```bash
+   CHAT_FILE="$SESSION_DIR/chat.md"
+   if [ ! -f "$CHAT_FILE" ]; then
+     # Initialize from template if missing
+     cp skills/springfield/templates/chat.md.template "$CHAT_FILE"
+   fi
+   ```
+
+2. **Parse for mentions:**
+   ```bash
+   # Extract timestamp of last read message from state.json
+   LAST_READ=$(jq -r '.chat_last_read // "1970-01-01 00:00:00"' "$STATE_FILE")
+
+   # Find new messages mentioning this character or @all
+   NEW_MESSAGES=$(awk -v last="$LAST_READ" -v char="skinner" '
+     /^\*\*\[.*\] (USER|user):\*\*/ {
+       timestamp = $0
+       sub(/.*\[/, "", timestamp)
+       sub(/\].*/, "", timestamp)
+       if (timestamp > last) {
+         getline content
+         if (content ~ /@all/ || content ~ "@"char) {
+           print timestamp "|" content
+         }
+       }
+     }
+   ' "$CHAT_FILE")
+   ```
+
+3. **Respond if mentioned:**
+   ```bash
+   if [ -n "$NEW_MESSAGES" ]; then
+     # Extract the actual message content
+     MESSAGE=$(echo "$NEW_MESSAGES" | tail -1 | cut -d'|' -f2-)
+
+     # Log that we saw it
+     TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
+     echo "**[$TIMESTAMP] skinner:** I saw your message: \"$MESSAGE\"" >> "$CHAT_FILE"
+
+     # Update last_read in state.json
+     CURRENT_TIME=$(date "+%Y-%m-%d %H:%M:%S")
+     TMP_STATE=$(mktemp)
+     jq --arg time "$CURRENT_TIME" '.chat_last_read = $time' "$STATE_FILE" > "$TMP_STATE"
+     mv "$TMP_STATE" "$STATE_FILE"
+
+     # Skinner can clarify review comments
+     echo "User message detected in chat.md - I'll address your concerns in my review!"
+   fi
+   ```
 
 ## Review Criteria
 
@@ -86,6 +143,14 @@ After Skinner completes review:
 2. Frink incorporates feedback into final `prompt.md`
 3. If NEEDS_REVISION but n_reviews=1, Frink still proceeds (Skinner only reviews once)
 4. Skinner's feedback is advisory - Frink makes final decisions
+
+## Self-Reflection
+
+Before finalizing review.md, ask yourself:
+- Is my feedback constructive and specific?
+- Did I identify real issues or just nitpick?
+- Are my concerns actionable?
+- Did I consider the feasibility of my suggestions?
 
 ## Phase Completion
 

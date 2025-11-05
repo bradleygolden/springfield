@@ -13,9 +13,66 @@ Assess the implementation complexity based on Lisa's research findings at `$SESS
 
 ## Phase Setup
 
-1. **Check chat.md for user messages**: Use chat_last_read from state.json, respond if @quimby or @mayor-quimby or @mayor mentioned or no mentions
+1. **Check chat.md for user messages**: See Chat Interface Integration section below
 2. **Update state.json**: Set phases.quimby.status = "in_progress", start_time = now
 3. **Read research.md**: Analyze Lisa's findings
+
+## Chat Interface Integration
+
+### Check for User Messages
+
+At the start of the decision phase, check chat.md for user input:
+
+1. **Read chat.md:**
+   ```bash
+   CHAT_FILE="$SESSION_DIR/chat.md"
+   if [ ! -f "$CHAT_FILE" ]; then
+     # Initialize from template if missing
+     cp skills/springfield/templates/chat.md.template "$CHAT_FILE"
+   fi
+   ```
+
+2. **Parse for mentions:**
+   ```bash
+   # Extract timestamp of last read message from state.json
+   LAST_READ=$(jq -r '.chat_last_read // "1970-01-01 00:00:00"' "$STATE_FILE")
+
+   # Find new messages mentioning this character or @all
+   NEW_MESSAGES=$(awk -v last="$LAST_READ" -v char="quimby|mayor-quimby|mayor" '
+     /^\*\*\[.*\] (USER|user):\*\*/ {
+       timestamp = $0
+       sub(/.*\[/, "", timestamp)
+       sub(/\].*/, "", timestamp)
+       if (timestamp > last) {
+         getline content
+         if (content ~ /@all/ || content ~ "@(quimby|mayor-quimby|mayor)") {
+           print timestamp "|" content
+         }
+       }
+     }
+   ' "$CHAT_FILE")
+   ```
+
+3. **Respond if mentioned:**
+   ```bash
+   if [ -n "$NEW_MESSAGES" ]; then
+     # Extract the actual message content
+     MESSAGE=$(echo "$NEW_MESSAGES" | tail -1 | cut -d'|' -f2-)
+
+     # Log that we saw it
+     TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
+     echo "**[$TIMESTAMP] mayor-quimby:** I saw your message: \"$MESSAGE\"" >> "$CHAT_FILE"
+
+     # Update last_read in state.json
+     CURRENT_TIME=$(date "+%Y-%m-%d %H:%M:%S")
+     TMP_STATE=$(mktemp)
+     jq --arg time "$CURRENT_TIME" '.chat_last_read = $time' "$STATE_FILE" > "$TMP_STATE"
+     mv "$TMP_STATE" "$STATE_FILE"
+
+     # Mayor Quimby acknowledges user input in decision-making
+     echo "User message detected in chat.md - I'll factor this into my executive decision!"
+   fi
+   ```
 
 ## Complexity Criteria
 
@@ -46,6 +103,13 @@ Reasoning: [1-2 sentence explanation of why]
 ```
 
 This decision determines whether Frink creates a simple plan or runs the debate refinement loop.
+
+## Self-Reflection
+
+Before writing decision.txt, ask yourself:
+- Is my complexity assessment justified?
+- Did I consider the full scope of changes?
+- Would Lisa's research support this decision?
 
 ## Phase Completion
 

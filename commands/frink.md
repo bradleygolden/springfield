@@ -16,9 +16,66 @@ allowed-tools: Read, Write, Bash, Skill
 
 ## Phase Setup
 
-1. **Check chat.md for user messages**: Use chat_last_read from state.json, respond if @frink mentioned or no mentions
+1. **Check chat.md for user messages**: See Chat Interface Integration section below
 2. **Update state.json**: Set phases.frink.status = "in_progress", start_time = now
 3. **Read inputs**: `$SESSION_DIR/decision.txt` and `$SESSION_DIR/research.md`
+
+## Chat Interface Integration
+
+### Check for User Messages
+
+At the start of the planning phase, check chat.md for user input:
+
+1. **Read chat.md:**
+   ```bash
+   CHAT_FILE="$SESSION_DIR/chat.md"
+   if [ ! -f "$CHAT_FILE" ]; then
+     # Initialize from template if missing
+     cp skills/springfield/templates/chat.md.template "$CHAT_FILE"
+   fi
+   ```
+
+2. **Parse for mentions:**
+   ```bash
+   # Extract timestamp of last read message from state.json
+   LAST_READ=$(jq -r '.chat_last_read // "1970-01-01 00:00:00"' "$STATE_FILE")
+
+   # Find new messages mentioning this character or @all
+   NEW_MESSAGES=$(awk -v last="$LAST_READ" -v char="frink" '
+     /^\*\*\[.*\] (USER|user):\*\*/ {
+       timestamp = $0
+       sub(/.*\[/, "", timestamp)
+       sub(/\].*/, "", timestamp)
+       if (timestamp > last) {
+         getline content
+         if (content ~ /@all/ || content ~ "@"char) {
+           print timestamp "|" content
+         }
+       }
+     }
+   ' "$CHAT_FILE")
+   ```
+
+3. **Respond if mentioned:**
+   ```bash
+   if [ -n "$NEW_MESSAGES" ]; then
+     # Extract the actual message content
+     MESSAGE=$(echo "$NEW_MESSAGES" | tail -1 | cut -d'|' -f2-)
+
+     # Log that we saw it
+     TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
+     echo "**[$TIMESTAMP] frink:** I saw your message: \"$MESSAGE\"" >> "$CHAT_FILE"
+
+     # Update last_read in state.json
+     CURRENT_TIME=$(date "+%Y-%m-%d %H:%M:%S")
+     TMP_STATE=$(mktemp)
+     jq --arg time "$CURRENT_TIME" '.chat_last_read = $time' "$STATE_FILE" > "$TMP_STATE"
+     mv "$TMP_STATE" "$STATE_FILE"
+
+     # Frink can adjust plan based on user feedback
+     echo "User message detected in chat.md - glavin! I'll incorporate this into my planning calculations!"
+   fi
+   ```
 
 ## Branching Logic
 
@@ -72,6 +129,14 @@ Use template from `skills/springfield/templates/prompt.md.template` with subtask
 1. First subtask description **[PENDING]**
 2. Second subtask description **[PENDING]**
 ```
+
+## Self-Reflection
+
+Before finalizing the plan, ask yourself:
+- Is this plan feasible given the codebase?
+- Are subtasks clear and atomic?
+- Did I account for dependencies between subtasks?
+- Are success criteria measurable?
 
 ## Phase Completion
 

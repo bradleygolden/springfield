@@ -19,10 +19,67 @@ Ralph implements through persistent iteration - small, incremental steps that ev
 
 ## Phase Setup
 
-1. **Check chat.md for user messages**: Use chat_last_read from state.json, respond if @ralph mentioned or no mentions (check every 3 iterations)
+1. **Check chat.md for user messages**: See Chat Interface Integration section below (check every 3 iterations)
 2. **Update state.json**: Set phases.ralph.status = "in_progress", start_time = now
 3. **Read prompt.md**: Extract subtasks using parsing algorithm
 4. **Initialize scratchpad.md**: Use template from `skills/springfield/templates/scratchpad.md.template`
+
+## Chat Interface Integration
+
+### Check for User Messages
+
+Every 3 iterations, check chat.md for user input:
+
+1. **Read chat.md:**
+   ```bash
+   CHAT_FILE="$SESSION_DIR/chat.md"
+   if [ ! -f "$CHAT_FILE" ]; then
+     # Initialize from template if missing
+     cp skills/springfield/templates/chat.md.template "$CHAT_FILE"
+   fi
+   ```
+
+2. **Parse for mentions:**
+   ```bash
+   # Extract timestamp of last read message from state.json
+   LAST_READ=$(jq -r '.chat_last_read // "1970-01-01 00:00:00"' "$STATE_FILE")
+
+   # Find new messages mentioning this character or @all
+   NEW_MESSAGES=$(awk -v last="$LAST_READ" -v char="ralph" '
+     /^\*\*\[.*\] (USER|user):\*\*/ {
+       timestamp = $0
+       sub(/.*\[/, "", timestamp)
+       sub(/\].*/, "", timestamp)
+       if (timestamp > last) {
+         getline content
+         if (content ~ /@all/ || content ~ "@"char) {
+           print timestamp "|" content
+         }
+       }
+     }
+   ' "$CHAT_FILE")
+   ```
+
+3. **Respond if mentioned:**
+   ```bash
+   if [ -n "$NEW_MESSAGES" ]; then
+     # Extract the actual message content
+     MESSAGE=$(echo "$NEW_MESSAGES" | tail -1 | cut -d'|' -f2-)
+
+     # Log that we saw it
+     TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
+     echo "**[$TIMESTAMP] ralph:** I saw your message: \"$MESSAGE\"" >> "$CHAT_FILE"
+
+     # Update last_read in state.json
+     CURRENT_TIME=$(date "+%Y-%m-%d %H:%M:%S")
+     TMP_STATE=$(mktemp)
+     jq --arg time "$CURRENT_TIME" '.chat_last_read = $time' "$STATE_FILE" > "$TMP_STATE"
+     mv "$TMP_STATE" "$STATE_FILE"
+
+     # Ralph can pause for user input or adjust approach
+     echo "User message detected in chat.md - Hi! I'm helping!"
+   fi
+   ```
 
 ## Subtask Extraction Algorithm
 
@@ -127,6 +184,14 @@ Update every iteration with:
 - Next actions
 
 Use template structure from `skills/springfield/templates/scratchpad.md.template`
+
+## Self-Reflection
+
+At the end of each iteration, ask yourself:
+- Did I complete all subtasks I marked as done?
+- Does the implementation actually work?
+- Did I test the changes?
+- Should I mark any subtasks as FAILED instead of COMPLETE?
 
 ## Phase Completion
 
