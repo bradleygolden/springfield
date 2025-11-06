@@ -13,6 +13,9 @@ allowed-tools: Read, Write, Bash, Skill
 
 - `--plan-file=path` - Resume from existing prompt.md file
 - `--force` - Skip Skinner review regardless of complexity
+- `--use-debate-script` - Invoke `scripts/debate.sh` for COMPLEX task debate (instead of inline debate)
+- `--debate-sleep=SECONDS` - Sleep duration between debate rounds (default: 15, max: 3600)
+- `--max-debate-rounds=N` - Maximum debate rounds (default: 10, max: 100)
 
 ## Phase Setup
 
@@ -93,26 +96,46 @@ grep "^Decision:" decision.txt
 - Invoke: `/springfield:ralph`
 
 **If COMPLEX:**
-- Create `$SESSION_DIR/plan-v1.md` (initial draft)
-- If `--force` flag present:
-  - Skip Skinner review
-  - Update state.json: phases.skinner.status = "skipped", add override note
-  - Convert plan-v1.md to prompt.md
-  - Add transition: `{"from": "frink", "to": "ralph", "timestamp": "..."}`
-  - Invoke: `/springfield:ralph`
-- Otherwise:
-  - Update state.json: phases.skinner.status = "pending"
-  - Add transition: `{"from": "frink", "to": "skinner", "timestamp": "..."}`
-  - Invoke: `/springfield:skinner`
-  - Read `$SESSION_DIR/review.md` from Skinner
-  - Incorporate feedback into final `$SESSION_DIR/prompt.md` using template
-  - Add transition: `{"from": "skinner", "to": "ralph", "timestamp": "..."}`
-  - Invoke: `/springfield:ralph`
+- Check if `--use-debate-script` flag is present
+- **If using debate script:**
+  ```bash
+  # Create prompt_debate.md with high-level goal
+  # Export environment variables
+  export RALPH_DIR="$SESSION_DIR"
+  export DEBATE_SLEEP="${DEBATE_SLEEP_SECONDS:-15}"
+  export MAX_DEBATE_ROUNDS="${MAX_ROUNDS:-10}"
 
-**Debate Integration (if using debate.sh):**
-- Debate happens BEFORE Skinner for COMPLEX tasks
-- Flow: Frink debate → plan-v1.md → Skinner → review.md → prompt.md
-- Skinner reviews final debate output
+  # Invoke debate.sh
+  bash scripts/debate.sh "$SESSION_DIR/prompt_debate.md"
+  DEBATE_EXIT=$?
+
+  if [ $DEBATE_EXIT -eq 0 ]; then
+    echo "Debate converged! Glavin! Reading final prompt.md..."
+    # prompt.md created by debate.sh
+    mv "$SESSION_DIR/prompt.md" "$SESSION_DIR/plan-v1.md"
+  else
+    echo "Debate failed to converge! Creating plan manually..."
+    # Fall back to manual planning
+  fi
+  ```
+- **Otherwise, create plan inline:**
+  - Create `$SESSION_DIR/plan-v1.md` (initial draft using inline debate or direct planning)
+
+- **After plan-v1.md exists:**
+  - If `--force` flag present:
+    - Skip Skinner review
+    - Update state.json: phases.skinner.status = "skipped", add override note
+    - Convert plan-v1.md to prompt.md
+    - Add transition: `{"from": "frink", "to": "ralph", "timestamp": "..."}`
+    - Invoke: `/springfield:ralph`
+  - Otherwise:
+    - Update state.json: phases.skinner.status = "pending"
+    - Add transition: `{"from": "frink", "to": "skinner", "timestamp": "..."}`
+    - Invoke: `/springfield:skinner`
+    - Read `$SESSION_DIR/review.md` from Skinner
+    - Incorporate feedback into final `$SESSION_DIR/prompt.md` using template
+    - Add transition: `{"from": "skinner", "to": "ralph", "timestamp": "..."}`
+    - Invoke: `/springfield:ralph`
 
 ## Plan File Resume
 

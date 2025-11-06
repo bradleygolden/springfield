@@ -19,5 +19,6 @@
     "iterative",
     "springfield",
     "simpsons"
-  ]
+  ],
+  "hooks": "./hooks/hooks.json"
 }

@@ -16,13 +16,38 @@ Ralph implements through persistent iteration - small, incremental steps that ev
 ## Flags
 
 - `--session=SESSION_ID` - Resume specific session
+- `--use-script` - Invoke `scripts/ralph.sh` for autonomous loop execution
+- `--sleep=SECONDS` - Sleep duration between iterations (default: 10, max: 3600)
 
 ## Phase Setup
 
-1. **Check chat.md for user messages**: See Chat Interface Integration section below (check every 3 iterations)
-2. **Update state.json**: Set phases.ralph.status = "in_progress", start_time = now
-3. **Read prompt.md**: Extract subtasks using parsing algorithm
-4. **Initialize scratchpad.md**: Use template from `skills/springfield/templates/scratchpad.md.template`
+1. **Parse flags**: Extract --session, --use-script, --sleep from command invocation
+2. **Set SESSION_DIR**: Use provided session or default to most recent
+3. **Update state.json**: Set phases.ralph.status = "in_progress", start_time = now
+4. **Check for script invocation**:
+   ```bash
+   if [ "$USE_SCRIPT" = "true" ]; then
+     # Export environment variables
+     export SLEEP_DURATION="${SLEEP_SECONDS:-10}"
+
+     # Invoke ralph.sh with session directory
+     bash scripts/ralph.sh "$SESSION_DIR"
+     EXIT_CODE=$?
+
+     # Report completion based on exit code
+     if [ $EXIT_CODE -eq 0 ]; then
+       echo "Ralph completed successfully! I'm learnding!"
+     else
+       echo "Ralph hit iteration limit or error (exit code: $EXIT_CODE)"
+     fi
+
+     exit $EXIT_CODE
+   fi
+   ```
+5. **Otherwise, execute inline**: Continue with chat check and implementation loop below
+6. **Check chat.md for user messages**: See Chat Interface Integration section (check every 3 iterations)
+7. **Read prompt.md**: Extract subtasks using parsing algorithm
+8. **Initialize scratchpad.md**: Use template from `skills/springfield/templates/scratchpad.md.template`
 
 ## Chat Interface Integration
 

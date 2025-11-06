@@ -1,6 +1,6 @@
 ---
 name: springfield
-description: Activate when the term "Springfield" is mentioned.
+description: Activate when springfield is mentioned by the user. Springfield refers to this skill which knows how to orchestrate autonomous workflows effectively.
 allowed-tools:
   - Bash
   - SlashCommand
@@ -77,30 +77,12 @@ Validates implementation quality. Can kickback to earlier phases if issues found
 
 ## Helper Scripts
 
-Springfield has helper scripts in `${CLAUDE_PLUGIN_ROOT}/skills/springfield/scripts/`:
+Springfield commands may invoke helper scripts located in the repository's `scripts/` directory:
 
-### ralph.sh - Autonomous Implementation Loop
-Run when implementing tasks autonomously:
-```bash
-bash ${CLAUDE_PLUGIN_ROOT}/skills/springfield/scripts/ralph.sh "$SESSION_DIR"
-```
+- `scripts/ralph.sh` - Autonomous implementation loop
+- `scripts/debate.sh` - Debate refinement for complex plans
 
-This script:
-- Reads `prompt.md` for implementation guidance
-- Iteratively implements small pieces via Claude CLI
-- Updates `scratchpad.md` with progress
-- Monitors `completion.md` for finish signal
-
-### debate.sh - Debate Refinement Loop
-Run when refining complex plans:
-```bash
-bash ${CLAUDE_PLUGIN_ROOT}/skills/springfield/scripts/debate.sh "$SESSION_DIR/prompt_debate.md"
-```
-
-This script:
-- Spawns Proposer and Counter agents
-- Iteratively refines implementation plans
-- Creates final `prompt.md` when agents agree
+Commands execute these scripts directly when needed.
 
 ## Orchestration Strategy
 
