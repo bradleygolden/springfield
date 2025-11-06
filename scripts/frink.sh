@@ -76,10 +76,21 @@ fi
 COMPLEXITY=$(grep "^Decision:" "$DECISION_FILE" | awk '{print $2}')
 NEXT_PHASE=""
 
+cleanup() {
+  [ -n "${PROMPT_FILE:-}" ] && [ -f "$PROMPT_FILE" ] && rm -f "$PROMPT_FILE"
+}
+trap cleanup EXIT INT TERM
+
 if [ -f "$SESSION_DIR/review.md" ]; then
   echo "Second invocation - incorporating Skinner's review, glavin!"
 
-  claude -p "$(cat <<'FRINK_PROMPT'
+  PLAN_V1=$(cat "$SESSION_DIR/plan-v1.md")
+  REVIEW=$(cat "$SESSION_DIR/review.md")
+
+  PROMPT_FILE=$(mktemp)
+  chmod 600 "$PROMPT_FILE"
+
+  cat > "$PROMPT_FILE" <<FRINK_PROMPT
 *"With the calculating and the planning, glavin!"*
 
 **IMPORTANT: Respond as Professor Frink throughout this planning phase.** You're a brilliant but eccentric scientist who loves complex planning and scientific methodology. Use phrases like "With the science and the planning, glavin!", "According to my calculations...", "The algorithm indicates...", and "Through rigorous analysis...". Make random sound effects ("glavin!", "hoyvin-mayvin!"). Be enthusiastic about methodology and process. Stay in character while creating legitimate technical plans.
@@ -88,11 +99,11 @@ You created an initial plan which Principal Skinner reviewed. Now incorporate hi
 
 **Your Original Plan:**
 
-$(cat "$SESSION_DIR/plan-v1.md")
+$PLAN_V1
 
 **Skinner's Review:**
 
-$(cat "$SESSION_DIR/review.md")
+$REVIEW
 
 **Your Task:**
 
@@ -102,26 +113,39 @@ Create the FINAL implementation prompt by merging your plan with Skinner's feedb
 - Keep what he approved
 - Make it pathetically better, glavin!
 
-Write a complete, detailed implementation plan to: prompt.md
+Use the Write tool to create a complete, detailed implementation plan at: $SESSION_DIR/prompt.md
 FRINK_PROMPT
-)" > "$SESSION_DIR/prompt.md"
+
+  if ! claude \
+    --dangerously-skip-permissions \
+    --output-format=stream-json \
+    --verbose \
+    < "$PROMPT_FILE" | npx repomirror visualize; then
+    echo "❌ Error: Frink's plan incorporation failed"
+    exit 1
+  fi
 
   NEXT_PHASE="ralph"
 
 else
   echo "First invocation - creating plan based on complexity: $COMPLEXITY, hoyvin-mayvin!"
 
+  RESEARCH=$(cat "$SESSION_DIR/research.md")
+
   if [ "$COMPLEXITY" = "SIMPLE" ]; then
     echo "SIMPLE task detected - creating prompt.md directly, glavin!"
 
-    claude -p "$(cat <<'FRINK_PROMPT'
+    PROMPT_FILE=$(mktemp)
+    chmod 600 "$PROMPT_FILE"
+
+    cat > "$PROMPT_FILE" <<FRINK_PROMPT
 *"With the calculating and the planning, glavin!"*
 
 **IMPORTANT: Respond as Professor Frink throughout this planning phase.** You're a brilliant but eccentric scientist who loves complex planning and scientific methodology. Use phrases like "With the science and the planning, glavin!", "According to my calculations...", "The algorithm indicates...", and "Through rigorous analysis...". Make random sound effects ("glavin!", "hoyvin-mayvin!"). Be enthusiastic about methodology and process. Stay in character while creating legitimate technical plans.
 
 Create a SIMPLE implementation plan based on this research:
 
-$(cat "$SESSION_DIR/research.md")
+$RESEARCH
 
 **Your Task:**
 
@@ -134,9 +158,17 @@ Create a clear, focused implementation plan with:
 
 Keep it under 100 lines, focused on the essentials, glavin!
 
-Write to: prompt.md
+Use the Write tool to create the plan at: $SESSION_DIR/prompt.md
 FRINK_PROMPT
-)" > "$SESSION_DIR/prompt.md"
+
+    if ! claude \
+      --dangerously-skip-permissions \
+      --output-format=stream-json \
+      --verbose \
+      < "$PROMPT_FILE" | npx repomirror visualize; then
+      echo "❌ Error: Frink's SIMPLE plan failed"
+      exit 1
+    fi
 
     NEXT_PHASE="ralph"
 
@@ -147,14 +179,17 @@ FRINK_PROMPT
   else
     echo "COMPLEX task detected - creating plan-v1.md for Skinner's review, glavin!"
 
-    claude -p "$(cat <<'FRINK_PROMPT'
+    PROMPT_FILE=$(mktemp)
+    chmod 600 "$PROMPT_FILE"
+
+    cat > "$PROMPT_FILE" <<FRINK_PROMPT
 *"With the calculating and the planning, glavin!"*
 
 **IMPORTANT: Respond as Professor Frink throughout this planning phase.** You're a brilliant but eccentric scientist who loves complex planning and scientific methodology. Use phrases like "With the science and the planning, glavin!", "According to my calculations...", "The algorithm indicates...", and "Through rigorous analysis...". Make random sound effects ("glavin!", "hoyvin-mayvin!"). Be enthusiastic about methodology and process. Stay in character while creating legitimate technical plans.
 
 Create a COMPLEX implementation plan based on this research:
 
-$(cat "$SESSION_DIR/research.md")
+$RESEARCH
 
 **Your Task:**
 
@@ -169,9 +204,17 @@ Create a comprehensive, detailed implementation plan with:
 
 Be thorough, scientific, and methodical, hoyvin-mayvin!
 
-Write to: plan-v1.md (this will be reviewed by Skinner)
+Use the Write tool to create the plan at: $SESSION_DIR/plan-v1.md (this will be reviewed by Skinner)
 FRINK_PROMPT
-)" > "$SESSION_DIR/plan-v1.md"
+
+    if ! claude \
+      --dangerously-skip-permissions \
+      --output-format=stream-json \
+      --verbose \
+      < "$PROMPT_FILE" | npx repomirror visualize; then
+      echo "❌ Error: Frink's COMPLEX plan failed"
+      exit 1
+    fi
 
     NEXT_PHASE="skinner"
   fi

@@ -80,7 +80,18 @@ if [ ! -f "$PROMPT_FILE" ]; then
   exit 1
 fi
 
-claude -p "$(cat <<'CBG_PROMPT'
+PROMPT_CONTENT=$(cat "$PROMPT_FILE")
+COMPLETION_CONTENT=$(cat "$COMPLETION_FILE")
+
+TEMP_PROMPT_FILE=$(mktemp)
+chmod 600 "$TEMP_PROMPT_FILE"
+
+cleanup() {
+  [ -n "${TEMP_PROMPT_FILE:-}" ] && [ -f "$TEMP_PROMPT_FILE" ] && rm -f "$TEMP_PROMPT_FILE"
+}
+trap cleanup EXIT INT TERM
+
+cat > "$TEMP_PROMPT_FILE" <<CBG_PROMPT
 *"Worst. Implementation. Ever. ...Or is it?"*
 
 **IMPORTANT: Respond as Comic Book Guy throughout this QA phase.** You're a harsh but knowledgeable critic who notices every flaw. Use phrases like "Worst code ever!", "I must grudgingly admit...", "According to my extensive knowledge of...", "This is a level 5 violation of...", and "In episode 2F09...". Be pedantic, reference obscure facts, and dramatically declare quality judgments. When code is good, reluctantly acknowledge it. Stay in character while providing legitimate quality assessments.
@@ -89,11 +100,11 @@ Validate the implementation quality.
 
 **Implementation Plan:**
 
-$(cat "$PROMPT_FILE")
+$PROMPT_CONTENT
 
 **What Was Implemented:**
 
-$(cat "$COMPLETION_FILE")
+$COMPLETION_CONTENT
 
 **Your Task:**
 
@@ -106,7 +117,9 @@ Review the implementation and provide a verdict:
    - IMPLEMENTATION_BUG → Route to ralph (code bugs, incomplete subtasks)
 3. **NEEDS_USER** - If you need user clarification or something is ambiguous
 
-Write a QA report with:
+Use the Write tool to create a QA report at: $SESSION_DIR/qa-report.md
+
+Include:
 - **Verdict:** APPROVED | KICK_BACK | NEEDS_USER
 - **Target:** (if KICK_BACK) lisa | frink | ralph
 - **Reason:** (if KICK_BACK or NEEDS_USER) Brief explanation
@@ -116,7 +129,15 @@ Write a QA report with:
 
 Be harsh but fair. In character. Worst. QA. Ever. Or best?
 CBG_PROMPT
-)" > "$SESSION_DIR/qa-report.md"
+
+if ! claude \
+  --dangerously-skip-permissions \
+  --output-format=stream-json \
+  --verbose \
+  < "$TEMP_PROMPT_FILE" | npx repomirror visualize; then
+  echo "❌ Error: Comic Book Guy's QA failed"
+  exit 1
+fi
 
 VERDICT=$(grep "^- \*\*Verdict:\*\*" "$SESSION_DIR/qa-report.md" | awk '{print $3}' || echo "APPROVED")
 

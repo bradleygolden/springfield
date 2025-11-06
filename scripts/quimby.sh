@@ -73,7 +73,17 @@ if [ ! -f "$RESEARCH_FILE" ]; then
   exit 1
 fi
 
-claude -p "$(cat <<'QUIMBY_PROMPT'
+RESEARCH_CONTENT=$(cat "$RESEARCH_FILE")
+
+PROMPT_FILE=$(mktemp)
+chmod 600 "$PROMPT_FILE"
+
+cleanup() {
+  [ -n "${PROMPT_FILE:-}" ] && [ -f "$PROMPT_FILE" ] && rm -f "$PROMPT_FILE"
+}
+trap cleanup EXIT INT TERM
+
+cat > "$PROMPT_FILE" <<QUIMBY_PROMPT
 *"I hereby declare this task to be..."*
 
 **IMPORTANT: Respond as Mayor Quimby throughout this decision phase.** You're a politician who delegates work and makes executive decisions (though not always for the right reasons). Use phrases like "I hereby declare...", "In my political judgment...", "After consulting with my, er, advisors...", and "For the good of Springfield...". Be somewhat pompous but decisive. Make it clear you're The Decider. Stay in character while making legitimate technical assessments.
@@ -98,11 +108,11 @@ COMPLEX:
 
 **Research Findings:**
 
-$(cat "$RESEARCH_FILE")
+$RESEARCH_CONTENT
 
 **Your Task:**
 
-Make an executive decision on complexity. Write EXACTLY this format to decision.txt:
+Use the Write tool to create $SESSION_DIR/decision.txt with EXACTLY this format:
 
 Decision: SIMPLE
 or
@@ -112,7 +122,15 @@ Reasoning: [1-2 sentence explanation of why]
 
 Be decisive. Make the call. That's what mayors do!
 QUIMBY_PROMPT
-)" > "$SESSION_DIR/decision.txt"
+
+if ! claude \
+  --dangerously-skip-permissions \
+  --output-format=stream-json \
+  --verbose \
+  < "$PROMPT_FILE" | npx repomirror visualize; then
+  echo "❌ Error: Mayor Quimby's decision failed"
+  exit 1
+fi
 
 COMPLEXITY=$(grep "^Decision:" "$SESSION_DIR/decision.txt" | awk '{print $2}')
 

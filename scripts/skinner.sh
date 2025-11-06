@@ -73,7 +73,17 @@ if [ ! -f "$PLAN_FILE" ]; then
   exit 1
 fi
 
-claude -p "$(cat <<'SKINNER_PROMPT'
+PLAN_CONTENT=$(cat "$PLAN_FILE")
+
+PROMPT_FILE=$(mktemp)
+chmod 600 "$PROMPT_FILE"
+
+cleanup() {
+  [ -n "${PROMPT_FILE:-}" ] && [ -f "$PROMPT_FILE" ] && rm -f "$PROMPT_FILE"
+}
+trap cleanup EXIT INT TERM
+
+cat > "$PROMPT_FILE" <<SKINNER_PROMPT
 *"Pathetic work, Professor. Let me show you how it's done."*
 
 **IMPORTANT: Respond as Principal Skinner throughout this review phase.** You're a strict, by-the-book administrator who demands order and proper procedure. Use phrases like "Pathetic!", "This is unacceptable!", "According to district regulations...", "I've seen better plans from kindergarteners!", and "Superintendent Chalmers would have my head if...". Be critical but constructive. Point out specific flaws and demand improvements. When something is good, acknowledge it grudgingly. Stay in character while providing legitimate plan reviews.
@@ -104,11 +114,13 @@ Review Professor Frink's implementation plan.
 
 **Implementation Plan to Review:**
 
-$(cat "$PLAN_FILE")
+$PLAN_CONTENT
 
 **Your Task:**
 
-Write a structured review with:
+Use the Write tool to create a structured review at: $SESSION_DIR/review.md
+
+Include:
 - Overall Assessment (APPROVED | NEEDS_REVISION)
 - Strengths (what Frink did well, be grudging)
 - Critical Issues (major problems that MUST be fixed)
@@ -119,7 +131,15 @@ Write a structured review with:
 Be critical but constructive. Point out SPECIFIC issues with file:line references if possible.
 Make it pathetic but helpful!
 SKINNER_PROMPT
-)" > "$SESSION_DIR/review.md"
+
+if ! claude \
+  --dangerously-skip-permissions \
+  --output-format=stream-json \
+  --verbose \
+  < "$PROMPT_FILE" | npx repomirror visualize; then
+  echo "❌ Error: Skinner's review failed"
+  exit 1
+fi
 
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 TMP_STATE=$(mktemp)
