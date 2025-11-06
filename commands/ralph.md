@@ -11,13 +11,7 @@ Ralph is ready to implement! He'll work through the plan step by step, making sm
 
 **Implementing:** `$1/prompt.md`
 
-**Note:** Ralph is running in an isolated context and will work autonomously for a while. You can check on his progress by looking at:
+**Note:** This command is informational only. The Springfield skill will handle execution of Ralph's implementation phase by calling the underlying script directly. Ralph runs autonomously and you can check his progress:
 - `$1/scratchpad.md` - Ralph's latest work (updated every iteration)
 - `$1/state.json` - Current status and iteration count
 - `$1/completion.md` - Will appear when Ralph is done!
-
-!scripts/ralph.sh "$1"
-
-*"Me made everything! I'm helping!"*
-
-Ralph completed his implementation! Check `$1/completion.md` for the summary of what he accomplished.

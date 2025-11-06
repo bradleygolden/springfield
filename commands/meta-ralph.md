@@ -25,4 +25,4 @@ Meta-Ralph runs Springfield in an infinite loop based on a prompt string or file
 - `/springfield:meta-ralph my-task.md` - Reads from file
 - `/springfield:meta-ralph "Fix all bugs"` - Uses prompt string directly
 
-!scripts/meta-ralph.sh "${1:-PROMPT.md}"
+**Note:** This command is informational only. To run Meta-Ralph, use the Springfield skill which will execute the script directly.

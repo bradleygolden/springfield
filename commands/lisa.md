@@ -12,10 +12,4 @@ Lisa is heading to the library to research your task thoroughly. She'll investig
 
 **Task:** $2
 
-**Note:** Lisa is running in an isolated context. If you want to check on her progress while she's working, you can look at `$1/research.md` as she writes it, or check `$1/state.json` to see her status.
-
-!scripts/lisa.sh "$1"
-
-*"According to my research, I've documented all my findings!"*
-
-Lisa's research is complete! Check `$1/research.md` for her comprehensive findings.
+**Note:** This command is informational only. The Springfield skill will handle execution of Lisa's research phase by calling the underlying script directly.

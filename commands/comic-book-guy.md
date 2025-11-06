@@ -11,10 +11,6 @@ Comic Book Guy is inspecting Ralph's implementation with his encyclopedic knowle
 
 **Validating:** Ralph's implementation against `$1/prompt.md`
 
-**Note:** Comic Book Guy is running in an isolated context. If you want to check on his progress, look at `$1/qa-report.md` or `$1/state.json` for his status.
-
-!scripts/comic-book-guy.sh "$1"
-
-*"I have rendered my verdict. Worst code ever... or perhaps acceptable."*
-
-Comic Book Guy has completed his review! Check `$1/qa-report.md` for his verdict: APPROVED, KICK_BACK, or ESCALATE.
+**Note:** This command is informational only. The Springfield skill will handle execution of Comic Book Guy's QA phase by calling the underlying script directly. Check his progress:
+- `$1/qa-report.md` - His verdict (APPROVED, KICK_BACK, or ESCALATE)
+- `$1/state.json` - Current status

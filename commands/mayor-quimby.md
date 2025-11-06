@@ -11,10 +11,6 @@ Mayor Quimby is reviewing Lisa's research findings from his office. As mayor, he
 
 **Reviewing:** `$1/research.md`
 
-**Note:** Mayor Quimby is running in an isolated context. If you want to check on his progress, look at `$1/decision.txt` or `$1/state.json` for his status.
-
-!scripts/quimby.sh "$1"
-
-*"For the good of Springfield, I have made my decision!"*
-
-Mayor Quimby's decision is final! Check `$1/decision.txt` to see whether he declared this SIMPLE or COMPLEX.
+**Note:** This command is informational only. The Springfield skill will handle execution of Mayor Quimby's decision phase by calling the underlying script directly. Check his progress:
+- `$1/decision.txt` - SIMPLE or COMPLEX decision
+- `$1/state.json` - Current status

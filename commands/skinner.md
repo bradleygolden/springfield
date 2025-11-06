@@ -11,10 +11,6 @@ Principal Skinner is reviewing Professor Frink's plan with his strict, by-the-bo
 
 **Reviewing:** `$1/plan-v1.md`
 
-**Note:** Principal Skinner is running in an isolated context. If you want to check on his progress, look at `$1/review.md` or `$1/state.json` for his status.
-
-!scripts/skinner.sh "$1"
-
-*"I've completed my review. It's... adequate. Barely."*
-
-Principal Skinner's review is complete! Check `$1/review.md` for his detailed feedback.
+**Note:** This command is informational only. The Springfield skill will handle execution of Skinner's review phase by calling the underlying script directly. Check his progress:
+- `$1/review.md` - His detailed feedback
+- `$1/state.json` - Current status

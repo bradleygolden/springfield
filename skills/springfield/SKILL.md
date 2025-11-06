@@ -10,7 +10,6 @@ allowed-tools:
   - AskUserQuestion
   - BashOutput
   - KillShell
-  - SlashCommand
 ---
 
 # Springfield - Autonomous Workflow Orchestration
@@ -48,7 +47,7 @@ Initialize session files:
 Execute phases in sequence, monitoring state:
 
 ### Phase: Lisa (Research)
-Invokes: `/springfield:lisa SESSION_DIR TASK`
+Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/lisa.sh SESSION_DIR`
 
 Lisa thoroughly researches the codebase. She investigates:
 - Existing implementations and patterns
@@ -59,14 +58,14 @@ Lisa thoroughly researches the codebase. She investigates:
 **Output**: `research.md`
 
 ### Phase: Mayor Quimby (Decide Complexity)
-Invokes: `/springfield:mayor-quimby SESSION_DIR`
+Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/quimby.sh SESSION_DIR`
 
 Mayor Quimby reviews Lisa's research and makes an executive decision: SIMPLE or COMPLEX?
 
 **Output**: `decision.txt`
 
 ### Phase: Professor Frink (Plan)
-Invokes: `/springfield:frink SESSION_DIR`
+Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/frink.sh SESSION_DIR`
 
 Professor Frink creates the implementation plan using scientific methodology, glavin!
 - SIMPLE tasks: Creates `prompt.md` directly, goes to Ralph
@@ -75,7 +74,7 @@ Professor Frink creates the implementation plan using scientific methodology, gl
 **Output**: `plan-v1.md` (complex) or `prompt.md` (simple)
 
 ### Phase: Principal Skinner (Review) [Complex Tasks Only]
-Invokes: `/springfield:skinner SESSION_DIR`
+Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/skinner.sh SESSION_DIR`
 
 Skinner reviews Frink's plan with his strict, by-the-book standards. Points out flaws and demands improvements.
 
@@ -84,14 +83,14 @@ After review, Frink is invoked again to incorporate feedback into final `prompt.
 **Output**: `review.md`
 
 ### Phase: Ralph (Implement)
-Invokes: `/springfield:ralph SESSION_DIR`
+Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/ralph.sh SESSION_DIR`
 
 Ralph runs the implementation loop! He works iteratively, making small changes, committing progress. Monitors `completion.md` for completion signal.
 
 **Output**: `scratchpad.md` (progress), `completion.md` (when done)
 
 ### Phase: Comic Book Guy (QA)
-Invokes: `/springfield:comic-book-guy SESSION_DIR`
+Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/comic-book-guy.sh SESSION_DIR`
 
 Comic Book Guy validates the implementation. Worst code ever... or is it?
 
@@ -145,12 +144,12 @@ When this skill is invoked, execute the following orchestration logic:
    - If status is "blocked": Report escalation, point to chat.md, EXIT
    - If status is "failed": Report failure, EXIT
    - Execute next phase (always pass SESSION_DIR as first argument):
-     - **lisa**: SlashCommand tool → `/springfield:lisa SESSION_DIR TASK`
-     - **quimby**: SlashCommand tool → `/springfield:mayor-quimby SESSION_DIR`
-     - **frink**: SlashCommand tool → `/springfield:frink SESSION_DIR`
-     - **skinner**: SlashCommand tool → `/springfield:skinner SESSION_DIR`, then invoke frink again
-     - **ralph**: SlashCommand tool → `/springfield:ralph SESSION_DIR` (runs in background via script)
-     - **comic-book-guy**: SlashCommand tool → `/springfield:comic-book-guy SESSION_DIR`, handle verdict
+     - **lisa**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/lisa.sh SESSION_DIR`
+     - **quimby**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/quimby.sh SESSION_DIR`
+     - **frink**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/frink.sh SESSION_DIR`
+     - **skinner**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/skinner.sh SESSION_DIR`, then invoke frink again
+     - **ralph**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/ralph.sh SESSION_DIR` (runs in background)
+     - **comic-book-guy**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/comic-book-guy.sh SESSION_DIR`, handle verdict
    - Sleep 2 seconds between phases
    - Update TodoWrite with phase completion
 6. **Handle errors**: Non-zero exit → mark failed, write to chat.md
