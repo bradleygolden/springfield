@@ -18,6 +18,39 @@
 - [Disclaimers](#disclaimers)
 - [License](#license)
 
+## Quick Start
+
+**Try Springfield in 30 seconds:**
+
+```bash
+# Make sure you're in a git repository
+cd your-project
+
+# Activate Springfield with any task
+echo "Add a factorial function to math.js" | claude
+# Springfield auto-activates! Lisa begins research...
+```
+
+**What just happened?**
+
+1. **Lisa** researched your codebase for relevant files
+2. **Mayor Quimby** assessed complexity (SIMPLE task = no debate)
+3. **Ralph** implemented the change: "Me added the function!"
+4. **Comic Book Guy** validated the result: "Acceptable... barely."
+
+**For complex tasks:**
+
+```bash
+echo "Refactor the authentication system to support OAuth2" | claude
+# Complex task triggers debate between Frink and Skinner!
+# Then Ralph implements with better requirements
+```
+
+**Next steps:**
+- See [Examples](#examples) for detailed walkthroughs
+- Read [How It Works](#how-it-works) to understand the workflow
+- Check [Troubleshooting](#troubleshooting) if you run into issues
+
 *"I'm learnding!"* - Ralph Wiggum
 
 Autonomous workflow orchestration for Claude Code, where cartoon characters do your coding. It's like having the whole town of Springfield working on your project!
