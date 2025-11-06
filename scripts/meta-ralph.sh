@@ -21,14 +21,18 @@ fi
 
 while :; do
   if [ -f "$INPUT" ]; then
-    cat "$INPUT" | claude \
-      --dangerously-skip-permissions \
-      --output-format=stream-json \
-      | npx repomirror visualize
+    PROMPT=$(cat "$INPUT")
   else
-    echo "$INPUT" | claude \
-      --dangerously-skip-permissions \
-      --output-format=stream-json \
-      | npx repomirror visualize
+    PROMPT="$INPUT"
   fi
+
+  if [[ ! "$PROMPT" =~ ^[[:space:]]*springfield ]]; then
+    PROMPT="springfield $PROMPT"
+  fi
+
+  echo "$PROMPT" | claude -p \
+    --dangerously-skip-permissions \
+    --output-format=stream-json \
+    --verbose \
+    | npx repomirror visualize
 done
