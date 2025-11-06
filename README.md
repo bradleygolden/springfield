@@ -14,6 +14,7 @@
 - [Requirements](#requirements)
 - [Monitoring Sessions](#monitoring-sessions)
 - [Examples](#examples)
+- [Troubleshooting](#troubleshooting)
 - [Safety Warning](#safety-warning)
 - [Philosophy](#philosophy)
 - [Sources of Inspiration](#sources-of-inspiration)
@@ -406,6 +407,149 @@ fi
    - Resume: `echo "resume session my-session" | claude`
 
 **No manual intervention needed** - Springfield's loop handles retries automatically!
+
+## Troubleshooting
+
+### Issue: "SESSION_DIR is required" error
+
+**Symptoms:**
+- Script fails immediately with error message
+- No Springfield workflow activates
+
+**Causes:**
+1. Not in a git repository
+2. Springfield hook not properly configured
+3. Manual script invocation without arguments
+
+**Solutions:**
+```bash
+# Verify you're in a git repo
+git status
+
+# Check hooks configuration
+cat hooks/hooks.json | jq .
+
+# Ensure "springfield" appears in your prompt
+echo "Use springfield to add feature X" | claude
+```
+
+### Issue: Ralph stuck in infinite loop
+
+**Symptoms:**
+- Ralph keeps retrying same approach
+- No progress after multiple attempts
+- Session shows multiple failed attempts
+
+**Solutions:**
+
+1. **Check feedback in session directory:**
+   ```bash
+   cat .springfield/[session]/validation.md
+   # See what Comic Book Guy is rejecting
+   ```
+
+2. **Review Ralph's attempts:**
+   ```bash
+   ls .springfield/[session]/implementation-attempt-*.md
+   # Compare attempts to see if Ralph is learning
+   ```
+
+3. **Manual intervention:**
+   ```bash
+   # Edit the prompt with more specific guidance
+   nano .springfield/[session]/prompt.md
+
+   # Ralph will use updated prompt on next attempt
+   ```
+
+4. **Force exit if needed:**
+   - Stop Claude Code process
+   - Review session state
+   - Delete session directory if starting over
+
+### Issue: "jq: command not found"
+
+**Symptoms:**
+- Scripts fail with jq error
+- JSON parsing errors
+
+**Solutions:**
+
+```bash
+# macOS
+brew install jq
+
+# Linux (Debian/Ubuntu)
+sudo apt-get install jq
+
+# Linux (RHEL/CentOS)
+sudo yum install jq
+
+# Verify installation
+jq --version
+```
+
+### Issue: Springfield doesn't activate
+
+**Symptoms:**
+- You mention "springfield" but workflow doesn't start
+- Regular Claude Code responds instead
+
+**Solutions:**
+
+1. **Verify hooks are enabled:**
+   ```bash
+   # Check hooks/hooks.json exists
+   ls -la hooks/hooks.json
+
+   # Verify springfield skill is registered
+   cat hooks/hooks.json | jq '.skills'
+   ```
+
+2. **Check Claude Code settings:**
+   - Ensure hooks are enabled in settings
+   - Verify plugin directory is correct
+   - Restart Claude Code
+
+3. **Try explicit activation:**
+   ```bash
+   # Use the springfield skill directly
+   /springfield "Your task description here"
+   ```
+
+### Issue: Character voices seem inconsistent
+
+**Symptoms:**
+- Generated content doesn't match character personality
+- Ralph sounds too formal
+- Frink lacks enthusiasm
+
+**This is acceptable** - Characters maintain personality in prompts and outputs, but technical content should be clear. If technical accuracy is present, voice variations are acceptable.
+
+### Getting More Help
+
+If you encounter issues not covered here:
+
+1. **Check session files:**
+   ```bash
+   cat .springfield/[session]/state.json | jq .
+   # Review the workflow state
+   ```
+
+2. **Review logs:**
+   - Check `.springfield/[session]/` for all generated files
+   - Look for error messages in validation.md
+
+3. **Report issues:**
+   - Open a [GitHub Issue](https://github.com/bradleygolden/springfield/issues)
+   - Include session state.json
+   - Describe expected vs actual behavior
+   - Note your platform (macOS/Linux)
+
+4. **Ask for help:**
+   - Start a [GitHub Discussion](https://github.com/bradleygolden/springfield/discussions)
+   - Community members can assist
+   - Maintainers monitor discussions
 
 ## Safety Warning
 
