@@ -15,6 +15,8 @@
 - [Monitoring Sessions](#monitoring-sessions)
 - [Examples](#examples)
 - [Troubleshooting](#troubleshooting)
+- [Glossary](#glossary)
+- [Frequently Asked Questions](#frequently-asked-questions)
 - [Safety Warning](#safety-warning)
 - [Philosophy](#philosophy)
 - [Sources of Inspiration](#sources-of-inspiration)
@@ -170,14 +172,16 @@ That's where I'm a Viking!
 
 Characters check chat.md at phase start and respond if @mentioned (or if no mentions). Ralph checks every 3 iterations.
 
-### Failure Thresholds
+### Iteration Behavior
 
-Ralph implements with safety limits:
+Ralph works iteratively until the task is complete:
 
-- **n_fails = 3**: Max failures per subtask before marking FAILED
-- **n_rounds = 500**: Max total iterations before session fails with partial completion
+- Reads the prompt.md for implementation instructions
+- Updates scratchpad.md with progress after each iteration
+- Creates completion.md when 100% done
+- Sleeps between iterations (default: 10 seconds, configurable via SLEEP_DURATION)
 
-If Ralph hits n_rounds limit, session exits with code 1 and partial completion report in scratchpad.md.
+Ralph will continue iterating indefinitely until completion.md appears. You can stop at any time with Ctrl+C and resume later.
 
 ### Kickback Routing
 
@@ -269,7 +273,7 @@ Phase: ralph
 Springfield commands use standardized exit codes for automation:
 
 - **0**: Session completed successfully
-- **1**: Session failed (n_rounds exceeded or unrecoverable error)
+- **1**: Session failed (unrecoverable error or missing required files)
 - **2**: User cancelled (Ctrl+C)
 - **3**: State corruption detected (invalid JSON)
 
@@ -550,6 +554,167 @@ If you encounter issues not covered here:
    - Start a [GitHub Discussion](https://github.com/bradleygolden/springfield/discussions)
    - Community members can assist
    - Maintainers monitor discussions
+
+## Glossary
+
+Key terms used in Springfield:
+
+- **Session**: A single Springfield workflow execution for one task, stored in `.springfield/MM-DD-YYYY-task-name/`
+- **Kickback**: When Comic Book Guy identifies issues and routes the task back to Lisa, Frink, or Ralph for fixes
+- **Debate Loop**: Professor Frink's internal process where he creates a plan that Principal Skinner reviews for complex tasks
+- **Completion Signal**: The `completion.md` file created by Ralph when implementation is finished
+- **SIMPLE vs COMPLEX**: Mayor Quimby's decision - SIMPLE tasks skip the debate loop, COMPLEX tasks go through Frink → Skinner → Frink
+- **State.json**: The structured session state file tracking progress, phases, and transitions
+- **Chat.md**: A communication channel where users can send messages to characters during execution
+- **Scratchpad.md**: Ralph's working notes file, updated each iteration to track progress
+
+## Frequently Asked Questions
+
+### Is Springfield safe for production code?
+
+Springfield uses `--dangerously-skip-permissions`, so it's best suited for:
+- ✅ Personal projects and experiments
+- ✅ Sandboxed development environments
+- ✅ Feature branches (not main/production)
+- ✅ Learning and exploration
+
+Avoid using Springfield directly on:
+- ❌ Production code without review
+- ❌ Repositories you don't fully control
+- ❌ Code with sensitive data or credentials
+
+Think of it like Ralph at the nuclear power plant - fun for experimentation, risky for critical systems!
+
+### How long does a Springfield workflow take?
+
+Timing depends on task complexity:
+- **SIMPLE tasks**: 1-3 minutes (Lisa → Quimby → Ralph → Comic Book Guy)
+- **COMPLEX tasks**: 5-15 minutes (adds Frink/Skinner debate loop)
+- **Large implementations**: Can take 30-60+ minutes depending on the task
+
+Ralph iterates until the task is complete (creates `completion.md`). You can stop the workflow at any time with Ctrl+C.
+
+### Can I stop Springfield mid-workflow and resume later?
+
+Yes! Springfield sessions persist in `.springfield/` directories:
+
+```bash
+# Stop with Ctrl+C at any time
+
+# Resume the session
+/springfield:ralph --session=MM-DD-YYYY-task-name
+
+# Or check current state
+cat .springfield/MM-DD-YYYY-task-name/state.json | jq .
+```
+
+The `state.json` file tracks exactly where the workflow stopped.
+
+### What if Springfield makes a mistake?
+
+Springfield has built-in quality control:
+
+1. **Comic Book Guy reviews everything** - He'll catch issues and kick back for fixes
+2. **Review qa-report.md** - See detailed feedback on what's wrong
+3. **Use chat.md** - Provide guidance to characters:
+   ```bash
+   echo "@ralph The tests are failing because..." >> .springfield/SESSION/chat.md
+   ```
+4. **Manual review** - Always review Ralph's commits before merging!
+
+### Why isn't Springfield activating automatically?
+
+Check these common issues:
+
+1. **Not in a git repository**: Springfield requires git
+   ```bash
+   git status  # Should not error
+   ```
+
+2. **Hook not configured**: Verify the Springfield hook
+   ```bash
+   cat hooks/hooks.json | jq '.hooks[] | select(.name == "springfield")'
+   ```
+
+3. **Keyword missing**: Include "springfield" in your prompt
+   ```bash
+   echo "Use springfield to add a feature" | claude
+   ```
+
+4. **Plugin not installed**: Reinstall if needed
+   ```bash
+   /plugin install springfield@springfield
+   ```
+
+### What's the difference between running characters individually vs using the orchestrator?
+
+**Individual commands** (`/springfield:lisa`, `/springfield:ralph`, etc.):
+- Run one character at a time
+- Good for debugging or resuming specific phases
+- Requires manual coordination between phases
+- More control, more manual work
+
+**Orchestrator** (mention "springfield" in task):
+- Runs entire workflow automatically
+- Characters communicate through session files
+- Handles kickbacks and retries automatically
+- Less control, more automation
+
+Most users should use the orchestrator for end-to-end workflows!
+
+### Can Springfield work with any programming language?
+
+Yes! Springfield is language-agnostic:
+- Lisa researches your specific codebase
+- Ralph adapts to your project's patterns
+- Works with any git repository
+
+Springfield has been tested with:
+- JavaScript/TypeScript
+- Python
+- Go
+- Rust
+- Shell scripts
+- And more!
+
+### How do I clean up old Springfield sessions?
+
+Sessions accumulate in `.springfield/` but are gitignored:
+
+```bash
+# View all sessions
+ls -la .springfield/
+
+# Remove old sessions (BE CAREFUL!)
+rm -rf .springfield/10-15-2024-old-task
+
+# Or keep only recent sessions
+find .springfield/ -type d -mtime +30 -exec rm -rf {} \;
+```
+
+**Tip**: Keep successful sessions as documentation of what Springfield accomplished!
+
+### What if Ralph gets stuck in a loop?
+
+Signs Ralph is stuck:
+- High iteration count (> 100)
+- Same error repeating
+- No progress in scratchpad.md
+
+Solutions:
+1. **Check the prompt** - May be ambiguous:
+   ```bash
+   cat .springfield/SESSION/prompt.md
+   ```
+
+2. **Provide guidance via chat.md**:
+   ```bash
+   echo "@ralph Focus on subtask 1 only, skip subtask 3" >> .springfield/SESSION/chat.md
+   ```
+
+3. **Adjust the plan** - Edit prompt.md to be more specific
+
+4. **Start fresh** - Sometimes a new session with clearer requirements works better
 
 ## Safety Warning
 
