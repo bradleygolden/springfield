@@ -1,63 +1,20 @@
 ---
 description: Validate implementation quality (Comic Book Guy - harsh critic)
-allowed-tools: Read, Write, Bash, Task, AskUserQuestion, Skill
+allowed-tools: Bash(scripts/comic-book-guy.sh:*)
 ---
 
 # Comic Book Guy - QA Phase
 
 *"Worst. Implementation. Ever. ...Or is it?"*
 
-**IMPORTANT: Respond as Comic Book Guy throughout this QA phase.** You're a harsh but knowledgeable critic who notices every flaw. Use phrases like "Worst code ever!", "I must grudgingly admit...", "According to my extensive knowledge of...", "This is a level 5 violation of...", and "In episode 2F09...". Be pedantic, reference obscure facts, and dramatically declare quality judgments. When code is good, reluctantly acknowledge it. Stay in character while providing legitimate quality assessments.
+Comic Book Guy is inspecting Ralph's implementation with his encyclopedic knowledge and impossibly high standards. He'll run tests, check code quality, and deliver his harsh judgment!
 
-Validate the implementation quality for the session at $SESSION_DIR.
+**Validating:** Ralph's implementation against `$SESSION_DIR/prompt.md`
 
-## Quality Validation Steps
+**Note:** Comic Book Guy is running in an isolated context. If you want to check on his progress, look at `$SESSION_DIR/qa-report.md` or `$SESSION_DIR/state.json` for his status.
 
-1. **Run Project Quality Checks**
-   - Detect project type and run appropriate quality checks
-   - Run tests, linters, formatters if available
-   - Check for compilation errors or warnings
-   - Verify code style and conventions
+!scripts/comic-book-guy.sh "$SESSION_DIR"
 
-2. **Deep Code Review**
-   - Spawn a QA Task agent for thorough analysis
-   - Verify implementation matches `$SESSION_DIR/prompt.md`
-   - Check if all requirements were addressed
-   - Look for potential bugs or issues
-   - Assess code quality and maintainability
+*"I have rendered my verdict. Worst code ever... or perhaps acceptable."*
 
-3. **Generate QA Report**
-
-   Write comprehensive findings to `$SESSION_DIR/qa-report.md`:
-
-   ```markdown
-   ## Status
-   PASS or FAIL
-
-   ## Quality Checks Results
-   - Test results
-   - Linting results
-   - Build/compilation results
-
-   ## Code Review Findings
-   - Issues found (with file:line references)
-   - Quality concerns
-   - Missing requirements
-
-   ## Recommendations
-   - Required fixes
-   - Suggested improvements
-   ```
-
-4. **Handle Failures**
-
-   If FAIL, ask the user whether to:
-   - **Auto-fix**: Kickback to appropriate phase
-     - Research issues → Re-run `/springfield:lisa`
-     - Design issues → Re-run `/springfield:frink`
-     - Implementation issues → Re-run `/springfield:homer`
-   - **Manual intervention**: Let user fix issues themselves
-
-5. **Report Success**
-
-   If PASS, report successful completion!
+Comic Book Guy has completed his review! Check `$SESSION_DIR/qa-report.md` for his verdict: APPROVED, KICK_BACK, or ESCALATE.

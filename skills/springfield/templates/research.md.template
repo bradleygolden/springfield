@@ -1,0 +1,29 @@
+# Research Findings
+
+## Session Information
+- **Session ID**: {{session_id}}
+- **Task**: {{task_description}}
+- **Started**: {{timestamp}}
+
+## Overview
+{{research_overview}}
+
+## Key Findings
+
+### Relevant Files
+{{relevant_files}}
+
+### Existing Patterns
+{{existing_patterns}}
+
+### Dependencies
+{{dependencies}}
+
+### Potential Issues
+{{potential_issues}}
+
+## Recommendations
+{{recommendations}}
+
+## Next Steps
+{{next_steps}}

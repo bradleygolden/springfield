@@ -11,6 +11,7 @@ Springfield is a Claude Code plugin that breaks down complex tasks into phases, 
 - **Lisa** 📚 - Does the research (she's the smart one)
 - **Mayor Quimby** 🎩 - Decides if it's simple or complex (he's good at delegating)
 - **Professor Frink** 🔬 - Makes the plan (with the science and the planning, glavin!)
+- **Principal Skinner** 📋 - Reviews complex plans (pathetic work, Professor!)
 - **Ralph** 🖍️ - Implements through persistent iteration (I'm learnding!)
 - **Comic Book Guy** 💬 - Reviews the quality ("Worst code ever... or best?")
 
@@ -38,22 +39,103 @@ Springfield runs all phases automatically. Or run them individually:
 /springfield:lisa "authentication"     # Research
 /springfield:mayor-quimby              # Decide complexity
 /springfield:frink                     # Plan
+/springfield:skinner                   # Review plan (COMPLEX tasks only)
 /springfield:ralph                     # Implement
 /springfield:comic-book-guy            # Review
+/springfield:watch                     # Monitor progress
+```
+
+### Advanced Flags
+
+```bash
+/springfield:lisa "task" --dry-run                 # Create session without executing
+/springfield:lisa --session=SESSION_ID             # Resume specific session
+/springfield:lisa --research-file=research.md      # Use existing research
+/springfield:frink --plan-file=prompt.md           # Use existing plan
+/springfield:frink --force                         # Skip Skinner review
+/springfield:ralph --session=SESSION_ID            # Resume Ralph implementation
+/springfield:watch SESSION_ID --interval=30        # Watch with custom interval
+/springfield:watch --quiet                         # Minimal output
 ```
 
 ## How it Works
 
-Springfield creates a `.springfield/` directory with session folders for each task. Inside you'll find:
+Springfield creates a `.springfield/` directory with session folders for each task (format: `MM-DD-YYYY-task-name/`). Inside you'll find:
 
+- `state.json` - Structured session state with schema versioning
+- `chat.md` - Interactive communication with characters
 - `research.md` - Lisa's findings
 - `decision.txt` - SIMPLE or COMPLEX
-- `prompt.md` - Implementation plan
-- `scratchpad.md` - Ralph's progress notes
+- `plan-v1.md` - Frink's initial plan (COMPLEX tasks)
+- `review.md` - Skinner's plan feedback (COMPLEX tasks)
+- `prompt.md` - Final implementation plan with subtasks
+- `scratchpad.md` - Ralph's progress notes (updated every iteration)
 - `completion.md` - "Task complete!" signal
 - `qa-report.md` - Comic Book Guy's verdict
 
-For complex tasks, Professor Frink runs a debate loop where two AI perspectives argue until they reach consensus on the best approach.
+### State Management
+
+Springfield uses structured state tracking via `state.json`:
+
+```json
+{
+  "schema_version": "1.0",
+  "session_id": "11-05-2025-task-name",
+  "status": "in_progress",
+  "current_phase": "ralph",
+  "iteration_count": 42,
+  "phases": {
+    "lisa": { "status": "complete", "start_time": "...", "end_time": "..." },
+    "ralph": { "status": "in_progress", "iteration": 42 }
+  },
+  "subtasks": [
+    { "id": 1, "description": "...", "status": "COMPLETE", "failures": 0 }
+  ],
+  "transitions": [...],
+  "kickbacks": [...],
+  "kickback_counts": { "lisa": 0, "frink": 0, "ralph": 1 }
+}
+```
+
+Use `jq` to query session state: `jq '.status' .springfield/*/state.json`
+
+### Chat Interface
+
+Talk to characters during execution via `chat.md`:
+
+```markdown
+**[2025-11-05 14:30:00] RALPH:**
+I'm working on subtask 3! I'm learnding!
+
+User: @ralph please add tests for auth.js
+
+**[2025-11-05 14:32:00] RALPH:**
+I'm adding tests! (re: your message about auth.js)
+That's where I'm a Viking!
+```
+
+Characters check chat.md at phase start and respond if @mentioned (or if no mentions). Ralph checks every 3 iterations.
+
+### Failure Thresholds
+
+Ralph implements with safety limits:
+
+- **n_fails = 3**: Max failures per subtask before marking FAILED
+- **n_rounds = 500**: Max total iterations before session fails with partial completion
+
+If Ralph hits n_rounds limit, session exits with code 1 and partial completion report in scratchpad.md.
+
+### Kickback Routing
+
+Comic Book Guy routes issues back to appropriate characters:
+
+- **RESEARCH_GAP** → Lisa (missing context)
+- **DESIGN_ISSUE** → Frink (architecture problems)
+- **IMPLEMENTATION_BUG** → Ralph (code bugs)
+
+**Kickback limits**: Max 2 kickbacks per character. After 2, Comic Book Guy escalates to user via chat.md.
+
+For complex tasks, Professor Frink runs a debate loop where two AI perspectives argue until they reach consensus on the best approach. If task is COMPLEX, Skinner reviews Frink's plan before Ralph implements.
 
 ### Workflow Diagram
 
@@ -100,6 +182,52 @@ graph TD
 - Node.js (for `npx` and `repomirror`)
 - Bash 4.0+
 - Standard Unix tools (mktemp, readlink/realpath)
+- **jq** (for state.json operations) - Install: `brew install jq` (macOS) or `apt-get install jq` (Linux)
+
+Springfield validates jq availability at session start. Without jq, state.json features are unavailable.
+
+## Monitoring Sessions
+
+Use the watch command to monitor Ralph's progress in real-time:
+
+```bash
+/springfield:watch                    # Watch most recent session
+/springfield:watch SESSION_ID         # Watch specific session
+/springfield:watch --interval=30      # Custom check interval (seconds)
+/springfield:watch --quiet            # Minimal output
+```
+
+Example output:
+```
+=== Springfield Session Monitor ===
+Session: 11-05-2025-add-authentication
+Status: in_progress
+Phase: ralph
+
+[14:32:15] Ralph (Iteration 42/500)
+  └─ Subtask 3/5: Update character commands **[IN_PROGRESS]**
+  └─ Failures: 1/3
+  └─ Recent: "I'm adding state.json tracking! I'm helping!"
+```
+
+### Exit Codes
+
+Springfield commands use standardized exit codes for automation:
+
+- **0**: Session completed successfully
+- **1**: Session failed (n_rounds exceeded or unrecoverable error)
+- **2**: User cancelled (Ctrl+C)
+- **3**: State corruption detected (invalid JSON)
+
+Use in scripts:
+```bash
+/springfield:watch --quiet
+if [ $? -eq 0 ]; then
+  echo "Success! Deploy to production"
+elif [ $? -eq 1 ]; then
+  echo "Failed - check logs"
+fi
+```
 
 ## Safety Warning
 
@@ -114,7 +242,7 @@ See `skills/springfield/REFERENCE.md` for the full philosophy.
 ## Sources of Inspiration
 
 - [Ralph pattern by Geoffrey Huntley](https://ghuntley.com/ralph/)
-- [AI Agents That Matter (arXiv:2510.26887)](https://arxiv.org/abs/2510.26887)
+- [The Denario Project: Deep knowledge AI agents for scientific discovery (arXiv:2510.26887)](https://arxiv.org/abs/2510.26887)
 - [HumanLayer Claude Commands](https://github.com/humanlayer/humanlayer/tree/main/.claude/commands)
 
 ## Disclaimers

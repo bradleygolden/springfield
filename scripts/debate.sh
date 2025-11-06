@@ -3,7 +3,7 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TEMPLATE="$SCRIPT_DIR/../templates/ralph_instructions.md"
+TEMPLATE="$SCRIPT_DIR/../skills/springfield/templates/ralph_instructions.md"
 
 if [[ ! -f "$TEMPLATE" ]]; then
   echo "Error: Template ralph_instructions.md not found" >&2

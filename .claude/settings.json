@@ -1,0 +1,13 @@
+{
+  "enabledPlugins": {
+    "springfield@springfield": true
+  },
+  "extraKnownMarketplaces": {
+    "springfield": {
+      "source": {
+        "source": "directory",
+        "path": "./"
+      }
+    }
+  }
+}

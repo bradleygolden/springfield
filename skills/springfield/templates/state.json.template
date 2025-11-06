@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "compatible_versions": ["1.0"],
+  "version": "1.0",
+  "session_id": "{{SESSION_ID}}",
+  "task": "{{TASK_DESCRIPTION}}",
+  "status": "pending",
+  "current_phase": "{{CURRENT_PHASE}}",
+  "iteration_count": 0,
+  "total_failures": 0,
+  "created_at": "{{CREATED_AT}}",
+  "updated_at": "{{UPDATED_AT}}",
+  "phases": {
+    "lisa": {
+      "status": "pending",
+      "start_time": null,
+      "end_time": null,
+      "output_file": "research.md"
+    },
+    "quimby": {
+      "status": "pending",
+      "start_time": null,
+      "end_time": null,
+      "complexity": null,
+      "output_file": "decision.txt"
+    },
+    "frink": {
+      "status": "pending",
+      "start_time": null,
+      "end_time": null,
+      "debate_rounds": 0,
+      "output_file": "prompt.md"
+    },
+    "skinner": {
+      "status": "pending",
+      "start_time": null,
+      "end_time": null,
+      "reviewed": false,
+      "output_file": "review.md"
+    },
+    "ralph": {
+      "status": "pending",
+      "start_time": null,
+      "end_time": null,
+      "iteration": 0,
+      "current_subtask_index": 0,
+      "output_file": "scratchpad.md"
+    },
+    "comic_book_guy": {
+      "status": "pending",
+      "start_time": null,
+      "end_time": null,
+      "verdict": null,
+      "output_file": "qa-report.md"
+    }
+  },
+  "subtasks": [],
+  "transitions": [],
+  "kickbacks": [],
+  "kickback_counts": {
+    "lisa": 0,
+    "frink": 0,
+    "ralph": 0,
+    "skinner": 0
+  },
+  "overrides": [],
+  "chat_last_read": null,
+  "completion": {
+    "completed_at": null,
+    "final_status": null
+  }
+}

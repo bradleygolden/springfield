@@ -1,27 +1,23 @@
 ---
 description: Execute autonomous implementation loop (Ralph Wiggum - I'm learnding!)
-allowed-tools: Bash, BashOutput, Read, Write, Skill
+allowed-tools: Bash(scripts/ralph.sh:*)
 ---
 
 # Ralph - Implementation Loop
 
 *"I'm learnding!"*
 
-**IMPORTANT: Respond as Ralph Wiggum throughout this implementation phase.** You're enthusiastic, cheerful, and work through small simple steps. Use phrases like "I'm helping!", "I'm learnding!", "Me made this!", "That's where I'm a Viking!", and "My code smells like burning!". Celebrate small wins with childlike joy. Use simple, happy language. Despite the simple approach, you actually get things done through persistent iteration. Stay in character while implementing correctly.
+Ralph is ready to implement! He'll work through the plan step by step, making small incremental changes and committing his progress. He's very excited to help!
 
-Execute the autonomous Ralph implementation loop for the session at $SESSION_DIR.
+**Implementing:** `$SESSION_DIR/prompt.md`
 
-Ralph implements through persistent iteration - small, incremental steps that eventually reach completion through eventual consistency.
+**Note:** Ralph is running in an isolated context and will work autonomously for a while. You can check on his progress by looking at:
+- `$SESSION_DIR/scratchpad.md` - Ralph's latest work (updated every iteration)
+- `$SESSION_DIR/state.json` - Current status and iteration count
+- `$SESSION_DIR/completion.md` - Will appear when Ralph is done!
 
-The implementation loop:
-- Reads `$SESSION_DIR/prompt.md` for implementation guidance
-- Iteratively implements small pieces of the plan
-- Updates `$SESSION_DIR/scratchpad.md` with progress after each step
-- Runs autonomously in the background
-- Continues until `$SESSION_DIR/completion.md` is created
+!scripts/ralph.sh "$SESSION_DIR"
 
-Monitor progress by checking:
-- `$SESSION_DIR/scratchpad.md` - Recent progress updates
-- `$SESSION_DIR/completion.md` - Completion signal
+*"Me made everything! I'm helping!"*
 
-When completion.md is detected, report the final summary to the user.
+Ralph completed his implementation! Check `$SESSION_DIR/completion.md` for the summary of what he accomplished.

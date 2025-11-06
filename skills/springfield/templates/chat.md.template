@@ -1,0 +1,44 @@
+# Springfield Session Chat
+
+**Session ID**: {{session_id}}
+**Task**: {{task_description}}
+
+---
+
+## How to Use This Chat
+
+You can communicate with the Springfield characters at any time by writing messages below.
+
+### Message Format
+- **Your messages**: Just write plain text (no special formatting needed)
+- **Agent messages**: Will appear as `**[YYYY-MM-DD HH:MM:SS] CHARACTER_NAME:**` followed by their response
+
+### Mentioning Characters
+Use `@character-name` to direct your message to specific characters:
+- `@lisa` - Research specialist
+- `@mayor-quimby` - Complexity assessor
+- `@frink` - Planning specialist
+- `@skinner` - Plan reviewer
+- `@ralph` - Implementation specialist
+- `@comic-book-guy` - Quality assurance
+
+If you don't mention anyone, all active characters will see and respond to your message.
+
+### Examples
+```
+@ralph please add tests for auth.js
+
+@frink can you break down the database migration into smaller steps?
+
+I think we should prioritize performance over features here
+```
+
+---
+
+## Session Chat Log
+
+**[{{timestamp}}] SYSTEM:**
+Session started. Characters will check this file periodically for your messages.
+Write your messages below this line - the active character will respond!
+
+---
