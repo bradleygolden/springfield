@@ -31,7 +31,7 @@
 cd your-project
 
 # Activate Springfield with any task
-echo "Add a factorial function to math.js" | claude
+echo "springfield help me add a factorial function to math.js" | claude
 # Springfield auto-activates! Lisa begins research...
 ```
 
@@ -45,7 +45,7 @@ echo "Add a factorial function to math.js" | claude
 **For complex tasks:**
 
 ```bash
-echo "Refactor the authentication system to support OAuth2" | claude
+echo "springfield help me refactor the authentication system to support OAuth2" | claude
 # Complex task triggers debate between Frink and Skinner!
 # Then Ralph implements with better requirements
 ```
@@ -244,7 +244,7 @@ Springfield validates jq availability at session start. Without jq, state.json f
 
 ### Example 1: Simple Task (No Debate)
 
-**Task:** "Add a factorial function to math.js"
+**Task:** "springfield help me add a factorial function to math.js"
 
 **What happens:**
 
@@ -279,7 +279,7 @@ Springfield validates jq availability at session start. Without jq, state.json f
 
 ### Example 2: Complex Task (With Debate)
 
-**Task:** "Refactor the authentication system to support OAuth2"
+**Task:** "springfield help me refactor the authentication system to support OAuth2"
 
 **What happens:**
 
