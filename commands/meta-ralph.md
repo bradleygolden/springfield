@@ -25,12 +25,4 @@ Meta-Ralph runs Springfield in an infinite loop based on a prompt string or file
 - `/springfield:meta-ralph my-task.md` - Reads from file
 - `/springfield:meta-ralph "Fix all bugs"` - Uses prompt string directly
 
----
-
-Execute the Meta-Ralph continuous improvement loop by running:
-
-```bash
-bash scripts/meta-ralph.sh "${1:-PROMPT.md}"
-```
-
-This will start an infinite loop that continuously sends the prompt to Claude for improvements. The loop will run forever until you stop it with Ctrl+C. Use the Bash tool to execute this command.
+!scripts/meta-ralph.sh "${1:-PROMPT.md}"
