@@ -12,7 +12,6 @@
 - [Usage](#usage)
 - [How it Works](#how-it-works)
 - [Requirements](#requirements)
-- [Monitoring Sessions](#monitoring-sessions)
 - [Examples](#examples)
 - [Troubleshooting](#troubleshooting)
 - [Glossary](#glossary)
