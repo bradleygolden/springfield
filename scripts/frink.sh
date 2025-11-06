@@ -3,7 +3,16 @@ set -euo pipefail
 
 SESSION_DIR="${1:-}"
 if [ -z "$SESSION_DIR" ]; then
-  echo "Error: SESSION_DIR required"
+  echo "❌ Error: SESSION_DIR is required" >&2
+  echo "" >&2
+  echo "Usage: $0 <session-directory>" >&2
+  echo "" >&2
+  echo "Example:" >&2
+  echo "  $0 .springfield/my-session" >&2
+  echo "" >&2
+  echo "💡 Tip: Professor Frink creates plans after Mayor Quimby's complexity assessment" >&2
+  echo "" >&2
+  echo "📖 Documentation: See README.md#characters" >&2
   exit 1
 fi
 
@@ -69,7 +78,13 @@ fi
 
 DECISION_FILE="$SESSION_DIR/decision.txt"
 if [ ! -f "$DECISION_FILE" ]; then
-  echo "Error: decision.txt not found" >&2
+  echo "❌ Error: decision.txt not found in session directory" >&2
+  echo "" >&2
+  echo "Expected: $DECISION_FILE" >&2
+  echo "" >&2
+  echo "💡 Tip: Mayor Quimby must make complexity decision before Frink can plan, glavin!" >&2
+  echo "" >&2
+  echo "📖 Documentation: See README.md#how-it-works" >&2
   exit 1
 fi
 

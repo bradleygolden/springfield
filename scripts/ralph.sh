@@ -4,11 +4,16 @@ set -euo pipefail
 
 RALPH_DIR="${1:-}"
 if [ -z "$RALPH_DIR" ]; then
-  echo "❌ Error: Ralph session directory required"
-  echo ""
-  echo "Usage:"
-  echo "  bash $0 /path/to/session/directory"
-  echo ""
+  echo "❌ Error: Ralph session directory required" >&2
+  echo "" >&2
+  echo "Usage: $0 <session-directory>" >&2
+  echo "" >&2
+  echo "Example:" >&2
+  echo "  $0 .springfield/my-session" >&2
+  echo "" >&2
+  echo "💡 Tip: Ralph implements tasks after Frink creates the plan and Skinner approves it" >&2
+  echo "" >&2
+  echo "📖 Documentation: See README.md#characters" >&2
   exit 1
 fi
 
@@ -42,15 +47,27 @@ COMPLETION_FILE="$RALPH_DIR/completion.md"
 SLEEP_DURATION="${SLEEP_DURATION:-10}"
 
 if ! [[ "$SLEEP_DURATION" =~ ^[0-9]+$ ]] || [ "$SLEEP_DURATION" -lt 0 ] || [ "$SLEEP_DURATION" -gt 3600 ]; then
-  echo "Error: SLEEP_DURATION must be 0-3600, got '$SLEEP_DURATION'" >&2
+  echo "❌ Error: SLEEP_DURATION must be a number between 0-3600 seconds" >&2
+  echo "" >&2
+  echo "Got: '$SLEEP_DURATION'" >&2
+  echo "" >&2
+  echo "💡 Tip: Set SLEEP_DURATION environment variable (default is 10 seconds)" >&2
+  echo "" >&2
+  echo "Example:" >&2
+  echo "  SLEEP_DURATION=5 $0 .springfield/my-session" >&2
+  echo "" >&2
+  echo "📖 Documentation: See README.md#characters" >&2
   exit 1
 fi
 
 if [ ! -f "$PROMPT_FILE" ]; then
-  echo "❌ Error: $PROMPT_FILE does not exist!"
-  echo ""
-  echo "Ralph requires prompt.md to exist in the session directory."
-  echo "Create it first, then run Ralph again."
+  echo "❌ Error: prompt.md not found in session directory" >&2
+  echo "" >&2
+  echo "Expected: $PROMPT_FILE" >&2
+  echo "" >&2
+  echo "💡 Tip: Professor Frink creates prompt.md with implementation instructions for Ralph" >&2
+  echo "" >&2
+  echo "📖 Documentation: See README.md#how-it-works" >&2
   exit 1
 fi
 
