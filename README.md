@@ -1,5 +1,9 @@
 # Springfield Plugin
 
+[![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](https://github.com/bradleygolden/springfield)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)]()
+
 *"I'm learnding!"* - Ralph Wiggum
 
 Autonomous workflow orchestration for Claude Code, where cartoon characters do your coding. It's like having the whole town of Springfield working on your project!
