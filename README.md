@@ -6,12 +6,14 @@
 
 ## Table of Contents
 
+- [Quick Start](#quick-start)
 - [What is this?](#what-is-this)
 - [Installation](#installation)
 - [Usage](#usage)
 - [How it Works](#how-it-works)
 - [Requirements](#requirements)
 - [Monitoring Sessions](#monitoring-sessions)
+- [Examples](#examples)
 - [Safety Warning](#safety-warning)
 - [Philosophy](#philosophy)
 - [Sources of Inspiration](#sources-of-inspiration)
@@ -279,6 +281,131 @@ elif [ $? -eq 1 ]; then
   echo "Failed - check logs"
 fi
 ```
+
+## Examples
+
+### Example 1: Simple Task (No Debate)
+
+**Task:** "Add a factorial function to math.js"
+
+**What happens:**
+
+1. **Lisa researches** (10 seconds):
+   - Finds math.js in your project
+   - Identifies existing function patterns
+   - Creates research.md with findings
+
+2. **Mayor Quimby decides** (5 seconds):
+   - Complexity: SIMPLE
+   - Decision: Skip debate, proceed to Ralph
+   - Rationale: Clear requirement, no architectural decisions
+
+3. **Ralph implements** (30 seconds):
+   - Adds factorial function matching style
+   - Includes basic error handling
+   - Creates implementation.md
+
+4. **Comic Book Guy validates** (15 seconds):
+   - Reviews code quality
+   - Checks for edge cases
+   - Verdict: "Acceptable work. The recursive approach is... adequate."
+
+**Session files created:**
+```
+.springfield/[session-name]/
+├── state.json (tracks progress)
+├── research.md (Lisa's findings)
+├── implementation.md (Ralph's work)
+└── validation.md (Comic Book Guy's review)
+```
+
+### Example 2: Complex Task (With Debate)
+
+**Task:** "Refactor the authentication system to support OAuth2"
+
+**What happens:**
+
+1. **Lisa researches** (30 seconds):
+   - Maps current auth implementation
+   - Identifies dependencies
+   - Documents integration points
+
+2. **Mayor Quimby decides** (5 seconds):
+   - Complexity: COMPLEX
+   - Decision: Initiate Frink/Skinner debate
+   - Rationale: Architectural changes, multiple approaches
+
+3. **Frink plans** (60 seconds):
+   - Proposes OAuth2 integration approach
+   - Identifies required libraries
+   - Creates detailed implementation steps
+   - Scientific enthusiasm: "With the OAuth and the tokens, glavin!"
+
+4. **Skinner reviews** (45 seconds):
+   - Critiques Frink's plan
+   - Identifies risks and issues
+   - Demands revisions: "This is unacceptable! Where's your error handling?!"
+
+5. **Frink revises** (60 seconds):
+   - Addresses Skinner's feedback
+   - Improves plan with better error handling
+   - Adds migration strategy
+
+6. **Skinner approves** (30 seconds):
+   - Final review
+   - Status: APPROVED (possibly with grumbling)
+   - "Acceptable. Barely."
+
+7. **Ralph implements** (5 minutes):
+   - Follows approved plan step-by-step
+   - Self-validates after each step
+   - Retries if Comic Book Guy rejects
+   - "Me did the OAuth thing!"
+
+8. **Comic Book Guy validates** (30 seconds):
+   - Reviews implementation quality
+   - Checks against plan requirements
+   - Final verdict
+
+**Session files created:**
+```
+.springfield/[session-name]/
+├── state.json
+├── research.md (Lisa)
+├── plan-v1.md (Frink's initial plan)
+├── review.md (Skinner's critique)
+├── plan-v2.md (Frink's revision)
+├── review-v2.md (Skinner's approval)
+├── prompt.md (Final implementation prompt)
+├── implementation-attempt-1.md (Ralph's work)
+└── validation.md (Comic Book Guy)
+```
+
+### Example 3: Resuming a Failed Session
+
+**Scenario:** Ralph's implementation failed validation
+
+**What happens:**
+
+1. You see the failure:
+   ```bash
+   # Comic Book Guy rejected Ralph's work
+   cat .springfield/my-session/state.json
+   # Shows: "status": "failed", "reason": "Missing error handling"
+   ```
+
+2. Springfield automatically retries:
+   - Ralph reads Comic Book Guy's feedback
+   - Ralph attempts implementation again
+   - Continues until success or max attempts reached
+
+3. If max attempts reached:
+   - Session state saved as "failed"
+   - You can manually review `.springfield/my-session/`
+   - Adjust prompt.md with more guidance
+   - Resume: `echo "resume session my-session" | claude`
+
+**No manual intervention needed** - Springfield's loop handles retries automatically!
 
 ## Safety Warning
 
