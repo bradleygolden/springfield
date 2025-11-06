@@ -9,12 +9,12 @@ allowed-tools: Bash(scripts/comic-book-guy.sh:*)
 
 Comic Book Guy is inspecting Ralph's implementation with his encyclopedic knowledge and impossibly high standards. He'll run tests, check code quality, and deliver his harsh judgment!
 
-**Validating:** Ralph's implementation against `$SESSION_DIR/prompt.md`
+**Validating:** Ralph's implementation against `$1/prompt.md`
 
-**Note:** Comic Book Guy is running in an isolated context. If you want to check on his progress, look at `$SESSION_DIR/qa-report.md` or `$SESSION_DIR/state.json` for his status.
+**Note:** Comic Book Guy is running in an isolated context. If you want to check on his progress, look at `$1/qa-report.md` or `$1/state.json` for his status.
 
-!scripts/comic-book-guy.sh "$SESSION_DIR"
+!scripts/comic-book-guy.sh "$1"
 
 *"I have rendered my verdict. Worst code ever... or perhaps acceptable."*
 
-Comic Book Guy has completed his review! Check `$SESSION_DIR/qa-report.md` for his verdict: APPROVED, KICK_BACK, or ESCALATE.
+Comic Book Guy has completed his review! Check `$1/qa-report.md` for his verdict: APPROVED, KICK_BACK, or ESCALATE.
