@@ -47,7 +47,9 @@ Initialize session files:
 Execute phases in sequence, monitoring state:
 
 ### Phase: Lisa (Research)
-Lisa uses Task agents to thoroughly research the codebase. She investigates:
+Invokes: `bash scripts/lisa.sh "$SESSION_DIR"`
+
+Lisa thoroughly researches the codebase. She investigates:
 - Existing implementations and patterns
 - Related files and dependencies
 - Technical constraints and requirements
@@ -142,7 +144,7 @@ When this skill is invoked, execute the following orchestration logic:
    - If status is "blocked": Report escalation, point to chat.md, EXIT
    - If status is "failed": Report failure, EXIT
    - Execute next phase:
-     - **lisa**: Use Task tool for research (not external script), write research.md
+     - **lisa**: Bash tool → `scripts/lisa.sh "$SESSION_DIR"`
      - **quimby**: Bash tool → `scripts/quimby.sh "$SESSION_DIR"`
      - **frink**: Bash tool → `scripts/frink.sh "$SESSION_DIR"`
      - **skinner**: Bash tool → `scripts/skinner.sh "$SESSION_DIR"`, then invoke frink again
