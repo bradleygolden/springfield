@@ -4,6 +4,20 @@
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)]()
 
+## Table of Contents
+
+- [What is this?](#what-is-this)
+- [Installation](#installation)
+- [Usage](#usage)
+- [How it Works](#how-it-works)
+- [Requirements](#requirements)
+- [Monitoring Sessions](#monitoring-sessions)
+- [Safety Warning](#safety-warning)
+- [Philosophy](#philosophy)
+- [Sources of Inspiration](#sources-of-inspiration)
+- [Disclaimers](#disclaimers)
+- [License](#license)
+
 *"I'm learnding!"* - Ralph Wiggum
 
 Autonomous workflow orchestration for Claude Code, where cartoon characters do your coding. It's like having the whole town of Springfield working on your project!
