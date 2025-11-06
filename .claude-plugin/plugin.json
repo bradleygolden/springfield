@@ -1,6 +1,6 @@
 {
   "name": "springfield",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Multi-phase autonomous workflow orchestration with debate-driven refinement. Research (Lisa), Plan (Frink), Implement (Ralph), and QA (Comic Book Guy) working together through eventual consistency.",
   "author": {
     "name": "Bradley Golden",

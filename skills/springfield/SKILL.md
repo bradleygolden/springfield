@@ -128,6 +128,36 @@ lisa → quimby → frink → [skinner → frink] → ralph → comic-book-guy
 
 Springfield orchestrates autonomous development through eventual consistency and iterative refinement. Each phase is handled by a different character, with Ralph running the implementation loop. See [REFERENCE.md](REFERENCE.md) for the Ralph pattern philosophy.
 
+## Meta-Ralph: Continuous Self-Improvement
+
+*"I'm gonna loop forever!"*
+
+Meta-Ralph is an alternative mode that runs Springfield in an infinite loop for continuous self-improvement. Based on the original Ralph pattern from [Geoff Huntley's blog](https://ghuntley.com/ralph/).
+
+**When to use Meta-Ralph:**
+- Continuous improvement of the codebase
+- Working on open-ended optimization tasks
+- Iterative refinement until manually stopped
+
+**How it works:**
+1. Takes a prompt string or file path
+2. Runs the prompt through Springfield workflow
+3. Repeats infinitely until stopped (Ctrl+C)
+4. Each iteration builds on previous improvements
+
+**Invocation:**
+```bash
+${CLAUDE_PLUGIN_ROOT}/scripts/meta-ralph.sh "PROMPT"
+# or
+${CLAUDE_PLUGIN_ROOT}/scripts/meta-ralph.sh path/to/prompt-file.md
+```
+
+**Examples:**
+- `meta-ralph.sh "Fix all bugs and improve documentation"`
+- `meta-ralph.sh PROMPT.md`
+
+**Note:** Meta-Ralph runs forever. User must manually stop it (Ctrl+C). Use for tasks that benefit from continuous iteration and eventual consistency.
+
 ---
 
 ## Implementation: Autonomous Orchestrator
