@@ -97,7 +97,6 @@ Springfield runs all phases automatically. Or run them individually:
 /springfield:skinner                   # Review plan (COMPLEX tasks only)
 /springfield:ralph                     # Implement
 /springfield:comic-book-guy            # Review
-/springfield:watch                     # Monitor progress
 ```
 
 ### Advanced Flags
@@ -109,8 +108,6 @@ Springfield runs all phases automatically. Or run them individually:
 /springfield:frink --plan-file=prompt.md           # Use existing plan
 /springfield:frink --force                         # Skip Skinner review
 /springfield:ralph --session=SESSION_ID            # Resume Ralph implementation
-/springfield:watch SESSION_ID --interval=30        # Watch with custom interval
-/springfield:watch --quiet                         # Minimal output
 ```
 
 ## How it Works
