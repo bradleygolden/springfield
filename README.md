@@ -240,49 +240,6 @@ graph TD
 
 Springfield validates jq availability at session start. Without jq, state.json features are unavailable.
 
-## Monitoring Sessions
-
-Use the watch command to monitor Ralph's progress in real-time:
-
-```bash
-/springfield:watch                    # Watch most recent session
-/springfield:watch SESSION_ID         # Watch specific session
-/springfield:watch --interval=30      # Custom check interval (seconds)
-/springfield:watch --quiet            # Minimal output
-```
-
-Example output:
-```
-=== Springfield Session Monitor ===
-Session: 11-05-2025-add-authentication
-Status: in_progress
-Phase: ralph
-
-[14:32:15] Ralph (Iteration 42/500)
-  └─ Subtask 3/5: Update character commands **[IN_PROGRESS]**
-  └─ Failures: 1/3
-  └─ Recent: "I'm adding state.json tracking! I'm helping!"
-```
-
-### Exit Codes
-
-Springfield commands use standardized exit codes for automation:
-
-- **0**: Session completed successfully
-- **1**: Session failed (unrecoverable error or missing required files)
-- **2**: User cancelled (Ctrl+C)
-- **3**: State corruption detected (invalid JSON)
-
-Use in scripts:
-```bash
-/springfield:watch --quiet
-if [ $? -eq 0 ]; then
-  echo "Success! Deploy to production"
-elif [ $? -eq 1 ]; then
-  echo "Failed - check logs"
-fi
-```
-
 ## Examples
 
 ### Example 1: Simple Task (No Debate)
