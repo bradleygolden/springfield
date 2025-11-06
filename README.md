@@ -1,5 +1,60 @@
 # Springfield Plugin
 
+[![Version](https://img.shields.io/badge/version-1.1.1-blue.svg)](https://github.com/bradleygolden/springfield)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)]()
+
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [What is this?](#what-is-this)
+- [Installation](#installation)
+- [Usage](#usage)
+- [How it Works](#how-it-works)
+- [Requirements](#requirements)
+- [Examples](#examples)
+- [Troubleshooting](#troubleshooting)
+- [Glossary](#glossary)
+- [Frequently Asked Questions](#frequently-asked-questions)
+- [Safety Warning](#safety-warning)
+- [Philosophy](#philosophy)
+- [Sources of Inspiration](#sources-of-inspiration)
+- [Disclaimers](#disclaimers)
+- [License](#license)
+
+## Quick Start
+
+**Try Springfield in 30 seconds:**
+
+```bash
+# Make sure you're in a git repository
+cd your-project
+
+# Activate Springfield with any task
+echo "springfield help me add a factorial function to math.js" | claude
+# Springfield auto-activates! Lisa begins research...
+```
+
+**What just happened?**
+
+1. **Lisa** researched your codebase for relevant files
+2. **Mayor Quimby** assessed complexity (SIMPLE task = no debate)
+3. **Ralph** implemented the change: "Me added the function!"
+4. **Comic Book Guy** validated the result: "Acceptable... barely."
+
+**For complex tasks:**
+
+```bash
+echo "springfield help me refactor the authentication system to support OAuth2" | claude
+# Complex task triggers debate between Frink and Skinner!
+# Then Ralph implements with better requirements
+```
+
+**Next steps:**
+- See [Examples](#examples) for detailed walkthroughs
+- Read [How It Works](#how-it-works) to understand the workflow
+- Check [Troubleshooting](#troubleshooting) if you run into issues
+
 *"I'm learnding!"* - Ralph Wiggum
 
 Autonomous workflow orchestration for Claude Code, where cartoon characters do your coding. It's like having the whole town of Springfield working on your project!
@@ -42,7 +97,6 @@ Springfield runs all phases automatically. Or run them individually:
 /springfield:skinner                   # Review plan (COMPLEX tasks only)
 /springfield:ralph                     # Implement
 /springfield:comic-book-guy            # Review
-/springfield:watch                     # Monitor progress
 ```
 
 ### Advanced Flags
@@ -54,8 +108,6 @@ Springfield runs all phases automatically. Or run them individually:
 /springfield:frink --plan-file=prompt.md           # Use existing plan
 /springfield:frink --force                         # Skip Skinner review
 /springfield:ralph --session=SESSION_ID            # Resume Ralph implementation
-/springfield:watch SESSION_ID --interval=30        # Watch with custom interval
-/springfield:watch --quiet                         # Minimal output
 ```
 
 ## How it Works
@@ -116,14 +168,16 @@ That's where I'm a Viking!
 
 Characters check chat.md at phase start and respond if @mentioned (or if no mentions). Ralph checks every 3 iterations.
 
-### Failure Thresholds
+### Iteration Behavior
 
-Ralph implements with safety limits:
+Ralph works iteratively until the task is complete:
 
-- **n_fails = 3**: Max failures per subtask before marking FAILED
-- **n_rounds = 500**: Max total iterations before session fails with partial completion
+- Reads the prompt.md for implementation instructions
+- Updates scratchpad.md with progress after each iteration
+- Creates completion.md when 100% done
+- Sleeps between iterations (default: 10 seconds, configurable via SLEEP_DURATION)
 
-If Ralph hits n_rounds limit, session exits with code 1 and partial completion report in scratchpad.md.
+Ralph will continue iterating indefinitely until completion.md appears. You can stop at any time with Ctrl+C and resume later.
 
 ### Kickback Routing
 
@@ -186,48 +240,434 @@ graph TD
 
 Springfield validates jq availability at session start. Without jq, state.json features are unavailable.
 
-## Monitoring Sessions
+## Examples
 
-Use the watch command to monitor Ralph's progress in real-time:
+### Example 1: Simple Task (No Debate)
+
+**Task:** "springfield help me add a factorial function to math.js"
+
+**What happens:**
+
+1. **Lisa researches** (10 seconds):
+   - Finds math.js in your project
+   - Identifies existing function patterns
+   - Creates research.md with findings
+
+2. **Mayor Quimby decides** (5 seconds):
+   - Complexity: SIMPLE
+   - Decision: Skip debate, proceed to Ralph
+   - Rationale: Clear requirement, no architectural decisions
+
+3. **Ralph implements** (30 seconds):
+   - Adds factorial function matching style
+   - Includes basic error handling
+   - Creates implementation.md
+
+4. **Comic Book Guy validates** (15 seconds):
+   - Reviews code quality
+   - Checks for edge cases
+   - Verdict: "Acceptable work. The recursive approach is... adequate."
+
+**Session files created:**
+```
+.springfield/[session-name]/
+├── state.json (tracks progress)
+├── research.md (Lisa's findings)
+├── implementation.md (Ralph's work)
+└── validation.md (Comic Book Guy's review)
+```
+
+### Example 2: Complex Task (With Debate)
+
+**Task:** "springfield help me refactor the authentication system to support OAuth2"
+
+**What happens:**
+
+1. **Lisa researches** (30 seconds):
+   - Maps current auth implementation
+   - Identifies dependencies
+   - Documents integration points
+
+2. **Mayor Quimby decides** (5 seconds):
+   - Complexity: COMPLEX
+   - Decision: Initiate Frink/Skinner debate
+   - Rationale: Architectural changes, multiple approaches
+
+3. **Frink plans** (60 seconds):
+   - Proposes OAuth2 integration approach
+   - Identifies required libraries
+   - Creates detailed implementation steps
+   - Scientific enthusiasm: "With the OAuth and the tokens, glavin!"
+
+4. **Skinner reviews** (45 seconds):
+   - Critiques Frink's plan
+   - Identifies risks and issues
+   - Demands revisions: "This is unacceptable! Where's your error handling?!"
+
+5. **Frink revises** (60 seconds):
+   - Addresses Skinner's feedback
+   - Improves plan with better error handling
+   - Adds migration strategy
+
+6. **Skinner approves** (30 seconds):
+   - Final review
+   - Status: APPROVED (possibly with grumbling)
+   - "Acceptable. Barely."
+
+7. **Ralph implements** (5 minutes):
+   - Follows approved plan step-by-step
+   - Self-validates after each step
+   - Retries if Comic Book Guy rejects
+   - "Me did the OAuth thing!"
+
+8. **Comic Book Guy validates** (30 seconds):
+   - Reviews implementation quality
+   - Checks against plan requirements
+   - Final verdict
+
+**Session files created:**
+```
+.springfield/[session-name]/
+├── state.json
+├── research.md (Lisa)
+├── plan-v1.md (Frink's initial plan)
+├── review.md (Skinner's critique)
+├── plan-v2.md (Frink's revision)
+├── review-v2.md (Skinner's approval)
+├── prompt.md (Final implementation prompt)
+├── implementation-attempt-1.md (Ralph's work)
+└── validation.md (Comic Book Guy)
+```
+
+### Example 3: Resuming a Failed Session
+
+**Scenario:** Ralph's implementation failed validation
+
+**What happens:**
+
+1. You see the failure:
+   ```bash
+   # Comic Book Guy rejected Ralph's work
+   cat .springfield/my-session/state.json
+   # Shows: "status": "failed", "reason": "Missing error handling"
+   ```
+
+2. Springfield automatically retries:
+   - Ralph reads Comic Book Guy's feedback
+   - Ralph attempts implementation again
+   - Continues until success or max attempts reached
+
+3. If max attempts reached:
+   - Session state saved as "failed"
+   - You can manually review `.springfield/my-session/`
+   - Adjust prompt.md with more guidance
+   - Resume: `echo "resume session my-session" | claude`
+
+**No manual intervention needed** - Springfield's loop handles retries automatically!
+
+## Troubleshooting
+
+### Issue: "SESSION_DIR is required" error
+
+**Symptoms:**
+- Script fails immediately with error message
+- No Springfield workflow activates
+
+**Causes:**
+1. Not in a git repository
+2. Springfield hook not properly configured
+3. Manual script invocation without arguments
+
+**Solutions:**
+```bash
+# Verify you're in a git repo
+git status
+
+# Check hooks configuration
+cat hooks/hooks.json | jq .
+
+# Ensure "springfield" appears in your prompt
+echo "Use springfield to add feature X" | claude
+```
+
+### Issue: Ralph stuck in infinite loop
+
+**Symptoms:**
+- Ralph keeps retrying same approach
+- No progress after multiple attempts
+- Session shows multiple failed attempts
+
+**Solutions:**
+
+1. **Check feedback in session directory:**
+   ```bash
+   cat .springfield/[session]/validation.md
+   # See what Comic Book Guy is rejecting
+   ```
+
+2. **Review Ralph's attempts:**
+   ```bash
+   ls .springfield/[session]/implementation-attempt-*.md
+   # Compare attempts to see if Ralph is learning
+   ```
+
+3. **Manual intervention:**
+   ```bash
+   # Edit the prompt with more specific guidance
+   nano .springfield/[session]/prompt.md
+
+   # Ralph will use updated prompt on next attempt
+   ```
+
+4. **Force exit if needed:**
+   - Stop Claude Code process
+   - Review session state
+   - Delete session directory if starting over
+
+### Issue: "jq: command not found"
+
+**Symptoms:**
+- Scripts fail with jq error
+- JSON parsing errors
+
+**Solutions:**
 
 ```bash
-/springfield:watch                    # Watch most recent session
-/springfield:watch SESSION_ID         # Watch specific session
-/springfield:watch --interval=30      # Custom check interval (seconds)
-/springfield:watch --quiet            # Minimal output
+# macOS
+brew install jq
+
+# Linux (Debian/Ubuntu)
+sudo apt-get install jq
+
+# Linux (RHEL/CentOS)
+sudo yum install jq
+
+# Verify installation
+jq --version
 ```
 
-Example output:
-```
-=== Springfield Session Monitor ===
-Session: 11-05-2025-add-authentication
-Status: in_progress
-Phase: ralph
+### Issue: Springfield doesn't activate
 
-[14:32:15] Ralph (Iteration 42/500)
-  └─ Subtask 3/5: Update character commands **[IN_PROGRESS]**
-  └─ Failures: 1/3
-  └─ Recent: "I'm adding state.json tracking! I'm helping!"
-```
+**Symptoms:**
+- You mention "springfield" but workflow doesn't start
+- Regular Claude Code responds instead
 
-### Exit Codes
+**Solutions:**
 
-Springfield commands use standardized exit codes for automation:
+1. **Verify hooks are enabled:**
+   ```bash
+   # Check hooks/hooks.json exists
+   ls -la hooks/hooks.json
 
-- **0**: Session completed successfully
-- **1**: Session failed (n_rounds exceeded or unrecoverable error)
-- **2**: User cancelled (Ctrl+C)
-- **3**: State corruption detected (invalid JSON)
+   # Verify springfield skill is registered
+   cat hooks/hooks.json | jq '.skills'
+   ```
 
-Use in scripts:
+2. **Check Claude Code settings:**
+   - Ensure hooks are enabled in settings
+   - Verify plugin directory is correct
+   - Restart Claude Code
+
+3. **Try explicit activation:**
+   ```bash
+   # Use the springfield skill directly
+   /springfield "Your task description here"
+   ```
+
+### Issue: Character voices seem inconsistent
+
+**Symptoms:**
+- Generated content doesn't match character personality
+- Ralph sounds too formal
+- Frink lacks enthusiasm
+
+**This is acceptable** - Characters maintain personality in prompts and outputs, but technical content should be clear. If technical accuracy is present, voice variations are acceptable.
+
+### Getting More Help
+
+If you encounter issues not covered here:
+
+1. **Check session files:**
+   ```bash
+   cat .springfield/[session]/state.json | jq .
+   # Review the workflow state
+   ```
+
+2. **Review logs:**
+   - Check `.springfield/[session]/` for all generated files
+   - Look for error messages in validation.md
+
+3. **Report issues:**
+   - Open a [GitHub Issue](https://github.com/bradleygolden/springfield/issues)
+   - Include session state.json
+   - Describe expected vs actual behavior
+   - Note your platform (macOS/Linux)
+
+4. **Ask for help:**
+   - Start a [GitHub Discussion](https://github.com/bradleygolden/springfield/discussions)
+   - Community members can assist
+   - Maintainers monitor discussions
+
+## Glossary
+
+Key terms used in Springfield:
+
+- **Session**: A single Springfield workflow execution for one task, stored in `.springfield/MM-DD-YYYY-task-name/`
+- **Kickback**: When Comic Book Guy identifies issues and routes the task back to Lisa, Frink, or Ralph for fixes
+- **Debate Loop**: Professor Frink's internal process where he creates a plan that Principal Skinner reviews for complex tasks
+- **Completion Signal**: The `completion.md` file created by Ralph when implementation is finished
+- **SIMPLE vs COMPLEX**: Mayor Quimby's decision - SIMPLE tasks skip the debate loop, COMPLEX tasks go through Frink → Skinner → Frink
+- **State.json**: The structured session state file tracking progress, phases, and transitions
+- **Chat.md**: A communication channel where users can send messages to characters during execution
+- **Scratchpad.md**: Ralph's working notes file, updated each iteration to track progress
+
+## Frequently Asked Questions
+
+### Is Springfield safe for production code?
+
+Springfield uses `--dangerously-skip-permissions`, so it's best suited for:
+- ✅ Personal projects and experiments
+- ✅ Sandboxed development environments
+- ✅ Feature branches (not main/production)
+- ✅ Learning and exploration
+
+Avoid using Springfield directly on:
+- ❌ Production code without review
+- ❌ Repositories you don't fully control
+- ❌ Code with sensitive data or credentials
+
+Think of it like Ralph at the nuclear power plant - fun for experimentation, risky for critical systems!
+
+### How long does a Springfield workflow take?
+
+Timing depends on task complexity:
+- **SIMPLE tasks**: 1-3 minutes (Lisa → Quimby → Ralph → Comic Book Guy)
+- **COMPLEX tasks**: 5-15 minutes (adds Frink/Skinner debate loop)
+- **Large implementations**: Can take 30-60+ minutes depending on the task
+
+Ralph iterates until the task is complete (creates `completion.md`). You can stop the workflow at any time with Ctrl+C.
+
+### Can I stop Springfield mid-workflow and resume later?
+
+Yes! Springfield sessions persist in `.springfield/` directories:
+
 ```bash
-/springfield:watch --quiet
-if [ $? -eq 0 ]; then
-  echo "Success! Deploy to production"
-elif [ $? -eq 1 ]; then
-  echo "Failed - check logs"
-fi
+# Stop with Ctrl+C at any time
+
+# Resume the session
+/springfield:ralph --session=MM-DD-YYYY-task-name
+
+# Or check current state
+cat .springfield/MM-DD-YYYY-task-name/state.json | jq .
 ```
+
+The `state.json` file tracks exactly where the workflow stopped.
+
+### What if Springfield makes a mistake?
+
+Springfield has built-in quality control:
+
+1. **Comic Book Guy reviews everything** - He'll catch issues and kick back for fixes
+2. **Review qa-report.md** - See detailed feedback on what's wrong
+3. **Use chat.md** - Provide guidance to characters:
+   ```bash
+   echo "@ralph The tests are failing because..." >> .springfield/SESSION/chat.md
+   ```
+4. **Manual review** - Always review Ralph's commits before merging!
+
+### Why isn't Springfield activating automatically?
+
+Check these common issues:
+
+1. **Not in a git repository**: Springfield requires git
+   ```bash
+   git status  # Should not error
+   ```
+
+2. **Hook not configured**: Verify the Springfield hook
+   ```bash
+   cat hooks/hooks.json | jq '.hooks[] | select(.name == "springfield")'
+   ```
+
+3. **Keyword missing**: Include "springfield" in your prompt
+   ```bash
+   echo "Use springfield to add a feature" | claude
+   ```
+
+4. **Plugin not installed**: Reinstall if needed
+   ```bash
+   /plugin install springfield@springfield
+   ```
+
+### What's the difference between running characters individually vs using the orchestrator?
+
+**Individual commands** (`/springfield:lisa`, `/springfield:ralph`, etc.):
+- Run one character at a time
+- Good for debugging or resuming specific phases
+- Requires manual coordination between phases
+- More control, more manual work
+
+**Orchestrator** (mention "springfield" in task):
+- Runs entire workflow automatically
+- Characters communicate through session files
+- Handles kickbacks and retries automatically
+- Less control, more automation
+
+Most users should use the orchestrator for end-to-end workflows!
+
+### Can Springfield work with any programming language?
+
+Yes! Springfield is language-agnostic:
+- Lisa researches your specific codebase
+- Ralph adapts to your project's patterns
+- Works with any git repository
+
+Springfield has been tested with:
+- JavaScript/TypeScript
+- Python
+- Go
+- Rust
+- Shell scripts
+- And more!
+
+### How do I clean up old Springfield sessions?
+
+Sessions accumulate in `.springfield/` but are gitignored:
+
+```bash
+# View all sessions
+ls -la .springfield/
+
+# Remove old sessions (BE CAREFUL!)
+rm -rf .springfield/10-15-2024-old-task
+
+# Or keep only recent sessions
+find .springfield/ -type d -mtime +30 -exec rm -rf {} \;
+```
+
+**Tip**: Keep successful sessions as documentation of what Springfield accomplished!
+
+### What if Ralph gets stuck in a loop?
+
+Signs Ralph is stuck:
+- High iteration count (> 100)
+- Same error repeating
+- No progress in scratchpad.md
+
+Solutions:
+1. **Check the prompt** - May be ambiguous:
+   ```bash
+   cat .springfield/SESSION/prompt.md
+   ```
+
+2. **Provide guidance via chat.md**:
+   ```bash
+   echo "@ralph Focus on subtask 1 only, skip subtask 3" >> .springfield/SESSION/chat.md
+   ```
+
+3. **Adjust the plan** - Edit prompt.md to be more specific
+
+4. **Start fresh** - Sometimes a new session with clearer requirements works better
 
 ## Safety Warning
 

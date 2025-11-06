@@ -3,7 +3,16 @@ set -euo pipefail
 
 SESSION_DIR="${1:-}"
 if [ -z "$SESSION_DIR" ]; then
-  echo "Error: SESSION_DIR required"
+  echo "❌ Error: SESSION_DIR is required" >&2
+  echo "" >&2
+  echo "Usage: $0 <session-directory>" >&2
+  echo "" >&2
+  echo "Example:" >&2
+  echo "  $0 .springfield/my-session" >&2
+  echo "" >&2
+  echo "💡 Tip: SESSION_DIR should be created by Springfield workflow automatically" >&2
+  echo "" >&2
+  echo "📖 Documentation: See README.md#how-it-works" >&2
   exit 1
 fi
 
@@ -69,7 +78,13 @@ if [ -n "$NEW_MESSAGES" ]; then
 fi
 
 if [ ! -f "$TASK_FILE" ]; then
-  echo "Error: task.txt not found" >&2
+  echo "❌ Error: task.txt not found in session directory" >&2
+  echo "" >&2
+  echo "Expected: $TASK_FILE" >&2
+  echo "" >&2
+  echo "💡 Tip: task.txt should contain the task description for Lisa to research" >&2
+  echo "" >&2
+  echo "📖 Documentation: See README.md#characters" >&2
   exit 1
 fi
 

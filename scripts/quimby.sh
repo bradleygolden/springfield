@@ -3,7 +3,16 @@ set -euo pipefail
 
 SESSION_DIR="${1:-}"
 if [ -z "$SESSION_DIR" ]; then
-  echo "Error: SESSION_DIR required"
+  echo "❌ Error: SESSION_DIR is required" >&2
+  echo "" >&2
+  echo "Usage: $0 <session-directory>" >&2
+  echo "" >&2
+  echo "Example:" >&2
+  echo "  $0 .springfield/my-session" >&2
+  echo "" >&2
+  echo "💡 Tip: Mayor Quimby assesses complexity after Lisa's research" >&2
+  echo "" >&2
+  echo "📖 Documentation: See README.md#characters" >&2
   exit 1
 fi
 
@@ -69,7 +78,13 @@ fi
 
 RESEARCH_FILE="$SESSION_DIR/research.md"
 if [ ! -f "$RESEARCH_FILE" ]; then
-  echo "Error: research.md not found" >&2
+  echo "❌ Error: research.md not found in session directory" >&2
+  echo "" >&2
+  echo "Expected: $RESEARCH_FILE" >&2
+  echo "" >&2
+  echo "💡 Tip: Lisa must complete her research before Mayor Quimby can assess complexity" >&2
+  echo "" >&2
+  echo "📖 Documentation: See README.md#how-it-works" >&2
   exit 1
 fi
 

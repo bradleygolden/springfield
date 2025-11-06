@@ -3,7 +3,16 @@ set -euo pipefail
 
 SESSION_DIR="${1:-}"
 if [ -z "$SESSION_DIR" ]; then
-  echo "Error: SESSION_DIR required"
+  echo "❌ Error: SESSION_DIR is required" >&2
+  echo "" >&2
+  echo "Usage: $0 <session-directory>" >&2
+  echo "" >&2
+  echo "Example:" >&2
+  echo "  $0 .springfield/my-session" >&2
+  echo "" >&2
+  echo "💡 Tip: Comic Book Guy validates Ralph's implementation after completion" >&2
+  echo "" >&2
+  echo "📖 Documentation: See README.md#characters" >&2
   exit 1
 fi
 
@@ -71,12 +80,24 @@ COMPLETION_FILE="$SESSION_DIR/completion.md"
 PROMPT_FILE="$SESSION_DIR/prompt.md"
 
 if [ ! -f "$COMPLETION_FILE" ]; then
-  echo "Error: completion.md not found - implementation not complete" >&2
+  echo "❌ Error: completion.md not found - implementation not complete" >&2
+  echo "" >&2
+  echo "Expected: $COMPLETION_FILE" >&2
+  echo "" >&2
+  echo "💡 Tip: Ralph must create completion.md when implementation is done" >&2
+  echo "" >&2
+  echo "📖 Documentation: See README.md#how-it-works" >&2
   exit 1
 fi
 
 if [ ! -f "$PROMPT_FILE" ]; then
-  echo "Error: prompt.md not found" >&2
+  echo "❌ Error: prompt.md not found in session directory" >&2
+  echo "" >&2
+  echo "Expected: $PROMPT_FILE" >&2
+  echo "" >&2
+  echo "💡 Tip: Comic Book Guy needs prompt.md to validate against requirements" >&2
+  echo "" >&2
+  echo "📖 Documentation: See README.md#how-it-works" >&2
   exit 1
 fi
 
