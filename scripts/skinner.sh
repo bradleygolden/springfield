@@ -162,7 +162,12 @@ jq --arg timestamp "$TIMESTAMP" \
    '.phases.skinner.status = "complete" |
     .phases.skinner.end_time = $timestamp |
     .phases.skinner.reviewed = true |
-    .phases.skinner.output_file = "review.md"' \
+    .phases.skinner.output_file = "review.md" |
+    .transitions += [{
+      "from": "skinner",
+      "to": "frink",
+      "timestamp": $timestamp
+    }]' \
    "$STATE_FILE" > "$TMP_STATE"
 mv "$TMP_STATE" "$STATE_FILE"
 
