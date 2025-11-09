@@ -560,7 +560,7 @@ Key terms used in Springfield:
 - **Kickback**: When Comic Book Guy identifies issues and routes the task back to Lisa, Frink, or Ralph for fixes
 - **Debate Loop**: Professor Frink's internal process where he creates a plan that Principal Skinner reviews for complex tasks
 - **Completion Signal**: The `completion.md` file created by Ralph when implementation is finished
-- **SIMPLE vs COMPLEX**: Mayor Quimby's decision - SIMPLE tasks skip the debate loop, COMPLEX tasks go through Frink → Skinner → Frink
+- **SIMPLE vs COMPLEX**: Mayor Quimby's decision - SIMPLE tasks skip the debate loop and Martin, COMPLEX tasks go through Frink → Skinner → Frink → Martin
 - **State.json**: The structured session state file tracking progress, phases, and transitions
 - **Chat.md**: A communication channel where users can send messages to characters during execution
 - **Scratchpad.md**: Ralph's working notes file, updated each iteration to track progress
@@ -586,7 +586,7 @@ Think of it like Ralph at the nuclear power plant - fun for experimentation, ris
 
 Timing depends on task complexity:
 - **SIMPLE tasks**: 1-3 minutes (Lisa → Quimby → Ralph → Comic Book Guy)
-- **COMPLEX tasks**: 5-15 minutes (adds Frink/Skinner debate loop)
+- **COMPLEX tasks**: 5-15 minutes (adds Frink/Skinner debate loop + Martin's documentation)
 - **Large implementations**: Can take 30-60+ minutes depending on the task
 
 Ralph iterates until the task is complete (creates `completion.md`). You can stop the workflow at any time with Ctrl+C.
