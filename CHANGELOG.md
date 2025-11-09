@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Workflow now includes Martin between Skinner/Frink and Ralph
 - Updated state.json template with martin phase
 - Springfield skill orchestration updated for Martin integration
+- Removed Timeline & Milestones section from PRD template (no time estimates!)
 
 ## [1.2.4] - 2025-11-06
 
