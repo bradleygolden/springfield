@@ -1,6 +1,6 @@
 # Springfield Plugin
 
-[![Version](https://img.shields.io/badge/version-1.2.4-blue.svg)](https://github.com/bradleygolden/springfield)
+[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](https://github.com/bradleygolden/springfield)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)]()
 
@@ -67,6 +67,7 @@ Springfield is a Claude Code plugin that breaks down complex tasks into phases, 
 - **Mayor Quimby** 🎩 - Decides if it's simple or complex (he's good at delegating)
 - **Professor Frink** 🔬 - Makes the plan (with the science and the planning, glavin!)
 - **Principal Skinner** 📋 - Reviews complex plans (pathetic work, Professor!)
+- **Martin Prince** 📝 - Creates prospective documentation (I've earned an A+ on this PRD!)
 - **Ralph** 🖍️ - Implements through persistent iteration (I'm learnding!)
 - **Comic Book Guy** 💬 - Reviews the quality ("Worst code ever... or best?")
 - **Meta-Ralph** 🔄 - Continuous self-improvement loop (I'm gonna loop forever!)
@@ -96,6 +97,7 @@ Springfield runs all phases automatically. Or run them individually:
 /springfield:mayor-quimby              # Decide complexity
 /springfield:frink                     # Plan
 /springfield:skinner                   # Review plan (COMPLEX tasks only)
+/springfield:martin                    # Create PRD/documentation
 /springfield:ralph                     # Implement
 /springfield:comic-book-guy            # Review
 /springfield:meta-ralph "task.md"      # Infinite improvement loop
