@@ -5,6 +5,19 @@ All notable changes to Springfield will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2025-11-08
+
+### Added
+- Martin Prince: Prospective documentation character
+- Creates PRDs and design docs BEFORE Ralph implements
+- Work item categorization (initiatives, features, tasks, bugs)
+- Directory structure: `/docs/planning/{type}/{work-item-id}/`
+- Four documentation templates (PRD, task doc, bug doc, work item state)
+
+### Changed
+- Workflow now includes Martin between Skinner/Frink and Ralph
+- Springfield skill orchestration updated for Martin integration
+
 ## [1.2.4] - 2025-11-06
 
 ### Added

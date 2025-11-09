@@ -1,6 +1,6 @@
 # Springfield Plugin
 
-[![Version](https://img.shields.io/badge/version-1.2.4-blue.svg)](https://github.com/bradleygolden/springfield)
+[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](https://github.com/bradleygolden/springfield)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)]()
 
@@ -67,6 +67,7 @@ Springfield is a Claude Code plugin that breaks down complex tasks into phases, 
 - **Mayor Quimby** 🎩 - Decides if it's simple or complex (he's good at delegating)
 - **Professor Frink** 🔬 - Makes the plan (with the science and the planning, glavin!)
 - **Principal Skinner** 📋 - Reviews complex plans (pathetic work, Professor!)
+- **Martin Prince** 📝 - Creates prospective documentation (I've earned an A+ on this PRD!)
 - **Ralph** 🖍️ - Implements through persistent iteration (I'm learnding!)
 - **Comic Book Guy** 💬 - Reviews the quality ("Worst code ever... or best?")
 - **Meta-Ralph** 🔄 - Continuous self-improvement loop (I'm gonna loop forever!)
@@ -96,6 +97,7 @@ Springfield runs all phases automatically. Or run them individually:
 /springfield:mayor-quimby              # Decide complexity
 /springfield:frink                     # Plan
 /springfield:skinner                   # Review plan (COMPLEX tasks only)
+/springfield:martin                    # Create PRD/documentation
 /springfield:ralph                     # Implement
 /springfield:comic-book-guy            # Review
 /springfield:meta-ralph "task.md"      # Infinite improvement loop
@@ -558,7 +560,7 @@ Key terms used in Springfield:
 - **Kickback**: When Comic Book Guy identifies issues and routes the task back to Lisa, Frink, or Ralph for fixes
 - **Debate Loop**: Professor Frink's internal process where he creates a plan that Principal Skinner reviews for complex tasks
 - **Completion Signal**: The `completion.md` file created by Ralph when implementation is finished
-- **SIMPLE vs COMPLEX**: Mayor Quimby's decision - SIMPLE tasks skip the debate loop, COMPLEX tasks go through Frink → Skinner → Frink
+- **SIMPLE vs COMPLEX**: Mayor Quimby's decision - SIMPLE tasks skip the debate loop and Martin, COMPLEX tasks go through Frink → Skinner → Frink → Martin
 - **State.json**: The structured session state file tracking progress, phases, and transitions
 - **Chat.md**: A communication channel where users can send messages to characters during execution
 - **Scratchpad.md**: Ralph's working notes file, updated each iteration to track progress
@@ -584,7 +586,7 @@ Think of it like Ralph at the nuclear power plant - fun for experimentation, ris
 
 Timing depends on task complexity:
 - **SIMPLE tasks**: 1-3 minutes (Lisa → Quimby → Ralph → Comic Book Guy)
-- **COMPLEX tasks**: 5-15 minutes (adds Frink/Skinner debate loop)
+- **COMPLEX tasks**: 5-15 minutes (adds Frink/Skinner debate loop + Martin's documentation)
 - **Large implementations**: Can take 30-60+ minutes depending on the task
 
 Ralph iterates until the task is complete (creates `completion.md`). You can stop the workflow at any time with Ctrl+C.

@@ -38,6 +38,14 @@
       "reviewed": false,
       "output_file": "review.md"
     },
+    "martin": {
+      "status": "pending",
+      "start_time": null,
+      "end_time": null,
+      "work_item_type": null,
+      "work_item_id": null,
+      "output_file": null
+    },
     "ralph": {
       "status": "pending",
       "start_time": null,

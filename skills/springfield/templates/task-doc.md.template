@@ -1,0 +1,76 @@
+---
+$schema: "https://docs.oasis-open.org/dita/v1.3/errata02/os/complete/part3-all-inclusive/xsd/task.xsd"
+type: task
+id: {{WORK_ITEM_ID}}
+status: planning
+phase: ready
+created: {{CREATED_DATE}}
+updated: {{UPDATED_DATE}}
+session: {{SESSION_ID}}
+author: Martin Prince
+---
+
+# Task: {{TASK_DESCRIPTION}}
+
+*"I've applied the highest academic standards to this task documentation!"* - Martin Prince
+
+## Task Information
+- **Work Item ID**: {{WORK_ITEM_ID}}
+- **Type**: task
+- **Session**: {{SESSION_ID}}
+- **Complexity**: SIMPLE
+- **Created**: {{CREATED_DATE}}
+- **Author**: Martin Prince
+
+## Description & Context
+
+### Task Overview
+{{TASK_OVERVIEW}}
+
+### Background
+{{BACKGROUND}}
+
+### Why This Matters
+{{WHY_MATTERS}}
+
+## Acceptance Criteria
+
+{{ACCEPTANCE_CRITERIA}}
+
+## Implementation Notes
+
+*Reference: [Professor Frink's Plan](.springfield/{{SESSION_ID}}/prompt.md)*
+
+### Key Steps
+{{KEY_STEPS}}
+
+### Files to Modify
+{{FILES_TO_MODIFY}}
+
+### Dependencies
+{{DEPENDENCIES}}
+
+### Potential Gotchas
+{{POTENTIAL_GOTCHAS}}
+
+## Testing Notes
+
+### How to Test
+{{HOW_TO_TEST}}
+
+### Expected Behavior
+{{EXPECTED_BEHAVIOR}}
+
+### Edge Cases
+{{EDGE_CASES}}
+
+## References
+
+- Research: `.springfield/{{SESSION_ID}}/research.md`
+- Implementation Plan: `.springfield/{{SESSION_ID}}/prompt.md`
+- Decision Record: `.springfield/{{SESSION_ID}}/decision.txt`
+- Work Item State: `docs/planning/tasks/{{WORK_ITEM_ID}}/state.yaml`
+
+---
+
+*"This task is well-defined and ready for implementation! I've earned an A+ on this documentation!"* - Martin Prince
