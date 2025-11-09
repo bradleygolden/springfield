@@ -5,6 +5,14 @@ All notable changes to Springfield will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.3] - 2025-11-09
+
+### Fixed
+- Frink's script now correctly transitions to Martin phase instead of bypassing to Ralph
+- Fixed both SIMPLE path (line 188) and post-Skinner COMPLEX path (line 143)
+- Added Skinner's transition recording to state.json for better workflow tracking
+- Martin's phase is now properly captured in state transitions for all workflows
+
 ## [1.3.0] - 2025-11-08
 
 ### Added
