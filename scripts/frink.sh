@@ -140,7 +140,7 @@ FRINK_PROMPT
     exit 1
   fi
 
-  NEXT_PHASE="ralph"
+  NEXT_PHASE="martin"
 
 else
   echo "First invocation - creating plan based on complexity: $COMPLEXITY, hoyvin-mayvin!"
