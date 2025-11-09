@@ -208,10 +208,16 @@ graph TD
 
     FrinkComplex --> |Proposer vs Counter| Consensus{Agents Agree?}
     Consensus --> |No| FrinkComplex
-    Consensus --> |Yes| FrinkDone[📝 prompt.md]
+    Consensus --> |Yes| Skinner[🏫 Skinner: Review]
 
-    FrinkSimple --> |prompt.md| Ralph[🖍️ Ralph: Implement Loop]
-    FrinkDone --> Ralph
+    Skinner --> |Approved| FrinkRevised[🔬 Frink: Revised Plan]
+    Skinner --> |Needs Work| FrinkComplex
+
+    FrinkRevised --> |prompt.md| Martin[📋 Martin: PRD]
+    FrinkSimple --> |prompt.md| MartinSimple[📋 Martin: doc.md]
+
+    Martin --> |prd.md| Ralph[🖍️ Ralph: Implement Loop]
+    MartinSimple --> |doc.md| Ralph
 
     Ralph --> |completion.md| ComicBook[💬 Comic Book Guy: QA]
 
@@ -227,6 +233,10 @@ graph TD
     style Quimby fill:#D8BFD8,stroke:#333,color:#000
     style FrinkSimple fill:#B0E0E6,stroke:#333,color:#000
     style FrinkComplex fill:#B0E0E6,stroke:#333,color:#000
+    style FrinkRevised fill:#B0E0E6,stroke:#333,color:#000
+    style Skinner fill:#F0E68C,stroke:#333,color:#000
+    style Martin fill:#E6E6FA,stroke:#333,color:#000
+    style MartinSimple fill:#E6E6FA,stroke:#333,color:#000
     style Ralph fill:#FFB6C1,stroke:#333,color:#000
     style ComicBook fill:#98FB98,stroke:#333,color:#000
     style Done fill:#90EE90,stroke:#333,color:#000
