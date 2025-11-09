@@ -234,6 +234,37 @@ graph TD
     linkStyle default stroke:#fff,stroke-width:2px
 ```
 
+### Martin's Prospective Documentation
+
+Before Ralph implements anything, Martin Prince creates prospective documentation that guides the implementation. This ensures Ralph has clear requirements and acceptance criteria to follow.
+
+**What Martin creates:**
+
+- **COMPLEX tasks**: Full PRD (Product Requirements Document) in `/docs/planning/{type}/{id}/prd.md`
+  - Requirements and acceptance criteria
+  - Implementation notes and guidance
+  - Test plan requirements
+  - Example: OAuth2 refactor gets detailed security requirements before Ralph starts coding
+
+- **SIMPLE tasks**: Lightweight `doc.md` with task overview
+  - Quick reference for Ralph
+  - Basic implementation guidance
+  - Less overhead for straightforward tasks
+
+**How it helps Ralph:**
+
+Ralph reads Martin's documentation during implementation and follows the requirements step-by-step. Comic Book Guy later validates Ralph's work against Martin's PRD to ensure all acceptance criteria are met.
+
+**Example workflow:**
+1. Lisa researches the codebase
+2. Mayor Quimby decides complexity
+3. Frink creates implementation plan (COMPLEX tasks also get Skinner review)
+4. **Martin writes the PRD/documentation** ← Planning happens here!
+5. Ralph implements following Martin's requirements
+6. Comic Book Guy validates against Martin's acceptance criteria
+
+This planning-before-implementation approach improves code quality and reduces rework!
+
 ## Requirements
 
 - Claude Code CLI
