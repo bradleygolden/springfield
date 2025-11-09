@@ -246,7 +246,7 @@ echo ""
 
 if ! claude \
   --dangerously-skip-permissions \
-  --output-format=stream-json \
+  --output-format=text \
   --verbose \
   < "$TEMP_FILE" > "$OUTPUT_FILE"; then
   echo "❌ Error: Claude command failed to generate documentation" >&2
