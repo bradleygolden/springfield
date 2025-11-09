@@ -185,7 +185,7 @@ FRINK_PROMPT
       exit 1
     fi
 
-    NEXT_PHASE="ralph"
+    NEXT_PHASE="martin"
 
     TMP_STATE=$(mktemp)
     jq '.phases.skinner.status = "skipped"' "$STATE_FILE" > "$TMP_STATE"
