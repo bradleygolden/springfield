@@ -131,7 +131,7 @@ if [ -f "$CHAT_FILE" ]; then
 fi
 
 echo "🔍 Determining work item type..."
-COMPLEXITY=$(cat "$DECISION_FILE" | grep -i "SIMPLE\|COMPLEX" | head -1 || echo "SIMPLE")
+COMPLEXITY=$(cat "$DECISION_FILE" | grep -oE "SIMPLE|COMPLEX" | head -1 || echo "SIMPLE")
 TASK_DESC=$(cat "$TASK_FILE")
 
 echo "📋 Complexity: $COMPLEXITY"

@@ -1,0 +1,20 @@
+type: feature
+id: 11-08-2025-add-martin-documentation
+status: planning
+phase: design
+complexity: COMPLEX
+created: 2025-11-08
+updated: 2025-11-08
+session:
+  id: 11-08-2025-add-martin-documentation
+  path: .springfield/11-08-2025-add-martin-documentation/
+documentation:
+  primary: prd.md
+  session_research: .springfield/11-08-2025-add-martin-documentation/research.md
+  session_plan: .springfield/11-08-2025-add-martin-documentation/prompt.md
+workflow:
+  created_by: martin
+  implements_by: ralph
+  validated_by: comic-book-guy
+ready_for_implementation: true
+blocking_issues: []
