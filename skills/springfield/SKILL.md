@@ -24,6 +24,7 @@ You've activated the Springfield autonomous workflow orchestrator! This skill wi
 - Research your task thoroughly (Lisa)
 - Assess complexity (Mayor Quimby)
 - Create implementation plans (Professor Frink, reviewed by Principal Skinner for complex tasks)
+- Generate comprehensive documentation (Martin Prince)
 - Implement iteratively (Ralph)
 - Validate quality (Comic Book Guy)
 
@@ -68,7 +69,7 @@ Mayor Quimby reviews Lisa's research and makes an executive decision: SIMPLE or 
 Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/frink.sh SESSION_DIR`
 
 Professor Frink creates the implementation plan using scientific methodology, glavin!
-- SIMPLE tasks: Creates `prompt.md` directly, goes to Ralph
+- SIMPLE tasks: Creates `prompt.md` directly, goes to Martin
 - COMPLEX tasks: Creates `plan-v1.md`, sends to Skinner for review
 
 **Output**: `plan-v1.md` (complex) or `prompt.md` (simple)
@@ -81,6 +82,21 @@ Skinner reviews Frink's plan with his strict, by-the-book standards. Points out 
 After review, Frink is invoked again to incorporate feedback into final `prompt.md`.
 
 **Output**: `review.md`
+
+### Phase: Martin Prince (Documentation)
+Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/martin.sh SESSION_DIR`
+
+Martin creates prospective documentation BEFORE implementation! He's thorough and academic:
+- Determines work item type (initiative, feature, task, or bug)
+- Creates comprehensive PRDs for COMPLEX work
+- Creates lightweight docs for SIMPLE work
+- Maintains `/docs/planning/{type}/{work-item-id}/` structure
+- Generates `state.yaml` with work item metadata
+- Answers @martin questions in chat.md
+
+**Inputs**: `research.md`, `decision.txt`, `prompt.md`, `task.txt`
+
+**Outputs**: `/docs/planning/{type}/{id}/[prd.md|doc.md]`, `/docs/planning/{type}/{id}/state.yaml`
 
 ### Phase: Ralph (Implement)
 Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/ralph.sh SESSION_DIR`
@@ -110,11 +126,11 @@ If workflow reaches status "blocked", escalate to user with details from `chat.m
 ## Workflow State Machine
 
 ```
-lisa → quimby → frink → [skinner → frink] → ralph → comic-book-guy
-                         (complex only)                    ↓
-                                                    APPROVED ✓
-                                                    KICK_BACK → (lisa|frink|ralph)
-                                                    ESCALATE → USER
+lisa → quimby → frink → [skinner → frink] → martin → ralph → comic-book-guy
+                         (complex only)                             ↓
+                                                             APPROVED ✓
+                                                             KICK_BACK → (lisa|frink|ralph)
+                                                             ESCALATE → USER
 ```
 
 ## Error Handling
@@ -178,6 +194,7 @@ When this skill is invoked, execute the following orchestration logic:
      - **quimby**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/quimby.sh SESSION_DIR`
      - **frink**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/frink.sh SESSION_DIR`
      - **skinner**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/skinner.sh SESSION_DIR`, then invoke frink again
+     - **martin**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/martin.sh SESSION_DIR`
      - **ralph**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/ralph.sh SESSION_DIR` (runs in background)
      - **comic-book-guy**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/comic-book-guy.sh SESSION_DIR`, handle verdict
    - Sleep 2 seconds between phases
