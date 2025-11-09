@@ -1,6 +1,6 @@
 # Springfield Plugin
 
-[![Version](https://img.shields.io/badge/version-1.3.0-blue.svg)](https://github.com/bradleygolden/springfield)
+[![Version](https://img.shields.io/badge/version-1.3.2-blue.svg)](https://github.com/bradleygolden/springfield)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)]()
 
@@ -208,10 +208,16 @@ graph TD
 
     FrinkComplex --> |Proposer vs Counter| Consensus{Agents Agree?}
     Consensus --> |No| FrinkComplex
-    Consensus --> |Yes| FrinkDone[📝 prompt.md]
+    Consensus --> |Yes| Skinner[🏫 Skinner: Review]
 
-    FrinkSimple --> |prompt.md| Ralph[🖍️ Ralph: Implement Loop]
-    FrinkDone --> Ralph
+    Skinner --> |Approved| FrinkRevised[🔬 Frink: Revised Plan]
+    Skinner --> |Needs Work| FrinkComplex
+
+    FrinkRevised --> |prompt.md| Martin[📋 Martin: PRD]
+    FrinkSimple --> |prompt.md| MartinSimple[📋 Martin: doc.md]
+
+    Martin --> |prd.md| Ralph[🖍️ Ralph: Implement Loop]
+    MartinSimple --> |doc.md| Ralph
 
     Ralph --> |completion.md| ComicBook[💬 Comic Book Guy: QA]
 
@@ -227,12 +233,47 @@ graph TD
     style Quimby fill:#D8BFD8,stroke:#333,color:#000
     style FrinkSimple fill:#B0E0E6,stroke:#333,color:#000
     style FrinkComplex fill:#B0E0E6,stroke:#333,color:#000
+    style FrinkRevised fill:#B0E0E6,stroke:#333,color:#000
+    style Skinner fill:#F0E68C,stroke:#333,color:#000
+    style Martin fill:#E6E6FA,stroke:#333,color:#000
+    style MartinSimple fill:#E6E6FA,stroke:#333,color:#000
     style Ralph fill:#FFB6C1,stroke:#333,color:#000
     style ComicBook fill:#98FB98,stroke:#333,color:#000
     style Done fill:#90EE90,stroke:#333,color:#000
 
     linkStyle default stroke:#fff,stroke-width:2px
 ```
+
+### Martin's Prospective Documentation
+
+Before Ralph implements anything, Martin Prince creates prospective documentation that guides the implementation. This ensures Ralph has clear requirements and acceptance criteria to follow.
+
+**What Martin creates:**
+
+- **COMPLEX tasks**: Full PRD (Product Requirements Document) in `/docs/planning/{type}/{id}/prd.md`
+  - Requirements and acceptance criteria
+  - Implementation notes and guidance
+  - Test plan requirements
+  - Example: OAuth2 refactor gets detailed security requirements before Ralph starts coding
+
+- **SIMPLE tasks**: Lightweight `doc.md` with task overview
+  - Quick reference for Ralph
+  - Basic implementation guidance
+  - Less overhead for straightforward tasks
+
+**How it helps Ralph:**
+
+Ralph reads Martin's documentation during implementation and follows the requirements step-by-step. Comic Book Guy later validates Ralph's work against Martin's PRD to ensure all acceptance criteria are met.
+
+**Example workflow:**
+1. Lisa researches the codebase
+2. Mayor Quimby decides complexity
+3. Frink creates implementation plan (COMPLEX tasks also get Skinner review)
+4. **Martin writes the PRD/documentation** ← Planning happens here!
+5. Ralph implements following Martin's requirements
+6. Comic Book Guy validates against Martin's acceptance criteria
+
+This planning-before-implementation approach improves code quality and reduces rework!
 
 ## Requirements
 

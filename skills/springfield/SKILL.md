@@ -86,13 +86,39 @@ After review, Frink is invoked again to incorporate feedback into final `prompt.
 ### Phase: Martin Prince (Documentation)
 Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/martin.sh SESSION_DIR`
 
-Martin creates prospective documentation BEFORE implementation! He's thorough and academic:
-- Determines work item type (initiative, feature, task, or bug)
-- Creates comprehensive PRDs for COMPLEX work
-- Creates lightweight docs for SIMPLE work
-- Maintains `/docs/planning/{type}/{work-item-id}/` structure
-- Generates `state.yaml` with work item metadata
-- Answers @martin questions in chat.md
+Martin creates prospective documentation BEFORE Ralph implements! He's the perfectionist student who plans everything in advance.
+
+**Purpose**: Martin produces planning documents that guide Ralph's implementation and serve as acceptance criteria for Comic Book Guy's validation. Every task flows through Martin - both COMPLEX and SIMPLE.
+
+**Work Item Type Determination**:
+Martin analyzes the task and categorizes it into one of four types:
+- **initiatives**: Large, multi-feature efforts (e.g., "add authentication system")
+- **features**: New functionality or capabilities (e.g., "add dark mode toggle")
+- **tasks**: Improvements, refactoring, or maintenance (e.g., "update documentation")
+- **bugs**: Defects and fixes (e.g., "fix login error")
+
+**COMPLEX Path** (initiatives/features after Skinner review):
+- Creates comprehensive Product Requirements Document (PRD)
+- Includes: Overview, Requirements, Acceptance Criteria, Implementation Notes
+- Full structured planning in `/docs/planning/{type}/{work-item-id}/prd.md`
+- Detailed enough for Ralph to follow step-by-step
+- Serves as validation checklist for Comic Book Guy
+
+**SIMPLE Path** (tasks/bugs without Skinner review):
+- Creates lightweight `doc.md` with task overview
+- Includes: Task description, key points, basic guidance
+- Stored in `/docs/planning/{type}/{work-item-id}/doc.md`
+- Concise but still provides Ralph clear direction
+
+**Output Structure**:
+- Planning directory: `/docs/planning/{type}/{work-item-id}/`
+- Documentation file: `prd.md` (COMPLEX) or `doc.md` (SIMPLE)
+- Metadata file: `state.yaml` (work item ID, type, status)
+- All created BEFORE Ralph begins implementation
+
+**Connection to Ralph**: Ralph reads Martin's documentation during implementation. Martin's requirements become Ralph's checklist. Martin's acceptance criteria become Comic Book Guy's validation rules.
+
+**Interactive Features**: Answers @martin questions in chat.md for clarification during workflow.
 
 **Inputs**: `research.md`, `decision.txt`, `prompt.md`, `task.txt`
 
