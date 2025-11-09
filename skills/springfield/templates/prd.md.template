@@ -1,0 +1,128 @@
+---
+$schema: "https://docs.oasis-open.org/dita/v1.3/errata02/os/complete/part3-all-inclusive/xsd/concept.xsd"
+type: {{WORK_ITEM_TYPE}}
+id: {{WORK_ITEM_ID}}
+status: planning
+phase: design
+created: {{CREATED_DATE}}
+updated: {{UPDATED_DATE}}
+session: {{SESSION_ID}}
+author: Martin Prince
+---
+
+# Product Requirements Document: {{TASK_DESCRIPTION}}
+
+*"I've earned an A+ on this comprehensive documentation!"* - Martin Prince
+
+## Document Information
+- **Work Item ID**: {{WORK_ITEM_ID}}
+- **Type**: {{WORK_ITEM_TYPE}}
+- **Session**: {{SESSION_ID}}
+- **Complexity**: COMPLEX
+- **Created**: {{CREATED_DATE}}
+- **Author**: Martin Prince
+
+## Problem Statement & Goals
+
+### Problem Description
+{{PROBLEM_DESCRIPTION}}
+
+### Goals & Objectives
+{{GOALS_OBJECTIVES}}
+
+### Success Criteria
+{{SUCCESS_CRITERIA}}
+
+## Research Findings
+
+*Reference: [Lisa's Research](.springfield/{{SESSION_ID}}/research.md)*
+
+### Key Insights
+{{RESEARCH_INSIGHTS}}
+
+### Existing Patterns
+{{EXISTING_PATTERNS}}
+
+### Dependencies
+{{DEPENDENCIES}}
+
+## Technical Design
+
+*Reference: [Professor Frink's Plan](.springfield/{{SESSION_ID}}/prompt.md)*
+
+### Architecture Overview
+{{ARCHITECTURE_OVERVIEW}}
+
+### Component Design
+{{COMPONENT_DESIGN}}
+
+### Data Models
+{{DATA_MODELS}}
+
+### API Specifications
+{{API_SPECIFICATIONS}}
+
+### Technology Stack
+{{TECHNOLOGY_STACK}}
+
+## Implementation Plan
+
+### Phase 1: Foundation
+{{PHASE_1_TASKS}}
+
+### Phase 2: Core Functionality
+{{PHASE_2_TASKS}}
+
+### Phase 3: Integration
+{{PHASE_3_TASKS}}
+
+### Phase 4: Polish & Optimization
+{{PHASE_4_TASKS}}
+
+## Testing Strategy
+
+### Unit Tests
+{{UNIT_TESTS}}
+
+### Integration Tests
+{{INTEGRATION_TESTS}}
+
+### End-to-End Tests
+{{E2E_TESTS}}
+
+### Test Coverage Goals
+{{COVERAGE_GOALS}}
+
+## Risks & Dependencies
+
+### Technical Risks
+{{TECHNICAL_RISKS}}
+
+### Dependencies
+{{DEPENDENCIES_LIST}}
+
+### Mitigation Strategies
+{{MITIGATION_STRATEGIES}}
+
+## Timeline & Milestones
+
+### Estimated Duration
+{{ESTIMATED_DURATION}}
+
+### Key Milestones
+{{KEY_MILESTONES}}
+
+## Acceptance Criteria
+
+{{ACCEPTANCE_CRITERIA}}
+
+## References
+
+- Research: `.springfield/{{SESSION_ID}}/research.md`
+- Implementation Plan: `.springfield/{{SESSION_ID}}/prompt.md`
+- Decision Record: `.springfield/{{SESSION_ID}}/decision.txt`
+- Work Item State: `docs/planning/{{WORK_ITEM_TYPE}}/{{WORK_ITEM_ID}}/state.yaml`
+
+---
+
+*"This documentation is thorough, impeccable, and academically rigorous! According to best practices, this PRD achieves the highest standards!"* - Martin Prince

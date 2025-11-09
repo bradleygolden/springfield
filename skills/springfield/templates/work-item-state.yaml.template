@@ -1,0 +1,20 @@
+type: {{WORK_ITEM_TYPE}}
+id: {{WORK_ITEM_ID}}
+status: planning
+phase: {{PHASE}}
+complexity: {{COMPLEXITY}}
+created: {{CREATED_DATE}}
+updated: {{UPDATED_DATE}}
+session:
+  id: {{SESSION_ID}}
+  path: .springfield/{{SESSION_ID}}/
+documentation:
+  primary: {{PRIMARY_DOC}}
+  session_research: .springfield/{{SESSION_ID}}/research.md
+  session_plan: .springfield/{{SESSION_ID}}/prompt.md
+workflow:
+  created_by: martin
+  implements_by: ralph
+  validated_by: comic-book-guy
+ready_for_implementation: true
+blocking_issues: []

@@ -1,0 +1,103 @@
+---
+$schema: "https://docs.oasis-open.org/dita/v1.3/errata02/os/complete/part3-all-inclusive/xsd/troubleshooting.xsd"
+type: bug
+id: {{WORK_ITEM_ID}}
+status: planning
+phase: ready
+created: {{CREATED_DATE}}
+updated: {{UPDATED_DATE}}
+session: {{SESSION_ID}}
+author: Martin Prince
+---
+
+# Bug Fix: {{TASK_DESCRIPTION}}
+
+*"I've documented this bug with scientific precision!"* - Martin Prince
+
+## Bug Information
+- **Work Item ID**: {{WORK_ITEM_ID}}
+- **Type**: bug
+- **Session**: {{SESSION_ID}}
+- **Complexity**: SIMPLE
+- **Created**: {{CREATED_DATE}}
+- **Author**: Martin Prince
+
+## Bug Description
+
+### Summary
+{{BUG_SUMMARY}}
+
+### Expected Behavior
+{{EXPECTED_BEHAVIOR}}
+
+### Actual Behavior
+{{ACTUAL_BEHAVIOR}}
+
+### Impact
+{{IMPACT}}
+
+## Reproduction Steps
+
+{{REPRODUCTION_STEPS}}
+
+## Root Cause Analysis
+
+*Reference: [Lisa's Research](.springfield/{{SESSION_ID}}/research.md)*
+
+### Investigation Findings
+{{INVESTIGATION_FINDINGS}}
+
+### Root Cause
+{{ROOT_CAUSE}}
+
+### Why This Happened
+{{WHY_HAPPENED}}
+
+## Proposed Fix
+
+*Reference: [Professor Frink's Plan](.springfield/{{SESSION_ID}}/prompt.md)*
+
+### Solution Overview
+{{SOLUTION_OVERVIEW}}
+
+### Files to Modify
+{{FILES_TO_MODIFY}}
+
+### Implementation Steps
+{{IMPLEMENTATION_STEPS}}
+
+### Side Effects & Risks
+{{SIDE_EFFECTS}}
+
+## Testing Plan
+
+### Test Cases
+{{TEST_CASES}}
+
+### Verification Steps
+{{VERIFICATION_STEPS}}
+
+### Regression Testing
+{{REGRESSION_TESTING}}
+
+## Impact Assessment
+
+### Users Affected
+{{USERS_AFFECTED}}
+
+### Severity
+{{SEVERITY}}
+
+### Urgency
+{{URGENCY}}
+
+## References
+
+- Research: `.springfield/{{SESSION_ID}}/research.md`
+- Implementation Plan: `.springfield/{{SESSION_ID}}/prompt.md`
+- Decision Record: `.springfield/{{SESSION_ID}}/decision.txt`
+- Work Item State: `docs/planning/bugs/{{WORK_ITEM_ID}}/state.yaml`
+
+---
+
+*"This bug analysis is comprehensive and impeccable! According to best practices, we can now fix this with confidence!"* - Martin Prince
