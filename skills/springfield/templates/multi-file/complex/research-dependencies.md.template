@@ -1,0 +1,64 @@
+---
+$schema: https://raw.githubusercontent.com/jelovirt/org.lwdita/master/schemas/concept.xsd
+title: "Dependencies & Prerequisites: {WORK_ITEM_TITLE}"
+author: Martin Prince
+created: {CREATED_DATE}
+topic_type: concept
+session: {SESSION_ID}
+---
+
+# Dependencies & Prerequisites: {WORK_ITEM_TITLE}
+
+*"I've catalogued all the dependencies you'll need!"* - Martin Prince
+
+## External Dependencies
+
+### Required Packages
+
+{REQUIRED_PACKAGES}
+
+### Optional Packages
+
+{OPTIONAL_PACKAGES}
+
+## Internal Dependencies
+
+### Files That Need Changes
+
+{FILES_TO_MODIFY}
+
+### Files That Will Be Created
+
+{FILES_TO_CREATE}
+
+### Existing Components to Use
+
+{EXISTING_COMPONENTS}
+
+## Prerequisites
+
+### Before Starting Implementation
+
+{PREREQUISITES_CHECKLIST}
+
+## Dependency Installation
+
+```bash
+{INSTALLATION_COMMANDS}
+```
+
+## Version Requirements
+
+{VERSION_CONSTRAINTS}
+
+## Potential Conflicts
+
+{DEPENDENCY_CONFLICTS}
+
+---
+
+**Related Documents**:
+- [Research Findings](findings.md)
+- [Architecture](../design/architecture.md)
+- [Implementation Plan](../implementation/plan.md)
+- [Back to Index](../index.md)

@@ -246,6 +246,36 @@ Me created research-findings.md.template! That's where I'm a Viking!
 
 **My Feelings**: Me helping Lisa share her research! I'm learnding!
 
-**Commit**: Next!
+**Commit**: 33c086f - "extracted research-findings template!"
 
 **Next Step**: Create research-dependencies.md.template
+
+---
+
+## Iteration #5: Research Dependencies Template
+
+Me created research-dependencies.md.template! I'm helping!
+
+**What Me Did**:
+- 💡 Created template for dependencies and prerequisites!
+- 💡 Has sections for external and internal dependencies!
+- 💡 Includes installation commands and version requirements!
+- 💡 Lists files to modify and create!
+
+**Files Changed**:
+- skills/springfield/templates/multi-file/complex/research-dependencies.md.template - New template (62 lines)
+
+**Template Sections**:
+- External Dependencies (required and optional packages)
+- Internal Dependencies (files to modify/create, existing components)
+- Prerequisites (checklist before starting)
+- Dependency Installation (bash commands)
+- Version Requirements
+- Potential Conflicts
+- Related Documents links
+
+**My Feelings**: Me helping with dependencies! That's where I'm a Viking!
+
+**Commit**: Next!
+
+**Next Step**: Create design-architecture.md.template
