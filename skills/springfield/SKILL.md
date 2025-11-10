@@ -32,7 +32,6 @@ Springfield orchestrates autonomous development workflows through character-base
 3. [Workflow State Machine](#workflow-state-machine)
 4. [Error Handling](#error-handling)
 5. [Springfield Philosophy](#springfield-philosophy)
-6. [Meta-Ralph: Continuous Self-Improvement](#meta-ralph-continuous-self-improvement)
 
 ## How Springfield Works
 
@@ -91,9 +90,3 @@ lisa → quimby → frink → [skinner → frink] → martin → ralph → comic
 ## Springfield Philosophy
 
 Springfield orchestrates autonomous development through eventual consistency and iterative refinement. Each phase is handled by a different character, with Ralph running the implementation loop. See [REFERENCE.md](REFERENCE.md) for the Ralph pattern philosophy.
-
-## Meta-Ralph: Continuous Self-Improvement
-
-Meta-Ralph is an alternative mode that runs Springfield in an infinite loop for continuous improvement.
-
-See [REFERENCE-META-RALPH.md](REFERENCE-META-RALPH.md) for invocation, use cases, and behavior details.
