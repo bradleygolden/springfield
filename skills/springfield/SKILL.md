@@ -1,6 +1,6 @@
 ---
 name: springfield
-description: Activate when springfield is mentioned by the user. Springfield refers to this skill which knows how to orchestrate autonomous workflows effectively.
+description: Orchestrates autonomous development workflows through specialized character-based phases - research (Lisa), complexity assessment (Mayor Quimby), planning (Professor Frink), documentation (Martin Prince), implementation (Ralph), and quality validation (Comic Book Guy). Handles multi-step development tasks end-to-end with automatic error recovery, kickback routing, and iterative refinement. Use for complex feature development, bug fixes requiring investigation, or any task benefiting from structured research-plan-implement-validate cycles.
 allowed-tools:
   - Bash
   - Task
@@ -16,138 +16,60 @@ allowed-tools:
 
 *"I'm learnding!"* - Ralph Wiggum
 
-**IMPORTANT: Throughout orchestration, narrate progress in a fun, Springfield-themed way.** You're coordinating the whole town to work on this task. Use phrases like "Lisa's heading to the library!", "The Mayor's making a decision!", "Professor Frink's in his laboratory!", "Ralph's got his crayons out!", and "Comic Book Guy is judging...". Make it feel like you're watching the characters work. Keep it entertaining while staying functional.
+Springfield orchestrates autonomous development workflows through character-based phases: research, planning, documentation, implementation, and validation.
 
-## Welcome to Springfield!
+## Table of Contents
 
-You've activated the Springfield autonomous workflow orchestrator! This skill will:
-- Research your task thoroughly (Lisa)
-- Assess complexity (Mayor Quimby)
-- Create implementation plans (Professor Frink, reviewed by Principal Skinner for complex tasks)
-- Generate comprehensive documentation (Martin Prince)
-- Implement iteratively (Ralph)
-- Validate quality (Comic Book Guy)
+1. [How Springfield Works](#how-springfield-works)
+2. [Workflow Phases](#workflow-phases)
+   - [Phase: Lisa (Research)](#phase-lisa-research)
+   - [Phase: Mayor Quimby (Decide Complexity)](#phase-mayor-quimby-decide-complexity)
+   - [Phase: Professor Frink (Plan)](#phase-professor-frink-plan)
+   - [Phase: Principal Skinner (Review)](#phase-principal-skinner-review)
+   - [Phase: Martin Prince (Documentation)](#phase-martin-prince-documentation)
+   - [Phase: Ralph (Implement)](#phase-ralph-implement)
+   - [Phase: Comic Book Guy (QA)](#phase-comic-book-guy-qa)
+3. [Workflow State Machine](#workflow-state-machine)
+4. [Error Handling](#error-handling)
+5. [Springfield Philosophy](#springfield-philosophy)
+6. [Meta-Ralph: Continuous Self-Improvement](#meta-ralph-continuous-self-improvement)
 
-All automatically, end-to-end!
+## How Springfield Works
 
-## Step 1: Understand the Task
+Springfield orchestrates development through a CLI-controlled workflow. All orchestration flows through the Springfield CLI script.
 
-First, let me infer what task you want Springfield to work on from our recent conversation. If it's unclear, I'll ask you directly.
+**Workflow:**
+1. Infer task from conversation (use AskUserQuestion if unclear)
+2. Initialize session: `${CLAUDE_PLUGIN_ROOT}/scripts/springfield.sh init "TASK_DESCRIPTION"`
+3. Run autonomous workflow: `${CLAUDE_PLUGIN_ROOT}/scripts/springfield.sh auto`
+4. Monitor output and report results
 
-## Step 2: Session Initialization
+The CLI handles all phase execution, state management, and error handling automatically.
 
-Create session directory: `.springfield/MM-DD-YYYY-task-name/`
+## Workflow Phases
 
-Initialize session files:
-- `state.json` - Tracks workflow phases, transitions, kickbacks
-- `chat.md` - Communication channel for user messages to characters
-- `task.txt` - Task description
-
-## Step 3: Orchestration Loop
-
-Execute phases in sequence, monitoring state:
+The CLI executes these phases in sequence:
 
 ### Phase: Lisa (Research)
-Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/lisa.sh SESSION_DIR`
-
-Lisa thoroughly researches the codebase. She investigates:
-- Existing implementations and patterns
-- Related files and dependencies
-- Technical constraints and requirements
-- Project structure and conventions
-
-**Output**: `research.md`
+Researches the codebase to understand task context and identify relevant patterns. See [REFERENCE-LISA.md](REFERENCE-LISA.md).
 
 ### Phase: Mayor Quimby (Decide Complexity)
-Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/quimby.sh SESSION_DIR`
-
-Mayor Quimby reviews Lisa's research and makes an executive decision: SIMPLE or COMPLEX?
-
-**Output**: `decision.txt`
+Reviews research and decides: SIMPLE or COMPLEX? See [REFERENCE-QUIMBY.md](REFERENCE-QUIMBY.md).
 
 ### Phase: Professor Frink (Plan)
-Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/frink.sh SESSION_DIR`
+Creates implementation plans using scientific methodology. See [REFERENCE-FRINK.md](REFERENCE-FRINK.md).
 
-Professor Frink creates the implementation plan using scientific methodology, glavin!
-- SIMPLE tasks: Creates `prompt.md` directly, goes to Martin
-- COMPLEX tasks: Creates `plan-v1.md`, sends to Skinner for review
-
-**Output**: `plan-v1.md` (complex) or `prompt.md` (simple)
-
-### Phase: Principal Skinner (Review) [Complex Tasks Only]
-Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/skinner.sh SESSION_DIR`
-
-Skinner reviews Frink's plan with his strict, by-the-book standards. Points out flaws and demands improvements.
-
-After review, Frink is invoked again to incorporate feedback into final `prompt.md`.
-
-**Output**: `review.md`
+### Phase: Principal Skinner (Review)
+Reviews Frink's plan for complex tasks with strict standards. See [REFERENCE-SKINNER.md](REFERENCE-SKINNER.md).
 
 ### Phase: Martin Prince (Documentation)
-Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/martin.sh SESSION_DIR`
-
-Martin creates prospective documentation BEFORE Ralph implements! He's the perfectionist student who plans everything in advance.
-
-**Purpose**: Martin produces planning documents that guide Ralph's implementation and serve as acceptance criteria for Comic Book Guy's validation. Every task flows through Martin - both COMPLEX and SIMPLE.
-
-**Work Item Type Determination**:
-Martin analyzes the task and categorizes it into one of four types:
-- **initiatives**: Large, multi-feature efforts (e.g., "add authentication system")
-- **features**: New functionality or capabilities (e.g., "add dark mode toggle")
-- **tasks**: Improvements, refactoring, or maintenance (e.g., "update documentation")
-- **bugs**: Defects and fixes (e.g., "fix login error")
-
-**COMPLEX Path** (initiatives/features after Skinner review):
-- Creates comprehensive Product Requirements Document (PRD)
-- Includes: Overview, Requirements, Acceptance Criteria, Implementation Notes
-- Full structured planning in `/docs/planning/{type}/{work-item-id}/prd.md`
-- Detailed enough for Ralph to follow step-by-step
-- Serves as validation checklist for Comic Book Guy
-
-**SIMPLE Path** (tasks/bugs without Skinner review):
-- Creates lightweight `doc.md` with task overview
-- Includes: Task description, key points, basic guidance
-- Stored in `/docs/planning/{type}/{work-item-id}/doc.md`
-- Concise but still provides Ralph clear direction
-
-**Output Structure**:
-- Planning directory: `/docs/planning/{type}/{work-item-id}/`
-- Documentation file: `prd.md` (COMPLEX) or `doc.md` (SIMPLE)
-- Metadata file: `state.yaml` (work item ID, type, status)
-- All created BEFORE Ralph begins implementation
-
-**Connection to Ralph**: Ralph reads Martin's documentation during implementation. Martin's requirements become Ralph's checklist. Martin's acceptance criteria become Comic Book Guy's validation rules.
-
-**Interactive Features**: Answers @martin questions in chat.md for clarification during workflow.
-
-**Inputs**: `research.md`, `decision.txt`, `prompt.md`, `task.txt`
-
-**Outputs**: `/docs/planning/{type}/{id}/[prd.md|doc.md]`, `/docs/planning/{type}/{id}/state.yaml`
+Creates prospective documentation before implementation. See [REFERENCE-MARTIN.md](REFERENCE-MARTIN.md).
 
 ### Phase: Ralph (Implement)
-Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/ralph.sh SESSION_DIR`
-
-Ralph runs the implementation loop! He works iteratively, making small changes, committing progress. Monitors `completion.md` for completion signal.
-
-**Output**: `scratchpad.md` (progress), `completion.md` (when done)
+Runs the implementation loop iteratively with small changes and regular commits. See [REFERENCE-RALPH.md](REFERENCE-RALPH.md).
 
 ### Phase: Comic Book Guy (QA)
-Invokes: `${CLAUDE_PLUGIN_ROOT}/scripts/comic-book-guy.sh SESSION_DIR`
-
-Comic Book Guy validates the implementation. Worst code ever... or is it?
-
-Verdicts:
-- **APPROVED**: Task complete! Success!
-- **KICK_BACK**: Issues found, route back to lisa/frink/ralph (max 2 attempts per target)
-- **ESCALATE**: Too many kickbacks or needs user input
-
-**Output**: `qa-report.md`
-
-## Step 4: Completion
-
-When workflow reaches status "complete", report success and show the completion summary!
-
-If workflow reaches status "blocked", escalate to user with details from `chat.md`.
+Validates implementation against acceptance criteria. Verdicts: APPROVED, KICK_BACK, or ESCALATE. See [REFERENCE-COMIC-BOOK-GUY.md](REFERENCE-COMIC-BOOK-GUY.md).
 
 ## Workflow State Machine
 
@@ -161,10 +83,10 @@ lisa → quimby → frink → [skinner → frink] → martin → ralph → comic
 
 ## Error Handling
 
-- Max 100 orchestration loop iterations (prevents infinite loops)
+- Max 100 orchestration loop iterations (balance: enough for complex workflows with kickbacks, prevents runaway loops)
 - Character scripts exit non-zero → mark failed, write to chat.md
-- Ralph timeout: 60 minutes max
-- Kickback limits: Max 2 per target, then ESCALATE
+- Ralph timeout: 60 minutes max (typical feature implementation timeframe, prevents stuck sessions)
+- Kickback limits: Max 2 per target, then ESCALATE (allows refinement attempts, prevents infinite kickback loops)
 
 ## Springfield Philosophy
 
@@ -172,61 +94,6 @@ Springfield orchestrates autonomous development through eventual consistency and
 
 ## Meta-Ralph: Continuous Self-Improvement
 
-*"I'm gonna loop forever!"*
+Meta-Ralph is an alternative mode that runs Springfield in an infinite loop for continuous improvement.
 
-Meta-Ralph is an alternative mode that runs Springfield in an infinite loop for continuous self-improvement. Based on the original Ralph pattern from [Geoff Huntley's blog](https://ghuntley.com/ralph/).
-
-**When to use Meta-Ralph:**
-- Continuous improvement of the codebase
-- Working on open-ended optimization tasks
-- Iterative refinement until manually stopped
-
-**How it works:**
-1. Takes a prompt string or file path
-2. Runs the prompt through Springfield workflow
-3. Repeats infinitely until stopped (Ctrl+C)
-4. Each iteration builds on previous improvements
-
-**Invocation:**
-```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/meta-ralph.sh "PROMPT"
-# or
-${CLAUDE_PLUGIN_ROOT}/scripts/meta-ralph.sh path/to/prompt-file.md
-```
-
-**Examples:**
-- `meta-ralph.sh "Fix all bugs and improve documentation"`
-- `meta-ralph.sh PROMPT.md`
-
-**Note:** Meta-Ralph runs forever. User must manually stop it (Ctrl+C). Use for tasks that benefit from continuous iteration and eventual consistency.
-
----
-
-## Implementation: Autonomous Orchestrator
-
-When this skill is invoked, execute the following orchestration logic:
-
-1. **Infer or ask for task**: Extract from conversation context using AskUserQuestion if unclear
-2. **Create session directory**: `.springfield/MM-DD-YYYY-sanitized-task-name/`
-3. **Initialize session files**: Copy templates, populate with session metadata
-4. **Create TodoWrite list**: Track orchestration progress
-5. **Main loop** (max 100 iterations):
-   - Read `state.json` to determine current status and next phase
-   - If status is "complete": Report success, show completion.md, EXIT
-   - If status is "blocked": Report escalation, point to chat.md, EXIT
-   - If status is "failed": Report failure, EXIT
-   - Execute next phase (always pass SESSION_DIR as first argument):
-     - **lisa**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/lisa.sh SESSION_DIR`
-     - **quimby**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/quimby.sh SESSION_DIR`
-     - **frink**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/frink.sh SESSION_DIR`
-     - **skinner**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/skinner.sh SESSION_DIR`, then invoke frink again
-     - **martin**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/martin.sh SESSION_DIR`
-     - **ralph**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/ralph.sh SESSION_DIR` (runs in background)
-     - **comic-book-guy**: Bash tool → `${CLAUDE_PLUGIN_ROOT}/scripts/comic-book-guy.sh SESSION_DIR`, handle verdict
-   - Sleep 2 seconds between phases
-   - Update TodoWrite with phase completion
-6. **Handle errors**: Non-zero exit → mark failed, write to chat.md
-7. **Kickback routing**: When Comic Book Guy kicks back, update state and re-run target phase
-8. **Timeout protection**: If iteration >= 100, mark failed and EXIT
-
-Let's get Springfield working!
+See [REFERENCE-META-RALPH.md](REFERENCE-META-RALPH.md) for invocation, use cases, and behavior details.
