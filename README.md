@@ -1,6 +1,6 @@
 # Springfield Plugin
 
-[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](https://github.com/bradleygolden/springfield)
+[![Version](https://img.shields.io/badge/version-1.6.0-blue.svg)](https://github.com/bradleygolden/springfield)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)]()
 
@@ -117,7 +117,6 @@ Springfield runs all phases automatically. Or run them individually:
 Springfield creates a `.springfield/` directory with session folders for each task (format: `MM-DD-YYYY-task-name/`). Inside you'll find:
 
 - `state.json` - Structured session state with schema versioning
-- `chat.md` - Interactive communication with characters
 - `research.md` - Lisa's findings
 - `decision.txt` - SIMPLE or COMPLEX
 - `plan-v1.md` - Frink's initial plan (COMPLEX tasks)
@@ -153,23 +152,6 @@ Springfield uses structured state tracking via `state.json`:
 
 Use `jq` to query session state: `jq '.status' .springfield/*/state.json`
 
-### Chat Interface
-
-Talk to characters during execution via `chat.md`:
-
-```markdown
-**[2025-11-05 14:30:00] RALPH:**
-I'm working on subtask 3! I'm learnding!
-
-User: @ralph please add tests for auth.js
-
-**[2025-11-05 14:32:00] RALPH:**
-I'm adding tests! (re: your message about auth.js)
-That's where I'm a Viking!
-```
-
-Characters check chat.md at phase start and respond if @mentioned (or if no mentions). Ralph checks every 3 iterations.
-
 ### Iteration Behavior
 
 Ralph works iteratively until the task is complete:
@@ -189,7 +171,7 @@ Comic Book Guy routes issues back to appropriate characters:
 - **DESIGN_ISSUE** → Frink (architecture problems)
 - **IMPLEMENTATION_BUG** → Ralph (code bugs)
 
-**Kickback limits**: Max 2 kickbacks per character. After 2, Comic Book Guy escalates to user via chat.md.
+**Kickback limits**: Max 2 kickbacks per character. After 2, Comic Book Guy escalates the issue.
 
 For complex tasks, Professor Frink runs a debate loop where two AI perspectives argue until they reach consensus on the best approach. If task is COMPLEX, Skinner reviews Frink's plan before Ralph implements.
 
@@ -612,11 +594,7 @@ Springfield has built-in quality control:
 
 1. **Comic Book Guy reviews everything** - He'll catch issues and kick back for fixes
 2. **Review qa-report.md** - See detailed feedback on what's wrong
-3. **Use chat.md** - Provide guidance to characters:
-   ```bash
-   echo "@ralph The tests are failing because..." >> .springfield/SESSION/chat.md
-   ```
-4. **Manual review** - Always review Ralph's commits before merging!
+3. **Manual review** - Always review Ralph's commits before merging!
 
 ### Why isn't Springfield activating automatically?
 
@@ -703,14 +681,9 @@ Solutions:
    cat .springfield/SESSION/prompt.md
    ```
 
-2. **Provide guidance via chat.md**:
-   ```bash
-   echo "@ralph Focus on subtask 1 only, skip subtask 3" >> .springfield/SESSION/chat.md
-   ```
+2. **Adjust the plan** - Edit prompt.md to be more specific
 
-3. **Adjust the plan** - Edit prompt.md to be more specific
-
-4. **Start fresh** - Sometimes a new session with clearer requirements works better
+3. **Start fresh** - Sometimes a new session with clearer requirements works better
 
 ## Safety Warning
 

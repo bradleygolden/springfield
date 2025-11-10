@@ -64,12 +64,6 @@ cmd_init() {
   echo "$task_description" > "$session_dir/task.txt"
   log_success "Created task.txt"
 
-  # Initialize chat.md from template
-  if [ -f "$TEMPLATES_DIR/chat.md.template" ]; then
-    cp "$TEMPLATES_DIR/chat.md.template" "$session_dir/chat.md"
-    log_success "Created chat.md"
-  fi
-
   # Initialize state.json from template
   if [ -f "$TEMPLATES_DIR/state.json.template" ]; then
     cp "$TEMPLATES_DIR/state.json.template" "$session_dir/state.json"
@@ -175,7 +169,7 @@ cmd_step() {
   fi
 
   if [ "$status" = "blocked" ]; then
-    log_warn "Workflow is blocked. Check chat.md for details."
+    log_warn "Workflow is blocked. Check state.json for details."
     exit 1
   fi
 
@@ -225,9 +219,7 @@ cmd_auto() {
     fi
 
     if [ "$status" = "blocked" ]; then
-      log_warn "Workflow blocked. Check chat.md:"
-      echo ""
-      cat "$session_dir/chat.md"
+      log_warn "Workflow blocked. Check state.json for details."
       exit 1
     fi
 

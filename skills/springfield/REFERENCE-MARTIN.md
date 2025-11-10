@@ -79,10 +79,6 @@ Ralph reads Martin's documentation during implementation:
 - Martin's acceptance criteria become Comic Book Guy's validation rules
 - Provides clear success criteria
 
-## Interactive Features
-
-Martin answers `@martin` questions in `chat.md` for clarification during workflow.
-
 ## Inputs
 
 - `research.md` (from Lisa)
