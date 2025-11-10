@@ -1,0 +1,16 @@
+index:index.md:concept:Navigation hub and overview
+requirements-problem:requirements/problem.md:concept:Problem statement and current situation
+requirements-goals:requirements/goals.md:concept:Goals and objectives
+requirements-success-criteria:requirements/success-criteria.md:concept:Success criteria and acceptance tests
+research-findings:research/findings.md:concept:Research findings from Lisa
+research-dependencies:research/dependencies.md:concept:Dependencies and prerequisites
+design-architecture:design/architecture.md:reference:System architecture and design
+design-components:design/components.md:reference:Component specifications
+design-data-models:design/data-models.md:reference:Data models and schemas
+implementation-plan:implementation/plan.md:task:Implementation strategy
+implementation-checklist:implementation/checklist.md:task:Step-by-step implementation checklist
+implementation-phases:implementation/phases.md:task:Implementation phases breakdown
+testing-strategy:testing/strategy.md:task:Testing approach and strategy
+testing-test-plan:testing/test-plan.md:task:Detailed test plan
+risks-analysis:risks/analysis.md:troubleshooting:Risk analysis and mitigation
+metadata:metadata.md:concept:Session metadata and summary
