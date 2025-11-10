@@ -9,7 +9,7 @@
       "name": "springfield",
       "source": "./",
       "description": "\"I'm learnding!\" - Multi-phase autonomous workflow where Lisa researches, Frink plans with science, Ralph implements through persistent iteration, and Comic Book Guy critiques. Springfield orchestrates Simpsons characters to autonomously turn your ideas into code.",
-      "version": "1.0.0",
+      "version": "1.4.0",
       "author": {
         "name": "Bradley Golden",
         "url": "https://github.com/bradleygolden"
