@@ -1,0 +1,64 @@
+---
+$schema: https://raw.githubusercontent.com/jelovirt/org.lwdita/master/schemas/concept.xsd
+title: "Success Criteria: {WORK_ITEM_TITLE}"
+author: Martin Prince
+created: {CREATED_DATE}
+topic_type: concept
+session: {SESSION_ID}
+---
+
+# Success Criteria: {WORK_ITEM_TITLE}
+
+*"Let me explain how we'll measure success with precision!"* - Martin Prince
+
+## Acceptance Criteria
+
+{ACCEPTANCE_CRITERIA}
+
+## Technical Validation
+
+{TECHNICAL_VALIDATION}
+
+## User-Facing Outcomes
+
+{USER_OUTCOMES}
+
+## Performance Benchmarks
+
+{PERFORMANCE_METRICS}
+
+## Testing Requirements
+
+{TESTING_REQUIREMENTS}
+
+## Definition of Done
+
+The following must ALL be true to consider this work item complete:
+
+1. {DONE_CRITERION_1}
+2. {DONE_CRITERION_2}
+3. {DONE_CRITERION_3}
+4. All tests passing (see [Test Plan](../testing/test-plan.md))
+5. Documentation updated
+6. Code reviewed and approved
+
+## Validation Checklist
+
+Use this checklist during final validation:
+
+- [ ] All acceptance criteria met
+- [ ] Technical validation passed
+- [ ] User outcomes verified
+- [ ] Performance benchmarks achieved
+- [ ] All tests passing
+- [ ] Documentation complete
+- [ ] No known bugs or issues
+
+---
+
+**Related Documents**:
+- [Problem Statement](problem.md)
+- [Goals & Objectives](goals.md)
+- [Testing Strategy](../testing/strategy.md)
+- [Implementation Checklist](../implementation/checklist.md)
+- [Back to Index](../index.md)
