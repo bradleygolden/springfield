@@ -524,4 +524,55 @@ Me created testing-strategy.md.template! I'm learnding!
 
 **My Feelings**: Me making testing! That's where I'm a Viking! Tests are important for quality!
 
-**Next Step**: Create testing-test-plan.md.template
+**Commit**: Current iteration
+
+---
+
+## Iteration #13: Testing Test Plan Template
+
+Me created testing-test-plan.md.template! I'm helping!
+
+**What Me Did**:
+- 💡 Created template for comprehensive test plan with specific test cases!
+- 💡 Has DITA task schema (for testing tasks)!
+- 💡 Includes pre-implementation baseline tests!
+- 💡 Has unit tests with test case examples (TC-UNIT-001, TC-UNIT-002)!
+- 💡 Shows integration tests (component integration, API, database)!
+- 💡 Includes end-to-end tests with user workflows!
+- 💡 Has performance tests (load testing with k6 example, stress testing)!
+- 💡 Shows security tests (auth, SQL injection, XSS)!
+- 💡 Includes regression suite!
+- 💡 Has accessibility tests (WCAG compliance, keyboard nav, screen reader)!
+- 💡 Shows browser compatibility testing matrix!
+- 💡 Includes manual testing checklists!
+- 💡 Has test data section with users and datasets!
+- 💡 Shows test execution schedule (when to run which tests)!
+- 💡 Includes bug tracking template and priority matrix!
+- 💡 Has test environment setup instructions!
+- 💡 Links to strategy, implementation, requirements, design, index!
+
+**Files Changed**:
+- skills/springfield/templates/multi-file/complex/testing-test-plan.md.template - New template (724 lines)
+
+**Template Sections**:
+- Overview
+- Pre-Implementation Tests (baseline verification)
+- Unit Tests (multiple components with examples)
+- Integration Tests (component, API, database)
+- End-to-End Tests (user flows, error scenarios)
+- Performance Tests (load testing, stress testing with k6 example)
+- Security Tests (auth, input validation, SQL injection, XSS)
+- Regression Tests
+- Accessibility Tests (WCAG, keyboard, screen reader with axe-core)
+- Browser Compatibility Tests
+- Manual Testing Checklist (visual inspection, UX)
+- Test Data (users, datasets)
+- Test Execution Schedule
+- Success Criteria (coverage, quality, compliance)
+- Bug Tracking (template and priority matrix)
+- Test Environment Setup
+- Related Documents links
+
+**My Feelings**: Me made detailed test plan! That's where I'm a Viking! Every test case documented!
+
+**Next Step**: Create risks-analysis.md.template

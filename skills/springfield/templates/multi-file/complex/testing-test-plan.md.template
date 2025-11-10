@@ -1,0 +1,761 @@
+---
+$schema: https://raw.githubusercontent.com/jelovirt/org.lwdita/master/schemas/task.xsd
+title: "Test Plan: {WORK_ITEM_TITLE}"
+author: Martin Prince
+created: {CREATED_DATE}
+topic_type: task
+session: {SESSION_ID}
+---
+
+# Test Plan: {WORK_ITEM_TITLE}
+
+*"I've organized every test case with scientific precision!"* - Martin Prince
+
+## Overview
+
+This document provides the detailed test plan for implementing and validating **{WORK_ITEM_TITLE}**. Each test case includes clear steps, expected results, and acceptance criteria.
+
+**Reference**: See [Testing Strategy](strategy.md) for overall testing approach and philosophy.
+
+---
+
+## Pre-Implementation Tests
+
+*"Verify everything works BEFORE we start changing things!"*
+
+### Test 1: Baseline Verification
+
+**Objective**: Confirm current functionality before changes
+
+**Prerequisites**:
+- Clean working directory
+- All existing tests passing
+- Development environment configured
+
+**Steps**:
+1. Run full test suite: `npm test` (or appropriate command)
+2. Run linter: `npm run lint`
+3. Run type checker: `npm run type-check`
+4. Document current behavior (screenshots, logs, metrics)
+
+**Expected Results**:
+- ✅ All existing tests pass
+- ✅ No linting errors
+- ✅ No type errors
+- ✅ Baseline metrics documented
+
+**Acceptance Criteria**:
+- [ ] Test suite shows 100% pass rate
+- [ ] Baseline documented in `baseline-metrics.md`
+
+---
+
+## Unit Tests
+
+*"Testing individual components in isolation!"*
+
+### Test 2: {COMPONENT_1_NAME} Unit Tests
+
+**Objective**: Verify {COMPONENT_1_NAME} works correctly in isolation
+
+**Test Cases**:
+
+#### TC-UNIT-001: {Test Case Name}
+```javascript
+describe('{COMPONENT_1_NAME}', () => {
+  it('should {expected behavior}', () => {
+    // Arrange
+    const input = {test_data};
+
+    // Act
+    const result = componentFunction(input);
+
+    // Assert
+    expect(result).toBe({expected_output});
+  });
+});
+```
+
+**Coverage Target**: 90%+ for {COMPONENT_1_NAME}
+
+#### TC-UNIT-002: Edge Cases
+- Empty input
+- Null/undefined values
+- Maximum values
+- Invalid input types
+
+**Expected Results**:
+- ✅ All happy path tests pass
+- ✅ Edge cases handled gracefully
+- ✅ Error messages are clear
+- ✅ No memory leaks
+
+### Test 3: {COMPONENT_2_NAME} Unit Tests
+
+**Objective**: Verify {COMPONENT_2_NAME} functionality
+
+**Test Cases**:
+
+#### TC-UNIT-003: Core Functionality
+```javascript
+test('{functionality description}', () => {
+  const component = new {COMPONENT_2_NAME}(config);
+  const result = component.execute(params);
+
+  expect(result.status).toBe('success');
+  expect(result.data).toMatchObject({expected_shape});
+});
+```
+
+#### TC-UNIT-004: Error Handling
+```javascript
+test('handles errors appropriately', () => {
+  const component = new {COMPONENT_2_NAME}(invalidConfig);
+
+  expect(() => component.execute()).toThrow({ERROR_TYPE});
+});
+```
+
+**Expected Results**:
+- ✅ Core functionality works
+- ✅ Errors are caught and handled
+- ✅ Component is properly isolated
+
+---
+
+## Integration Tests
+
+*"Testing how components work together!"*
+
+### Test 4: Component Integration
+
+**Objective**: Verify {COMPONENT_1_NAME} and {COMPONENT_2_NAME} integrate correctly
+
+**Test Scenario**:
+```javascript
+describe('Component Integration', () => {
+  it('should {integration behavior}', async () => {
+    const component1 = new {COMPONENT_1_NAME}();
+    const component2 = new {COMPONENT_2_NAME}();
+
+    const result1 = await component1.process(input);
+    const result2 = await component2.consume(result1);
+
+    expect(result2).toMatchSnapshot();
+  });
+});
+```
+
+**Expected Results**:
+- ✅ Data flows correctly between components
+- ✅ No race conditions
+- ✅ Proper error propagation
+
+### Test 5: API Integration
+
+**Objective**: Verify API endpoints work end-to-end
+
+**Test Cases**:
+
+#### TC-INT-001: {ENDPOINT_NAME}
+```bash
+# Setup
+curl -X POST http://localhost:3000/api/setup \
+  -H "Content-Type: application/json" \
+  -d '{"test": "data"}'
+
+# Test
+response=$(curl -X GET http://localhost:3000/api/{endpoint})
+
+# Verify
+echo "$response" | jq '.status' # Should be "success"
+```
+
+**Expected Response**:
+```json
+{
+  "status": "success",
+  "data": {
+    "field1": "expected_value",
+    "field2": 123
+  }
+}
+```
+
+**Acceptance Criteria**:
+- [ ] HTTP status is 200
+- [ ] Response matches schema
+- [ ] Response time < 500ms
+
+### Test 6: Database Integration
+
+**Objective**: Verify database operations work correctly
+
+**Test Cases**:
+
+#### TC-INT-002: Data Persistence
+1. Insert test record
+2. Query for record
+3. Update record
+4. Delete record
+5. Verify deletion
+
+**Expected Results**:
+- ✅ All CRUD operations work
+- ✅ Transactions are atomic
+- ✅ Constraints are enforced
+- ✅ Indexes are used efficiently
+
+---
+
+## End-to-End Tests
+
+*"Testing the complete user workflow!"*
+
+### Test 7: User Flow - {PRIMARY_FLOW}
+
+**Objective**: Verify complete user workflow from start to finish
+
+**Scenario**: {User Story Description}
+
+**Steps**:
+1. User navigates to {STARTING_PAGE}
+2. User performs {ACTION_1}
+3. System responds with {RESPONSE_1}
+4. User performs {ACTION_2}
+5. System completes {FINAL_ACTION}
+
+**Expected Results**:
+- ✅ User can complete workflow without errors
+- ✅ UI updates correctly at each step
+- ✅ Data is persisted correctly
+- ✅ User receives appropriate feedback
+
+**Automated E2E Test**:
+```javascript
+describe('{PRIMARY_FLOW}', () => {
+  it('completes user workflow', async () => {
+    await page.goto('{STARTING_URL}');
+    await page.click('{ACTION_SELECTOR}');
+    await page.waitForSelector('{RESULT_SELECTOR}');
+
+    const result = await page.textContent('{RESULT_SELECTOR}');
+    expect(result).toBe('{EXPECTED_TEXT}');
+  });
+});
+```
+
+### Test 8: Error Scenarios
+
+**Objective**: Verify system handles errors gracefully
+
+**Test Cases**:
+
+#### TC-E2E-001: Network Failure
+1. Start workflow
+2. Simulate network disconnection
+3. Verify error message displayed
+4. Restore network
+5. Verify recovery option works
+
+**Expected Results**:
+- ✅ User sees friendly error message
+- ✅ No data corruption
+- ✅ User can retry or recover
+
+#### TC-E2E-002: Invalid Input
+1. Submit form with invalid data
+2. Verify validation errors shown
+3. Correct errors
+4. Verify submission succeeds
+
+**Expected Results**:
+- ✅ Validation errors are clear
+- ✅ Field-level validation
+- ✅ No partial saves
+
+---
+
+## Performance Tests
+
+*"Making sure everything runs fast enough!"*
+
+### Test 9: Load Testing
+
+**Objective**: Verify system handles expected load
+
+**Test Configuration**:
+- **Tool**: Apache JMeter / k6 / Artillery
+- **Virtual Users**: {CONCURRENT_USERS}
+- **Duration**: {TEST_DURATION}
+- **Ramp-up**: {RAMP_UP_TIME}
+
+**Test Script**:
+```javascript
+import http from 'k6/http';
+import { check, sleep } from 'k6';
+
+export let options = {
+  vus: {CONCURRENT_USERS},
+  duration: '{TEST_DURATION}',
+};
+
+export default function() {
+  let response = http.get('{TARGET_ENDPOINT}');
+
+  check(response, {
+    'status is 200': (r) => r.status === 200,
+    'response time < 500ms': (r) => r.timings.duration < 500,
+  });
+
+  sleep(1);
+}
+```
+
+**Success Criteria**:
+- [ ] 95th percentile response time < 500ms
+- [ ] 99th percentile response time < 1000ms
+- [ ] Error rate < 0.1%
+- [ ] No memory leaks over duration
+
+### Test 10: Stress Testing
+
+**Objective**: Identify system breaking point
+
+**Test Configuration**:
+- Gradually increase load until failure
+- Monitor system resources
+- Identify bottlenecks
+
+**Acceptance Criteria**:
+- [ ] System handles at least {MIN_LOAD}x expected load
+- [ ] Graceful degradation under stress
+- [ ] Quick recovery after stress removal
+
+---
+
+## Security Tests
+
+*"Making sure everything is secure!"*
+
+### Test 11: Authentication & Authorization
+
+**Objective**: Verify security controls work correctly
+
+**Test Cases**:
+
+#### TC-SEC-001: Unauthorized Access
+```bash
+# Attempt to access protected resource without auth
+curl -X GET http://localhost:3000/api/protected
+
+# Expected: 401 Unauthorized
+```
+
+#### TC-SEC-002: Invalid Token
+```bash
+# Attempt access with invalid token
+curl -X GET http://localhost:3000/api/protected \
+  -H "Authorization: Bearer INVALID_TOKEN"
+
+# Expected: 401 Unauthorized
+```
+
+#### TC-SEC-003: Role-Based Access
+```bash
+# User with insufficient permissions
+curl -X DELETE http://localhost:3000/api/admin/resource \
+  -H "Authorization: Bearer USER_TOKEN"
+
+# Expected: 403 Forbidden
+```
+
+**Expected Results**:
+- ✅ Unauthorized requests rejected
+- ✅ Invalid tokens rejected
+- ✅ Role enforcement works
+- ✅ No sensitive data in error messages
+
+### Test 12: Input Validation
+
+**Objective**: Verify all inputs are properly validated
+
+**Test Cases**:
+
+#### TC-SEC-004: SQL Injection
+```bash
+curl -X POST http://localhost:3000/api/search \
+  -d "query='; DROP TABLE users; --"
+
+# Expected: Input sanitized, no SQL executed
+```
+
+#### TC-SEC-005: XSS
+```bash
+curl -X POST http://localhost:3000/api/comment \
+  -d "text=<script>alert('xss')</script>"
+
+# Expected: Script tags escaped
+```
+
+**Expected Results**:
+- ✅ No SQL injection possible
+- ✅ XSS attempts blocked
+- ✅ CSRF protection active
+- ✅ Input length limits enforced
+
+---
+
+## Regression Tests
+
+*"Making sure we didn't break anything!"*
+
+### Test 13: Regression Suite
+
+**Objective**: Verify existing functionality still works
+
+**Test Suite**: Run ALL previously passing tests
+
+**Command**:
+```bash
+npm run test:regression
+```
+
+**Expected Results**:
+- ✅ All regression tests pass
+- ✅ No performance degradation
+- ✅ No new warnings or errors
+
+**Acceptance Criteria**:
+- [ ] 100% of regression tests pass
+- [ ] Test execution time < {MAX_TIME}
+- [ ] No flaky tests
+
+---
+
+## Accessibility Tests
+
+*"Making sure everyone can use it!"*
+
+### Test 14: WCAG Compliance
+
+**Objective**: Verify accessibility standards met
+
+**Tool**: axe-core / Pa11y / Lighthouse
+
+**Test Cases**:
+
+#### TC-ACC-001: Keyboard Navigation
+1. Tab through entire interface
+2. Verify all interactive elements reachable
+3. Verify focus indicators visible
+4. Test keyboard shortcuts
+
+**Expected Results**:
+- ✅ All elements keyboard accessible
+- ✅ Logical tab order
+- ✅ Focus visible at all times
+
+#### TC-ACC-002: Screen Reader
+1. Test with VoiceOver (macOS) / NVDA (Windows)
+2. Verify all content announced
+3. Verify ARIA labels correct
+4. Test form validation announcements
+
+**Expected Results**:
+- ✅ All content accessible
+- ✅ Proper semantic HTML
+- ✅ ARIA attributes correct
+
+**Automated Check**:
+```javascript
+import { AxePuppeteer } from '@axe-core/puppeteer';
+
+test('accessibility', async () => {
+  await page.goto('{TARGET_URL}');
+  const results = await new AxePuppeteer(page).analyze();
+
+  expect(results.violations).toHaveLength(0);
+});
+```
+
+---
+
+## Browser Compatibility Tests
+
+*"Making sure it works everywhere!"*
+
+### Test 15: Cross-Browser Testing
+
+**Objective**: Verify functionality across browsers
+
+**Browsers to Test**:
+- [ ] Chrome (latest)
+- [ ] Firefox (latest)
+- [ ] Safari (latest)
+- [ ] Edge (latest)
+- [ ] Mobile Safari (iOS)
+- [ ] Chrome Mobile (Android)
+
+**Test Cases**:
+- Core functionality
+- Layout and styling
+- JavaScript features
+- Form submissions
+- File uploads
+- WebSocket connections
+
+**Expected Results**:
+- ✅ Consistent behavior across browsers
+- ✅ Graceful degradation for unsupported features
+- ✅ No browser-specific bugs
+
+---
+
+## Manual Testing Checklist
+
+*"Things that need human verification!"*
+
+### Test 16: Visual Inspection
+
+**Objective**: Verify UI looks correct
+
+**Tasks**:
+- [ ] Layout is correct on desktop (1920x1080, 1366x768)
+- [ ] Layout is correct on tablet (768x1024)
+- [ ] Layout is correct on mobile (375x667, 414x896)
+- [ ] All images load correctly
+- [ ] Fonts render correctly
+- [ ] Colors match design specs
+- [ ] Animations are smooth
+- [ ] No visual glitches or artifacts
+
+### Test 17: User Experience
+
+**Objective**: Verify UX is intuitive
+
+**Tasks**:
+- [ ] Navigation is intuitive
+- [ ] Error messages are helpful
+- [ ] Success feedback is clear
+- [ ] Loading states are shown
+- [ ] Empty states are handled
+- [ ] Tooltips are helpful
+- [ ] Workflow feels natural
+
+---
+
+## Test Data
+
+*"Data we'll use for testing!"*
+
+### Test Users
+
+```yaml
+admin_user:
+  username: admin@test.com
+  password: Test123!
+  role: admin
+
+standard_user:
+  username: user@test.com
+  password: Test123!
+  role: user
+
+read_only_user:
+  username: readonly@test.com
+  password: Test123!
+  role: readonly
+```
+
+### Test Datasets
+
+**Small Dataset**: 100 records (for quick tests)
+**Medium Dataset**: 10,000 records (for performance tests)
+**Large Dataset**: 1,000,000 records (for stress tests)
+
+**Location**: `tests/fixtures/test-data.json`
+
+---
+
+## Test Execution Schedule
+
+*"When we'll run each type of test!"*
+
+### During Development
+- Unit tests (on every save)
+- Linting (on every save)
+- Type checking (on every save)
+
+### Before Commit
+- Unit tests (full suite)
+- Integration tests (affected areas)
+- Linting and type checking
+
+### In CI/CD Pipeline
+- All unit tests
+- All integration tests
+- Security scans
+- Accessibility checks
+- Performance regression tests
+
+### Before Release
+- Full regression suite
+- E2E tests
+- Load testing
+- Security testing
+- Manual testing
+- Cross-browser testing
+
+---
+
+## Success Criteria
+
+*"How we'll know testing is complete!"*
+
+### Coverage Metrics
+- [ ] Unit test coverage ≥ 85%
+- [ ] Integration test coverage ≥ 70%
+- [ ] E2E test coverage for critical paths: 100%
+
+### Quality Metrics
+- [ ] All tests passing
+- [ ] No flaky tests
+- [ ] Test execution time < {MAX_TIME}
+
+### Compliance
+- [ ] Security tests pass
+- [ ] Accessibility (WCAG 2.1 AA) compliant
+- [ ] Performance benchmarks met
+
+### Documentation
+- [ ] All test cases documented
+- [ ] Test data documented
+- [ ] Known issues documented
+
+---
+
+## Bug Tracking
+
+*"How we'll track issues found during testing!"*
+
+### Bug Report Template
+
+```markdown
+## Bug ID: BUG-{NUMBER}
+
+**Severity**: Critical / High / Medium / Low
+**Status**: Open / In Progress / Resolved / Closed
+
+**Summary**: {One-line description}
+
+**Steps to Reproduce**:
+1.
+2.
+3.
+
+**Expected Behavior**:
+{What should happen}
+
+**Actual Behavior**:
+{What actually happens}
+
+**Environment**:
+- OS:
+- Browser:
+- Version:
+
+**Screenshots/Logs**:
+{Attach evidence}
+
+**Related Test Case**: TC-{ID}
+```
+
+### Bug Priority Matrix
+
+| Severity | Impact on Users | Fix Priority |
+|----------|----------------|--------------|
+| Critical | System unusable | Immediate |
+| High | Major feature broken | Before release |
+| Medium | Minor feature affected | After release |
+| Low | Cosmetic issue | Backlog |
+
+---
+
+## Test Environment Setup
+
+*"How to set up testing environments!"*
+
+### Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Set up test database
+npm run db:test:setup
+
+# Run migrations
+npm run db:migrate:test
+
+# Seed test data
+npm run db:seed:test
+
+# Run tests
+npm test
+```
+
+### CI/CD Environment
+
+```yaml
+# .github/workflows/test.yml
+name: Test Suite
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_DB: test_db
+          POSTGRES_PASSWORD: test
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - run: npm ci
+      - run: npm run test:ci
+      - run: npm run test:e2e
+```
+
+---
+
+## Related Documents
+
+**Planning & Design**:
+- [Requirements: Problem Statement](../requirements/problem.md)
+- [Requirements: Success Criteria](../requirements/success-criteria.md)
+- [Design: Architecture](../design/architecture.md)
+- [Design: Components](../design/components.md)
+
+**Implementation**:
+- [Implementation: Plan](../implementation/plan.md)
+- [Implementation: Checklist](../implementation/checklist.md)
+
+**Testing**:
+- [Testing Strategy](strategy.md) - Overall testing approach
+
+**Navigation**:
+- [Back to Index](../index.md)
+
+---
+
+*"I've documented every single test case! This is my most thorough test plan yet!"* - Martin Prince
+
+**Test Plan Version**: 1.0
+**Last Updated**: {CREATED_DATE}
+**Next Review**: After implementation completion
