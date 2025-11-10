@@ -1,0 +1,5 @@
+index:index.md:concept:Navigation hub and overview
+overview:overview.md:concept:Task overview and context
+checklist:checklist.md:task:Step-by-step implementation checklist
+testing:testing.md:task:Testing approach and verification
+metadata:metadata.md:concept:Session metadata and summary
