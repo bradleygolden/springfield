@@ -1,6 +1,6 @@
 # Springfield Plugin
 
-[![Version](https://img.shields.io/badge/version-1.4.0-blue.svg)](https://github.com/bradleygolden/springfield)
+[![Version](https://img.shields.io/badge/version-1.5.0-blue.svg)](https://github.com/bradleygolden/springfield)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Linux-lightgrey.svg)]()
 
@@ -70,7 +70,6 @@ Springfield is a Claude Code plugin that breaks down complex tasks into phases, 
 - **Martin Prince** 📝 - Creates prospective documentation (I've earned an A+ on this PRD!)
 - **Ralph** 🖍️ - Implements through persistent iteration (I'm learnding!)
 - **Comic Book Guy** 💬 - Reviews the quality ("Worst code ever... or best?")
-- **Meta-Ralph** 🔄 - Continuous self-improvement loop (I'm gonna loop forever!)
 
 ## Installation
 
@@ -100,7 +99,6 @@ Springfield runs all phases automatically. Or run them individually:
 /springfield:martin                    # Create PRD/documentation
 /springfield:ralph                     # Implement
 /springfield:comic-book-guy            # Review
-/springfield:meta-ralph "task.md"      # Infinite improvement loop
 ```
 
 ### Advanced Flags
@@ -384,47 +382,7 @@ Springfield validates jq availability at session start. Without jq, state.json f
 └── validation.md (Comic Book Guy)
 ```
 
-### Example 3: Meta-Ralph - Infinite Improvement Loop
-
-**Task:** Run Springfield in continuous self-improvement mode
-
-**What it is:**
-Meta-Ralph is the original Ralph pattern from [Geoff Huntley's blog](https://ghuntley.com/ralph/) - dead simple eventual consistency through persistent iteration. Ralph runs FOREVER, continuously improving your project based on a prompt.
-
-**Usage:**
-
-```bash
-# Using a file (default: PROMPT.md)
-/springfield:meta-ralph PROMPT.md
-
-# Using a direct prompt string
-/springfield:meta-ralph "Fix all bugs and improve documentation"
-
-# Default (uses PROMPT.md from repo root)
-/springfield:meta-ralph
-```
-
-**What happens:**
-
-1. Meta-Ralph reads your prompt (from file or string)
-2. Sends it to Claude with streaming output
-3. Claude makes improvements to Springfield
-4. Visualizes the output with `repomirror`
-5. Loops back to step 1 infinitely
-
-**Stop it:**
-- Press Ctrl+C to stop the loop
-- Meta-Ralph will keep running until you stop him manually
-
-**Best for:**
-- Continuous improvement of Springfield itself
-- Long-running optimization tasks
-- Iterative refinement based on a fixed goal
-- Letting Ralph "learn forever"
-
-**Note:** This is pure eventual consistency - Ralph never stops trying to make things better!
-
-### Example 4: Resuming a Failed Session
+### Example 3: Resuming a Failed Session
 
 **Scenario:** Ralph's implementation failed validation
 
