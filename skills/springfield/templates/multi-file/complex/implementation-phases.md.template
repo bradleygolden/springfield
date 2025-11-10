@@ -1,0 +1,186 @@
+---
+$schema: https://raw.githubusercontent.com/jelovirt/org.lwdita/master/schemas/task.xsd
+title: "Implementation Phases: {WORK_ITEM_TITLE}"
+author: Martin Prince
+created: {CREATED_DATE}
+topic_type: task
+session: {SESSION_ID}
+---
+
+# Implementation Phases: {WORK_ITEM_TITLE}
+
+*"I've broken down the implementation into perfectly organized phases!"* - Martin Prince
+
+## Phase Breakdown
+
+### Phase 1: {PHASE_1_NAME}
+
+**Objective**: {PHASE_1_OBJECTIVE}
+
+**Duration**: {PHASE_1_TIME}
+
+**Tasks**:
+{PHASE_1_TASKS}
+
+**Success Criteria**:
+{PHASE_1_SUCCESS_CRITERIA}
+
+**Dependencies**: {PHASE_1_DEPENDENCIES}
+
+**Deliverables**: {PHASE_1_DELIVERABLES}
+
+**Commit Message**: `{PHASE_1_COMMIT}`
+
+---
+
+### Phase 2: {PHASE_2_NAME}
+
+**Objective**: {PHASE_2_OBJECTIVE}
+
+**Duration**: {PHASE_2_TIME}
+
+**Tasks**:
+{PHASE_2_TASKS}
+
+**Success Criteria**:
+{PHASE_2_SUCCESS_CRITERIA}
+
+**Dependencies**: {PHASE_2_DEPENDENCIES}
+
+**Deliverables**: {PHASE_2_DELIVERABLES}
+
+**Commit Message**: `{PHASE_2_COMMIT}`
+
+---
+
+### Phase 3: {PHASE_3_NAME}
+
+**Objective**: {PHASE_3_OBJECTIVE}
+
+**Duration**: {PHASE_3_TIME}
+
+**Tasks**:
+{PHASE_3_TASKS}
+
+**Success Criteria**:
+{PHASE_3_SUCCESS_CRITERIA}
+
+**Dependencies**: {PHASE_3_DEPENDENCIES}
+
+**Deliverables**: {PHASE_3_DELIVERABLES}
+
+**Commit Message**: `{PHASE_3_COMMIT}`
+
+---
+
+### Phase 4: {PHASE_4_NAME}
+
+**Objective**: {PHASE_4_OBJECTIVE}
+
+**Duration**: {PHASE_4_TIME}
+
+**Tasks**:
+{PHASE_4_TASKS}
+
+**Success Criteria**:
+{PHASE_4_SUCCESS_CRITERIA}
+
+**Dependencies**: {PHASE_4_DEPENDENCIES}
+
+**Deliverables**: {PHASE_4_DELIVERABLES}
+
+**Commit Message**: `{PHASE_4_COMMIT}`
+
+---
+
+## Phase Dependencies
+
+```
+Phase 1: {PHASE_1_NAME}
+    ↓
+Phase 2: {PHASE_2_NAME}
+    ↓
+Phase 3: {PHASE_3_NAME}
+    ↓
+Phase 4: {PHASE_4_NAME}
+```
+
+## Timeline Summary
+
+| Phase | Duration | Cumulative Time |
+|-------|----------|-----------------|
+| Phase 1: {PHASE_1_NAME} | {PHASE_1_TIME} | {PHASE_1_TIME} |
+| Phase 2: {PHASE_2_NAME} | {PHASE_2_TIME} | {CUMULATIVE_PHASE_2_TIME} |
+| Phase 3: {PHASE_3_NAME} | {PHASE_3_TIME} | {CUMULATIVE_PHASE_3_TIME} |
+| Phase 4: {PHASE_4_NAME} | {PHASE_4_TIME} | {TOTAL_ESTIMATED_TIME} |
+
+**Total Estimated Time**: {TOTAL_ESTIMATED_TIME}
+
+## Critical Path
+
+{CRITICAL_PATH_DESCRIPTION}
+
+## Parallel Work Opportunities
+
+{PARALLEL_WORK_DESCRIPTION}
+
+## Phase Transition Checklist
+
+### Before Starting Phase 2
+- [ ] Phase 1 tasks completed
+- [ ] Phase 1 success criteria met
+- [ ] Phase 1 committed to version control
+- [ ] No blockers identified
+
+### Before Starting Phase 3
+- [ ] Phase 2 tasks completed
+- [ ] Phase 2 success criteria met
+- [ ] Phase 2 committed to version control
+- [ ] Integration points verified
+
+### Before Starting Phase 4
+- [ ] Phase 3 tasks completed
+- [ ] Phase 3 success criteria met
+- [ ] Phase 3 committed to version control
+- [ ] All features implemented
+
+## Risk Mitigation Per Phase
+
+### Phase 1 Risks
+{PHASE_1_RISKS}
+
+### Phase 2 Risks
+{PHASE_2_RISKS}
+
+### Phase 3 Risks
+{PHASE_3_RISKS}
+
+### Phase 4 Risks
+{PHASE_4_RISKS}
+
+## Phase Review Questions
+
+After completing each phase, ask yourself:
+
+1. **Completeness**: Did I complete all tasks for this phase?
+2. **Quality**: Does the code meet quality standards?
+3. **Testing**: Did I run all relevant tests?
+4. **Documentation**: Is the code adequately documented?
+5. **Integration**: Does it integrate with existing code?
+6. **Performance**: Does it meet performance requirements?
+7. **Security**: Are there any security concerns?
+8. **Blockers**: Are there any blockers for the next phase?
+
+---
+
+**Related Documents**:
+- [Implementation Plan](plan.md) - Overall strategy
+- [Implementation Checklist](checklist.md) ⭐ - Detailed task list
+- [Architecture](../design/architecture.md) - System design
+- [Testing Strategy](../testing/strategy.md) - Testing approach
+- [Risk Analysis](../risks/analysis.md) - Risk mitigation
+- [Back to Index](../index.md)
+
+---
+
+*"Follow these phases sequentially for perfect implementation!"* - Martin Prince
