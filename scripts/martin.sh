@@ -2,6 +2,17 @@
 
 set -euo pipefail
 
+check_yaml_tool() {
+  if command -v yq &> /dev/null; then
+    echo "yq"
+  else
+    echo "WARNING: yq not found, using sed fallback for YAML manipulation" >&2
+    echo "sed"
+  fi
+}
+
+YAML_TOOL=$(check_yaml_tool)
+
 SESSION_DIR="${1:-}"
 if [ -z "$SESSION_DIR" ]; then
   echo "❌ Error: Martin session directory required" >&2
