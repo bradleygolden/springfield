@@ -1,0 +1,62 @@
+---
+$schema: https://raw.githubusercontent.com/jelovirt/org.lwdita/master/schemas/concept.xsd
+title: "{WORK_ITEM_TITLE}"
+author: Martin Prince
+created: {CREATED_DATE}
+topic_type: concept
+session: {SESSION_ID}
+---
+
+# {WORK_ITEM_TITLE}
+
+*"I've organized everything perfectly for you!"* - Martin Prince
+
+## Quick Start
+
+**Start here**: [Implementation Checklist](implementation/checklist.md) ⭐
+
+## Navigation
+
+### Requirements
+- [Problem Statement](requirements/problem.md) - What we're solving
+- [Goals & Objectives](requirements/goals.md) - What we're achieving
+- [Success Criteria](requirements/success-criteria.md) - How we'll know we succeeded
+
+### Research
+- [Findings](research/findings.md) - What Lisa discovered
+- [Dependencies](research/dependencies.md) - What we need
+
+### Design
+- [Architecture](design/architecture.md) - System design
+- [Components](design/components.md) - Component specifications
+- [Data Models](design/data-models.md) - Data structures
+
+### Implementation
+- [Plan](implementation/plan.md) - Overall strategy
+- [**Checklist**](implementation/checklist.md) ⭐ - Step-by-step guide
+- [Phases](implementation/phases.md) - Phase breakdown
+
+### Testing
+- [Strategy](testing/strategy.md) - Testing approach
+- [Test Plan](testing/test-plan.md) - Detailed tests
+
+### Risks
+- [Analysis](risks/analysis.md) - Risks and mitigations
+
+### Metadata
+- [Session Metadata](metadata.md) - Complete session information
+
+---
+
+## Session Information
+
+**Session ID**: {SESSION_ID}
+**Created**: {CREATED_DATE}
+**Complexity**: {COMPLEXITY}
+**Estimated Effort**: {ESTIMATED_EFFORT}
+
+**Workflow State**: See [state.yaml](state.yaml)
+
+---
+
+*"Everything you need is right here, organized alphabetically and by topic!"* - Martin Prince
