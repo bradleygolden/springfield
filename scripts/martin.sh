@@ -46,7 +46,6 @@ DECISION_FILE="$SESSION_DIR/decision.txt"
 PROMPT_FILE="$SESSION_DIR/prompt.md"
 TASK_FILE="$SESSION_DIR/task.txt"
 STATE_FILE="$SESSION_DIR/state.json"
-CHAT_FILE="$SESSION_DIR/chat.md"
 
 if [ ! -f "$RESEARCH_FILE" ]; then
   echo "❌ Error: research.md not found in session directory" >&2
@@ -116,19 +115,6 @@ if [ -f "$STATE_FILE" ]; then
   echo ""
 fi
 
-if [ -f "$CHAT_FILE" ]; then
-  echo "💬 Checking chat.md for @martin mentions..."
-  LAST_MESSAGE=$(tail -20 "$CHAT_FILE" | grep -A 10 "@martin" || echo "")
-
-  if [[ -n "$LAST_MESSAGE" ]]; then
-    echo "📩 Found @martin question in chat.md"
-    echo "🎓 Martin is responding in his academic voice..."
-    echo ""
-    echo "⚠️  Chat.md integration not yet implemented - skipping for now"
-    echo "💡 Martin will respond to questions in a future iteration!"
-    echo ""
-  fi
-fi
 
 echo "🔍 Determining work item type..."
 COMPLEXITY=$(cat "$DECISION_FILE" | grep -oE "SIMPLE|COMPLEX" | head -1 || echo "SIMPLE")

@@ -41,7 +41,6 @@ case "$canonical" in
 esac
 
 STATE_FILE="$SESSION_DIR/state.json"
-CHAT_FILE="$SESSION_DIR/chat.md"
 
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 TMP_STATE=$(mktemp)
@@ -50,31 +49,6 @@ jq --arg timestamp "$TIMESTAMP" \
     .phases.comic_book_guy.start_time = $timestamp' \
    "$STATE_FILE" > "$TMP_STATE"
 mv "$TMP_STATE" "$STATE_FILE"
-
-LAST_READ=$(jq -r '.chat_last_read // "1970-01-01 00:00:00"' "$STATE_FILE")
-NEW_MESSAGES=$(awk -v last="$LAST_READ" -v char="comic-book-guy" '
-  /^\*\*\[.*\] (USER|user):\*\*/ {
-    timestamp = $0
-    sub(/.*\[/, "", timestamp)
-    sub(/\].*/, "", timestamp)
-    if (timestamp > last) {
-      getline content
-      if (content ~ /@all/ || content ~ "@"char) {
-        print timestamp "|" content
-      }
-    }
-  }
-' "$CHAT_FILE")
-
-if [ -n "$NEW_MESSAGES" ]; then
-  MESSAGE=$(echo "$NEW_MESSAGES" | tail -1 | cut -d'|' -f2-)
-  CURRENT_TIME=$(date "+%Y-%m-%d %H:%M:%S")
-  echo "**[$CURRENT_TIME] comic-book-guy:** I saw your message: \"$MESSAGE\"" >> "$CHAT_FILE"
-
-  TMP_STATE=$(mktemp)
-  jq --arg time "$CURRENT_TIME" '.chat_last_read = $time' "$STATE_FILE" > "$TMP_STATE"
-  mv "$TMP_STATE" "$STATE_FILE"
-fi
 
 COMPLETION_FILE="$SESSION_DIR/completion.md"
 PROMPT_FILE="$SESSION_DIR/prompt.md"
@@ -175,9 +149,6 @@ if [ "$VERDICT" = "KICK_BACK" ]; then
   if [ "$KICKBACK_COUNT" -ge 2 ]; then
     echo "Kickback limit reached for $TARGET - ESCALATING"
     VERDICT="ESCALATE"
-
-    CURRENT_TIME=$(date "+%Y-%m-%d %H:%M:%S")
-    echo "**[$CURRENT_TIME] COMIC_BOOK_GUY:** Worst. Implementation. Ever. Exceeded kickback limit for $TARGET (count: $KICKBACK_COUNT). This requires your intervention. Check qa-report.md for details." >> "$CHAT_FILE"
   fi
 fi
 

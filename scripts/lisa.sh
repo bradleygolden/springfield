@@ -41,7 +41,6 @@ case "$canonical" in
 esac
 
 STATE_FILE="$SESSION_DIR/state.json"
-CHAT_FILE="$SESSION_DIR/chat.md"
 TASK_FILE="$SESSION_DIR/task.txt"
 
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
@@ -51,31 +50,6 @@ jq --arg timestamp "$TIMESTAMP" \
     .phases.lisa.start_time = $timestamp' \
    "$STATE_FILE" > "$TMP_STATE"
 mv "$TMP_STATE" "$STATE_FILE"
-
-LAST_READ=$(jq -r '.chat_last_read // "1970-01-01 00:00:00"' "$STATE_FILE")
-NEW_MESSAGES=$(awk -v last="$LAST_READ" -v char="lisa" '
-  /^\*\*\[.*\] (USER|user):\*\*/ {
-    timestamp = $0
-    sub(/.*\[/, "", timestamp)
-    sub(/\].*/, "", timestamp)
-    if (timestamp > last) {
-      getline content
-      if (content ~ /@all/ || content ~ "@"char) {
-        print timestamp "|" content
-      }
-    }
-  }
-' "$CHAT_FILE")
-
-if [ -n "$NEW_MESSAGES" ]; then
-  MESSAGE=$(echo "$NEW_MESSAGES" | tail -1 | cut -d'|' -f2-)
-  CURRENT_TIME=$(date "+%Y-%m-%d %H:%M:%S")
-  echo "**[$CURRENT_TIME] lisa:** I saw your message: \"$MESSAGE\"" >> "$CHAT_FILE"
-
-  TMP_STATE=$(mktemp)
-  jq --arg time "$CURRENT_TIME" '.chat_last_read = $time' "$STATE_FILE" > "$TMP_STATE"
-  mv "$TMP_STATE" "$STATE_FILE"
-fi
 
 if [ ! -f "$TASK_FILE" ]; then
   echo "❌ Error: task.txt not found in session directory" >&2

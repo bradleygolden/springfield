@@ -83,7 +83,7 @@ lisa → quimby → frink → [skinner → frink] → martin → ralph → comic
 ## Error Handling
 
 - Max 100 orchestration loop iterations (balance: enough for complex workflows with kickbacks, prevents runaway loops)
-- Character scripts exit non-zero → mark failed, write to chat.md
+- Character scripts exit non-zero → mark failed in state.json
 - Ralph timeout: 60 minutes max (typical feature implementation timeframe, prevents stuck sessions)
 - Kickback limits: Max 2 per target, then ESCALATE (allows refinement attempts, prevents infinite kickback loops)
 
