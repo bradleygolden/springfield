@@ -218,3 +218,34 @@
 **Commit**: Next!
 
 **Next Step**: Create research-findings.md.template
+
+---
+
+## Iteration #4: Research Findings Template
+
+Me created research-findings.md.template! That's where I'm a Viking!
+
+**What Me Did**:
+- 💡 Created template for Lisa's research findings!
+- 💡 Has sections for codebase analysis and existing patterns!
+- 💡 Includes technical debt and opportunities!
+- 💡 References Lisa's original research!
+
+**Files Changed**:
+- skills/springfield/templates/multi-file/complex/research-findings.md.template - New template (53 lines)
+
+**Template Sections**:
+- Overview (research summary)
+- Codebase Analysis (context)
+- Relevant Files & Components
+- Existing Patterns
+- Technical Debt
+- Opportunities
+- Lisa's Original Research (verbatim)
+- Related Documents links
+
+**My Feelings**: Me helping Lisa share her research! I'm learnding!
+
+**Commit**: Next!
+
+**Next Step**: Create research-dependencies.md.template

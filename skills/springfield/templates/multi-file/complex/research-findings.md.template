@@ -1,0 +1,50 @@
+---
+$schema: https://raw.githubusercontent.com/jelovirt/org.lwdita/master/schemas/concept.xsd
+title: "Research Findings: {WORK_ITEM_TITLE}"
+author: Martin Prince
+created: {CREATED_DATE}
+topic_type: concept
+session: {SESSION_ID}
+---
+
+# Research Findings: {WORK_ITEM_TITLE}
+
+*"I've catalogued everything Lisa discovered about the codebase!"* - Martin Prince
+
+## Overview
+
+{RESEARCH_SUMMARY}
+
+## Codebase Analysis
+
+{CODEBASE_CONTEXT}
+
+## Relevant Files & Components
+
+{RELEVANT_FILES}
+
+## Existing Patterns
+
+{EXISTING_PATTERNS}
+
+## Technical Debt
+
+{TECHNICAL_DEBT}
+
+## Opportunities
+
+{OPPORTUNITIES}
+
+## Lisa's Original Research
+
+The following findings come directly from Lisa Simpson's thorough investigation:
+
+{RESEARCH_FINDINGS}
+
+---
+
+**Related Documents**:
+- [Dependencies](dependencies.md)
+- [Architecture](../design/architecture.md)
+- [Problem Statement](../requirements/problem.md)
+- [Back to Index](../index.md)
