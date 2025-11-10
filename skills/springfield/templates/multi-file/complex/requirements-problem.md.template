@@ -1,0 +1,36 @@
+---
+$schema: https://raw.githubusercontent.com/jelovirt/org.lwdita/master/schemas/concept.xsd
+title: "Problem Statement: {{WORK_ITEM_TITLE}}"
+author: Martin Prince
+created: {{CREATED_DATE}}
+topic_type: concept
+session: {{SESSION_ID}}
+---
+
+# Problem Statement: {{WORK_ITEM_TITLE}}
+
+*"Let me explain the problem we're solving with precision!"* - Martin Prince
+
+## Problem Description
+
+{{PROBLEM_DESCRIPTION}}
+
+## Current Situation Analysis
+
+{{CURRENT_STATE_ANALYSIS}}
+
+## Pain Points
+
+{{PAIN_POINTS_LIST}}
+
+## Why This Matters
+
+{{BUSINESS_JUSTIFICATION}}
+
+---
+
+**Related Documents**:
+- [Goals & Objectives](goals.md)
+- [Success Criteria](success-criteria.md)
+- [Architecture](../design/architecture.md)
+- [Back to Index](../index.md)
