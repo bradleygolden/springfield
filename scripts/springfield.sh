@@ -244,7 +244,7 @@ cmd_auto() {
 
 # Helper: Find latest session directory
 find_latest_session() {
-  local latest=$(find .springfield -maxdepth 1 -type d -name "[0-9]*" 2>/dev/null | sort -r | head -n 1)
+  local latest=$(find .springfield -maxdepth 1 -type d -name "[0-9]*" 2>/dev/null | xargs ls -td 2>/dev/null | head -n 1)
   echo "$latest"
 }
 
