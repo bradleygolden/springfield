@@ -1,0 +1,71 @@
+---
+$schema: https://raw.githubusercontent.com/jelovirt/org.lwdita/master/schemas/reference.xsd
+title: "Architecture: {WORK_ITEM_TITLE}"
+author: Martin Prince
+created: {CREATED_DATE}
+topic_type: reference
+session: {SESSION_ID}
+---
+
+# Architecture: {WORK_ITEM_TITLE}
+
+*"Let me explain the architectural design with precision!"* - Martin Prince
+
+## System Overview
+
+{ARCHITECTURE_OVERVIEW}
+
+## Architecture Diagram
+
+```
+{ARCHITECTURE_DIAGRAM}
+```
+
+## Component Interaction
+
+{COMPONENT_INTERACTION}
+
+## Design Principles
+
+{DESIGN_PRINCIPLES}
+
+## Technology Stack
+
+{TECHNOLOGY_STACK}
+
+## Architecture Patterns
+
+{ARCHITECTURE_PATTERNS}
+
+## Data Flow
+
+{DATA_FLOW}
+
+## Security Considerations
+
+{SECURITY_CONSIDERATIONS}
+
+## Scalability & Performance
+
+{SCALABILITY_CONSIDERATIONS}
+
+## Integration Points
+
+{INTEGRATION_POINTS}
+
+## Design Rationale
+
+{DESIGN_RATIONALE}
+
+---
+
+**Related Documents**:
+- [Components](components.md) - Detailed component specifications
+- [Data Models](data-models.md) - Data structure definitions
+- [Implementation Plan](../implementation/plan.md) - How we'll build this
+- [Requirements](../requirements/goals.md) - What we're achieving
+- [Back to Index](../index.md)
+
+---
+
+*"According to my architectural analysis, this design provides optimal structure, maintainability, and extensibility!"* - Martin Prince

@@ -1,0 +1,40 @@
+---
+$schema: https://raw.githubusercontent.com/jelovirt/org.lwdita/master/schemas/concept.xsd
+title: "Goals & Objectives: {WORK_ITEM_TITLE}"
+author: Martin Prince
+created: {CREATED_DATE}
+topic_type: concept
+session: {SESSION_ID}
+---
+
+# Goals & Objectives: {WORK_ITEM_TITLE}
+
+*"Let me explain what we're trying to achieve with precision!"* - Martin Prince
+
+## Primary Goals
+
+{PRIMARY_GOALS}
+
+## Secondary Objectives
+
+{SECONDARY_OBJECTIVES}
+
+## Expected Outcomes
+
+{EXPECTED_OUTCOMES}
+
+## Success Metrics
+
+{SUCCESS_METRICS}
+
+## Alignment with Project Vision
+
+{PROJECT_ALIGNMENT}
+
+---
+
+**Related Documents**:
+- [Problem Statement](problem.md)
+- [Success Criteria](success-criteria.md)
+- [Implementation Plan](../implementation/plan.md)
+- [Back to Index](../index.md)

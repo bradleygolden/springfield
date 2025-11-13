@@ -1,0 +1,737 @@
+---
+$schema: https://raw.githubusercontent.com/jelovirt/org.lwdita/master/schemas/troubleshooting.xsd
+title: "Risk Analysis: {WORK_ITEM_TITLE}"
+author: Martin Prince
+created: {CREATED_DATE}
+topic_type: troubleshooting
+session: {SESSION_ID}
+---
+
+# Risk Analysis: {WORK_ITEM_TITLE}
+
+*"I've identified all potential risks and mitigation strategies!"* - Martin Prince
+
+## Overview
+
+This document identifies potential risks associated with implementing **{WORK_ITEM_TITLE}**, their likelihood and impact, and mitigation strategies. Each risk is categorized by severity and includes a clear action plan.
+
+**Risk Assessment Matrix**:
+```
+Impact vs Likelihood:
+        Low    Medium   High
+High    [M]     [H]     [C]
+Medium  [L]     [M]     [H]
+Low     [L]     [L]     [M]
+
+C = Critical, H = High, M = Medium, L = Low
+```
+
+---
+
+## Critical Risks
+
+*"These are the most serious risks that require immediate attention!"*
+
+### RISK-C-001: {Critical Risk Name}
+
+**Category**: Technical / Business / Security / Operational
+
+**Description**:
+{Detailed description of the risk}
+
+**Likelihood**: High (>60% chance)
+**Impact**: High (Major disruption, data loss, security breach)
+**Severity**: **CRITICAL**
+
+**Indicators**:
+- 🚨 {Warning sign 1}
+- 🚨 {Warning sign 2}
+- 🚨 {Warning sign 3}
+
+**Consequences if Realized**:
+- {Consequence 1}
+- {Consequence 2}
+- {Consequence 3}
+
+**Mitigation Strategy**:
+
+**Prevention** (Before implementation):
+1. {Preventive action 1}
+2. {Preventive action 2}
+3. {Preventive action 3}
+
+**Detection** (During implementation):
+1. {Monitoring approach 1}
+2. {Alert configuration 2}
+3. {Early warning system 3}
+
+**Response** (If risk occurs):
+1. **Immediate**: {Emergency action}
+2. **Short-term**: {Containment action}
+3. **Long-term**: {Recovery action}
+
+**Contingency Plan**:
+```
+IF {risk_triggers}:
+  THEN {immediate_action}
+  AND {notify_stakeholders}
+  AND {activate_backup_plan}
+```
+
+**Owner**: {RISK_OWNER}
+**Review Date**: {REVIEW_DATE}
+
+---
+
+### RISK-C-002: Data Loss or Corruption
+
+**Category**: Technical
+
+**Description**:
+Implementation may involve database schema changes or data migrations that could result in data loss or corruption if not executed correctly.
+
+**Likelihood**: Medium (30-60% chance)
+**Impact**: High (Data loss, system downtime, user impact)
+**Severity**: **CRITICAL**
+
+**Indicators**:
+- 🚨 Complex database migrations required
+- 🚨 No rollback plan documented
+- 🚨 Limited testing of migration scripts
+- 🚨 Production database size is large
+
+**Consequences if Realized**:
+- Permanent loss of user data
+- Extended system downtime
+- Loss of user trust
+- Regulatory compliance issues
+
+**Mitigation Strategy**:
+
+**Prevention**:
+1. Create full database backup before migration
+2. Test migration on production clone with real data volumes
+3. Implement incremental migration with checkpoints
+4. Use database transactions for atomicity
+5. Document rollback procedure
+
+**Detection**:
+1. Monitor data integrity checksums
+2. Compare row counts before/after migration
+3. Set up alerts for migration failures
+4. Log all migration steps
+
+**Response**:
+1. **Immediate**: Stop migration, preserve current state
+2. **Short-term**: Restore from backup, assess damage
+3. **Long-term**: Fix migration script, re-test, retry
+
+**Contingency Plan**:
+```bash
+# Backup before migration
+pg_dump production_db > backup_$(date +%Y%m%d_%H%M%S).sql
+
+# Test migration on clone
+pg_restore backup.sql test_db
+./run-migration.sh test_db
+
+# If migration fails, rollback
+psql production_db < backup.sql
+```
+
+**Owner**: Database Administrator
+**Review Date**: Before migration execution
+
+---
+
+## High Risks
+
+*"These risks are serious and need careful attention!"*
+
+### RISK-H-001: {High Risk Name}
+
+**Category**: Technical / Business / Security / Operational
+
+**Description**:
+{Detailed description}
+
+**Likelihood**: High (>60%) OR Medium (30-60%) with High Impact
+**Impact**: High OR Medium
+**Severity**: **HIGH**
+
+**Indicators**:
+- ⚠️ {Warning sign 1}
+- ⚠️ {Warning sign 2}
+
+**Consequences**:
+- {Consequence 1}
+- {Consequence 2}
+
+**Mitigation Strategy**:
+
+**Prevention**:
+1. {Action 1}
+2. {Action 2}
+
+**Detection**:
+1. {Monitor 1}
+2. {Alert 2}
+
+**Response**:
+1. {Response 1}
+2. {Response 2}
+
+**Owner**: {OWNER}
+
+---
+
+### RISK-H-002: Performance Degradation
+
+**Category**: Technical
+
+**Description**:
+New features may introduce performance bottlenecks, causing slow response times or system resource exhaustion, especially under load.
+
+**Likelihood**: Medium (30-60% chance)
+**Impact**: High (User experience degradation, system instability)
+**Severity**: **HIGH**
+
+**Indicators**:
+- ⚠️ Adding new database queries
+- ⚠️ Introducing additional API calls
+- ⚠️ Complex computations in hot paths
+- ⚠️ No performance baselines established
+
+**Consequences**:
+- Slow page load times
+- Poor user experience
+- Increased infrastructure costs
+- System timeouts and failures
+
+**Mitigation Strategy**:
+
+**Prevention**:
+1. Establish performance baselines before implementation
+2. Profile code for bottlenecks
+3. Optimize database queries (add indexes, use explain plans)
+4. Implement caching where appropriate
+5. Use asynchronous processing for heavy tasks
+
+**Detection**:
+1. Monitor response times (p50, p95, p99)
+2. Track resource utilization (CPU, memory, I/O)
+3. Set up performance regression alerts
+4. Run load tests before production deployment
+
+**Response**:
+1. **Immediate**: Enable caching, scale resources
+2. **Short-term**: Optimize identified bottlenecks
+3. **Long-term**: Refactor architecture if needed
+
+**Performance Targets**:
+- API response time: p95 < 500ms
+- Database query time: p95 < 100ms
+- Page load time: < 3 seconds
+
+**Owner**: Performance Engineering Team
+
+---
+
+### RISK-H-003: Security Vulnerabilities
+
+**Category**: Security
+
+**Description**:
+New code may introduce security vulnerabilities such as authentication bypasses, injection attacks, or data exposure.
+
+**Likelihood**: Medium (30-60% chance)
+**Impact**: High (Security breach, data leak)
+**Severity**: **HIGH**
+
+**Indicators**:
+- ⚠️ User input not validated
+- ⚠️ SQL queries built with string concatenation
+- ⚠️ Authentication/authorization changes
+- ⚠️ Sensitive data handling
+
+**Consequences**:
+- Unauthorized data access
+- Data breach
+- Compliance violations
+- Reputation damage
+
+**Mitigation Strategy**:
+
+**Prevention**:
+1. Input validation and sanitization
+2. Use parameterized queries (never string concatenation)
+3. Implement principle of least privilege
+4. Encrypt sensitive data
+5. Code review with security focus
+6. Run SAST (Static Application Security Testing)
+
+**Detection**:
+1. Automated security scanning (Snyk, OWASP ZAP)
+2. Penetration testing
+3. Security monitoring and alerts
+4. Regular vulnerability assessments
+
+**Response**:
+1. **Immediate**: Disable vulnerable feature, patch
+2. **Short-term**: Assess exposure, notify users if needed
+3. **Long-term**: Security training, improved processes
+
+**Security Checklist**:
+- [ ] Input validation on all user inputs
+- [ ] SQL injection prevention (parameterized queries)
+- [ ] XSS prevention (output encoding)
+- [ ] CSRF protection enabled
+- [ ] Authentication/authorization tested
+- [ ] Sensitive data encrypted
+- [ ] Security headers configured
+- [ ] Dependency vulnerabilities checked
+
+**Owner**: Security Team
+
+---
+
+## Medium Risks
+
+*"These risks need monitoring but are less severe!"*
+
+### RISK-M-001: {Medium Risk Name}
+
+**Category**: Technical / Business / Operational
+
+**Description**:
+{Description}
+
+**Likelihood**: Low to Medium
+**Impact**: Medium
+**Severity**: **MEDIUM**
+
+**Indicators**:
+- ℹ️ {Indicator 1}
+- ℹ️ {Indicator 2}
+
+**Mitigation**:
+1. {Action 1}
+2. {Action 2}
+
+**Owner**: {OWNER}
+
+---
+
+### RISK-M-002: Incomplete Requirements
+
+**Category**: Business
+
+**Description**:
+Requirements may be incomplete or change during implementation, leading to rework and delays.
+
+**Likelihood**: Medium (30-60% chance)
+**Impact**: Medium (Schedule delays, scope creep)
+**Severity**: **MEDIUM**
+
+**Indicators**:
+- ℹ️ Vague or ambiguous requirements
+- ℹ️ Frequent stakeholder changes
+- ℹ️ Unclear success criteria
+- ℹ️ Missing edge case definitions
+
+**Consequences**:
+- Development delays
+- Increased costs
+- Misaligned expectations
+- Rework required
+
+**Mitigation Strategy**:
+
+**Prevention**:
+1. Document requirements clearly in [requirements/problem.md](../requirements/problem.md)
+2. Review success criteria with stakeholders
+3. Identify assumptions and validate them
+4. Use examples and mockups
+5. Define out-of-scope explicitly
+
+**Detection**:
+1. Regular stakeholder check-ins
+2. Demo progress frequently
+3. Document decisions and get sign-off
+4. Track requirement changes
+
+**Response**:
+1. **Immediate**: Clarify requirement with stakeholder
+2. **Short-term**: Update documentation, adjust plan
+3. **Long-term**: Improve requirements gathering process
+
+**Owner**: Product Manager
+
+---
+
+### RISK-M-003: Third-Party Dependency Issues
+
+**Category**: Technical
+
+**Description**:
+Dependencies on third-party libraries, APIs, or services may introduce instability, breaking changes, or availability issues.
+
+**Likelihood**: Medium (30-60% chance)
+**Impact**: Medium (Feature delays, workarounds needed)
+**Severity**: **MEDIUM**
+
+**Indicators**:
+- ℹ️ Using beta or unstable dependencies
+- ℹ️ Critical functionality depends on third-party
+- ℹ️ No SLA with third-party providers
+- ℹ️ Dependencies with known issues
+
+**Consequences**:
+- Feature unavailable or broken
+- Need to find alternatives
+- Implementation delays
+- Technical debt
+
+**Mitigation Strategy**:
+
+**Prevention**:
+1. Evaluate dependency stability and maintenance
+2. Use stable/LTS versions
+3. Abstract third-party integrations (adapter pattern)
+4. Have fallback options identified
+5. Pin dependency versions
+
+**Detection**:
+1. Monitor dependency health (GitHub stars, last commit)
+2. Subscribe to dependency release notes
+3. Automated dependency vulnerability scanning
+4. Test against dependency updates in CI
+
+**Response**:
+1. **Immediate**: Pin to known-good version
+2. **Short-term**: Find workaround or alternative
+3. **Long-term**: Contribute fixes or replace dependency
+
+**Dependency Review Checklist**:
+- [ ] Actively maintained (recent commits)
+- [ ] Good community support
+- [ ] Stable version available
+- [ ] License compatible
+- [ ] No critical security issues
+- [ ] Performance acceptable
+- [ ] Abstraction layer in place
+
+**Owner**: Tech Lead
+
+---
+
+## Low Risks
+
+*"These risks are minor but worth noting!"*
+
+### RISK-L-001: {Low Risk Name}
+
+**Category**: Operational / Business
+
+**Description**:
+{Description}
+
+**Likelihood**: Low (<30%)
+**Impact**: Low
+**Severity**: **LOW**
+
+**Mitigation**:
+{Brief mitigation strategy}
+
+**Owner**: {OWNER}
+
+---
+
+### RISK-L-002: Documentation Debt
+
+**Category**: Operational
+
+**Description**:
+Implementation may proceed without adequate documentation, making future maintenance difficult.
+
+**Likelihood**: Medium (30-60%)
+**Impact**: Low (Maintenance overhead)
+**Severity**: **LOW**
+
+**Indicators**:
+- ℹ️ Time pressure to ship quickly
+- ℹ️ No documentation requirements
+- ℹ️ Complex code without comments
+
+**Mitigation**:
+1. Include documentation in definition of done
+2. Write inline code documentation
+3. Update architecture docs
+4. Create runbooks for operational tasks
+5. Document decisions in ADRs (Architecture Decision Records)
+
+**Owner**: Development Team
+
+---
+
+### RISK-L-003: Testing Coverage Gaps
+
+**Category**: Technical
+
+**Description**:
+Some edge cases or integration points may not be adequately tested, leading to undiscovered bugs.
+
+**Likelihood**: Medium (30-60%)
+**Impact**: Low (Minor bugs in production)
+**Severity**: **LOW**
+
+**Indicators**:
+- ℹ️ Test coverage below target
+- ℹ️ Complex logic without unit tests
+- ℹ️ Integration tests missing
+- ℹ️ Manual testing only
+
+**Mitigation**:
+1. Set coverage targets (see [testing/strategy.md](../testing/strategy.md))
+2. Write tests for all new code
+3. Add integration tests for critical paths
+4. Include edge case testing
+5. Use test coverage tools to identify gaps
+
+**Testing Requirements**:
+- Unit test coverage: ≥85%
+- Integration test coverage: ≥70%
+- E2E tests for critical user paths
+
+**Owner**: QA Team
+
+---
+
+## Risk Monitoring
+
+*"How we'll track and update risks throughout the project!"*
+
+### Risk Review Schedule
+
+**Weekly**:
+- Review critical and high risks
+- Update risk status
+- Adjust mitigation strategies
+
+**Bi-weekly**:
+- Review all risks
+- Identify new risks
+- Close resolved risks
+
+**Before Major Milestones**:
+- Comprehensive risk assessment
+- Verify mitigation measures in place
+- Update contingency plans
+
+### Risk Tracking Template
+
+```yaml
+risk_id: RISK-{SEVERITY}-{NUMBER}
+status: open | monitoring | mitigated | closed
+last_review: YYYY-MM-DD
+next_review: YYYY-MM-DD
+owner: {OWNER_NAME}
+
+changes:
+  - date: YYYY-MM-DD
+    action: "{What changed}"
+    reason: "{Why}"
+```
+
+### Risk Dashboard Metrics
+
+Track these metrics throughout implementation:
+
+1. **Risk Velocity**: New risks identified per week
+2. **Risk Closure Rate**: Risks mitigated per week
+3. **Open Critical Risks**: Count of open critical risks (target: 0)
+4. **Risk Trend**: Are risks increasing or decreasing?
+
+**Target State**: All critical risks mitigated before production deployment
+
+---
+
+## Emergency Response Plan
+
+*"What to do if a critical risk is realized!"*
+
+### Incident Response Steps
+
+1. **Detect**: Identify that a risk has been realized
+2. **Assess**: Determine severity and impact
+3. **Contain**: Stop the spread or impact
+4. **Resolve**: Fix the root cause
+5. **Recover**: Restore normal operation
+6. **Review**: Post-mortem and lessons learned
+
+### Emergency Contacts
+
+```yaml
+tech_lead:
+  name: {TECH_LEAD_NAME}
+  phone: {PHONE}
+  email: {EMAIL}
+
+product_owner:
+  name: {PRODUCT_OWNER_NAME}
+  phone: {PHONE}
+  email: {EMAIL}
+
+on_call_engineer:
+  schedule: {PAGERDUTY_LINK}
+  escalation: {ESCALATION_POLICY}
+```
+
+### Rollback Procedures
+
+If a critical issue is discovered in production:
+
+```bash
+# 1. Identify problematic deployment
+git log --oneline -10
+
+# 2. Revert to last known good commit
+git revert {COMMIT_HASH}
+
+# 3. Deploy rollback
+./deploy.sh rollback
+
+# 4. Verify system health
+./health-check.sh
+
+# 5. Notify stakeholders
+./notify.sh "Rolled back {FEATURE} due to {ISSUE}"
+```
+
+---
+
+## Risk Acceptance
+
+*"Some risks we may choose to accept!"*
+
+### Accepted Risks
+
+Document risks that are consciously accepted:
+
+**RISK-A-001: {Accepted Risk}**
+
+**Description**: {What we're accepting}
+
+**Rationale**: {Why we're accepting it}
+- Cost of mitigation > impact of risk
+- Low likelihood and low impact
+- Business decision to proceed
+
+**Acceptance Criteria**:
+- Signed off by: {STAKEHOLDER}
+- Date: {DATE}
+- Review period: {DURATION}
+
+**Monitoring**: {How we'll watch for this risk}
+
+---
+
+## Dependencies and Assumptions
+
+*"Things we're depending on or assuming!"*
+
+### Dependencies
+
+Risks related to external dependencies:
+
+1. **{DEPENDENCY_1}**: Required for {functionality}
+   - Risk: May be unavailable or change
+   - Mitigation: {strategy}
+
+2. **{DEPENDENCY_2}**: Required for {functionality}
+   - Risk: Performance may degrade
+   - Mitigation: {strategy}
+
+### Assumptions
+
+Risks related to assumptions:
+
+1. **{ASSUMPTION_1}**: We assume {what}
+   - Risk if false: {consequence}
+   - Validation: {how to verify}
+
+2. **{ASSUMPTION_2}**: We assume {what}
+   - Risk if false: {consequence}
+   - Validation: {how to verify}
+
+---
+
+## Success Criteria
+
+*"How we'll know risk management is successful!"*
+
+**Risk Management Success**:
+- [ ] All critical risks identified and documented
+- [ ] Mitigation strategies defined for all high/critical risks
+- [ ] Risk owners assigned
+- [ ] Monitoring in place for critical risks
+- [ ] Contingency plans tested
+- [ ] Team trained on response procedures
+- [ ] No critical risks open at production deployment
+
+**Risk Tracking**:
+- [ ] Risk register maintained and up-to-date
+- [ ] Weekly risk reviews conducted
+- [ ] New risks identified and assessed promptly
+- [ ] Closed risks documented with lessons learned
+
+---
+
+## Related Documents
+
+**Requirements**:
+- [Problem Statement](../requirements/problem.md)
+- [Success Criteria](../requirements/success-criteria.md)
+
+**Design**:
+- [Architecture](../design/architecture.md)
+- [Components](../design/components.md)
+
+**Implementation**:
+- [Implementation Plan](../implementation/plan.md)
+- [Implementation Checklist](../implementation/checklist.md)
+
+**Testing**:
+- [Testing Strategy](../testing/strategy.md)
+- [Test Plan](../testing/test-plan.md)
+
+**Research**:
+- [Dependencies](../research/dependencies.md)
+
+**Navigation**:
+- [Back to Index](../index.md)
+
+---
+
+## Risk History
+
+*"Track how risks evolve over time!"*
+
+### Risk Log
+
+| Date | Risk ID | Status | Change | Owner |
+|------|---------|--------|--------|-------|
+| {DATE} | RISK-C-001 | Opened | Risk identified | {OWNER} |
+| {DATE} | RISK-C-001 | Mitigating | Prevention measures in place | {OWNER} |
+| {DATE} | RISK-H-002 | Opened | Performance concern raised | {OWNER} |
+| {DATE} | RISK-M-003 | Closed | Alternative dependency selected | {OWNER} |
+
+---
+
+*"I've documented every risk and mitigation strategy! Nothing will catch us by surprise!"* - Martin Prince
+
+**Risk Analysis Version**: 1.0
+**Last Updated**: {CREATED_DATE}
+**Next Review**: {NEXT_REVIEW_DATE}
+**Total Risks**: {TOTAL_RISK_COUNT}
+**Open Critical Risks**: {CRITICAL_COUNT}

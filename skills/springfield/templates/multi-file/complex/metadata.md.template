@@ -1,0 +1,497 @@
+---
+$schema: https://raw.githubusercontent.com/jelovirt/org.lwdita/master/schemas/concept.xsd
+title: "Session Metadata: {WORK_ITEM_TITLE}"
+author: Martin Prince
+created: {CREATED_DATE}
+topic_type: concept
+session: {SESSION_ID}
+---
+
+# Session Metadata: {WORK_ITEM_TITLE}
+
+*"I've cataloged all the session information with perfect organization!"* - Martin Prince
+
+## Session Information
+
+| Field | Value |
+|-------|-------|
+| **Session ID** | `{SESSION_ID}` |
+| **Work Item Type** | {WORK_ITEM_TYPE} (feature/task/bugfix) |
+| **Work Item Title** | {WORK_ITEM_TITLE} |
+| **Complexity** | {COMPLEXITY} |
+| **Estimated Effort** | {ESTIMATED_EFFORT} |
+| **Created Date** | {CREATED_DATE} |
+| **Created By** | Martin Prince (Documentation Phase) |
+| **Status** | {WORKFLOW_STATUS} |
+
+---
+
+## Workflow Phases
+
+*"Track which Springfield characters have completed their work!"*
+
+### Phase 1: Research (Lisa Simpson)
+
+**Status**: ✅ Complete
+
+**Outputs**:
+- [Research Findings](research/findings.md)
+- [Dependencies Analysis](research/dependencies.md)
+
+**Completed**: {LISA_COMPLETED_DATE}
+
+### Phase 2: Complexity Assessment (Mayor Quimby)
+
+**Status**: ✅ Complete
+
+**Decision**: **{COMPLEXITY}**
+- Estimated effort: {ESTIMATED_EFFORT}
+
+**Completed**: {QUIMBY_COMPLETED_DATE}
+
+### Phase 3: Planning (Professor Frink)
+
+**Status**: ✅ Complete
+
+**Outputs**:
+- Implementation prompt with phases and success criteria
+- Technical approach defined
+
+**Completed**: {FRINK_COMPLETED_DATE}
+
+### Phase 4: Documentation (Martin Prince)
+
+**Status**: ✅ Complete
+
+**Outputs**:
+- 16 documentation files organized hierarchically
+- [Index](index.md) with navigation
+- [Implementation Checklist](implementation/checklist.md) ⭐
+
+**Completed**: {MARTIN_COMPLETED_DATE}
+
+### Phase 5: Implementation (Ralph Wiggum)
+
+**Status**: {RALPH_STATUS}
+
+**Primary Guide**: [Implementation Checklist](implementation/checklist.md)
+
+**Progress**: {RALPH_PROGRESS}
+**Started**: {RALPH_STARTED_DATE}
+**Expected Completion**: {RALPH_EXPECTED_DATE}
+
+### Phase 6: Validation (Comic Book Guy)
+
+**Status**: {CBG_STATUS}
+
+**Review Focus**:
+- Code quality
+- Test coverage
+- Requirements met
+- Documentation complete
+
+**Completed**: {CBG_COMPLETED_DATE}
+
+---
+
+## Documentation Structure
+
+*"Every document in this session, organized perfectly!"*
+
+### Navigation Hub
+- **[index.md](index.md)** - Start here! Navigation hub with links to all sections
+
+### Requirements (3 files)
+- **[requirements/problem.md](requirements/problem.md)** - Problem statement and current situation
+- **[requirements/goals.md](requirements/goals.md)** - Goals and objectives
+- **[requirements/success-criteria.md](requirements/success-criteria.md)** - Success criteria and acceptance tests
+
+### Research (2 files)
+- **[research/findings.md](research/findings.md)** - Lisa's research findings about codebase
+- **[research/dependencies.md](research/dependencies.md)** - Dependencies and prerequisites
+
+### Design (3 files)
+- **[design/architecture.md](design/architecture.md)** - System architecture and design decisions
+- **[design/components.md](design/components.md)** - Component specifications and interactions
+- **[design/data-models.md](design/data-models.md)** - Data models, schemas, and structures
+
+### Implementation (3 files)
+- **[implementation/plan.md](implementation/plan.md)** - Overall implementation strategy
+- **[implementation/checklist.md](implementation/checklist.md)** ⭐ - Step-by-step implementation guide (PRIMARY DOCUMENT)
+- **[implementation/phases.md](implementation/phases.md)** - Implementation phases breakdown
+
+### Testing (2 files)
+- **[testing/strategy.md](testing/strategy.md)** - Testing approach and philosophy
+- **[testing/test-plan.md](testing/test-plan.md)** - Detailed test plan with test cases
+
+### Risks (1 file)
+- **[risks/analysis.md](risks/analysis.md)** - Risk analysis and mitigation strategies
+
+### Metadata (1 file)
+- **[metadata.md](metadata.md)** - This file! Session summary
+
+**Total Files**: 16 documentation files
+
+---
+
+## Key Metrics
+
+*"Numbers that tell the story!"*
+
+### Documentation Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total Documentation Files | 16 |
+| Total Lines of Documentation | {TOTAL_LINES} |
+| Total Words | {TOTAL_WORDS} |
+| Average File Size | {AVG_FILE_SIZE} lines |
+| Largest File | {LARGEST_FILE} ({LARGEST_SIZE} lines) |
+| Smallest File | {SMALLEST_FILE} ({SMALLEST_SIZE} lines) |
+
+### Implementation Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total Checklist Tasks | {TOTAL_TASKS} |
+| Completed Tasks | {COMPLETED_TASKS} |
+| Remaining Tasks | {REMAINING_TASKS} |
+| Completion Percentage | {COMPLETION_PCT}% |
+| Implementation Phases | {PHASE_COUNT} |
+| Estimated Total Time | {TOTAL_TIME_ESTIMATE} |
+| Actual Time Spent | {ACTUAL_TIME_SPENT} |
+
+### Quality Metrics
+
+| Metric | Value |
+|--------|-------|
+| Test Coverage Target | ≥85% (unit), ≥70% (integration) |
+| Test Cases Defined | {TEST_CASE_COUNT} |
+| Identified Risks | {RISK_COUNT} |
+| Critical Risks | {CRITICAL_RISK_COUNT} |
+| Dependencies Identified | {DEPENDENCY_COUNT} |
+| Success Criteria Defined | {SUCCESS_CRITERIA_COUNT} |
+
+---
+
+## Technology Stack
+
+*"Technologies and tools involved in this work item!"*
+
+### Primary Technologies
+
+{PRIMARY_TECHNOLOGIES}
+
+### Dependencies
+
+{KEY_DEPENDENCIES}
+
+### Development Tools
+
+{DEVELOPMENT_TOOLS}
+
+### Testing Tools
+
+{TESTING_TOOLS}
+
+---
+
+## Success Criteria Summary
+
+*"How we'll know we succeeded!"*
+
+### Functional Requirements
+
+{FUNCTIONAL_CRITERIA_SUMMARY}
+
+### Non-Functional Requirements
+
+{NON_FUNCTIONAL_CRITERIA_SUMMARY}
+
+### Quality Gates
+
+- [ ] All unit tests passing (≥85% coverage)
+- [ ] All integration tests passing (≥70% coverage)
+- [ ] E2E tests for critical paths passing
+- [ ] No critical or high-severity bugs
+- [ ] Performance benchmarks met
+- [ ] Security scan passed
+- [ ] Accessibility requirements met
+- [ ] Code review approved
+- [ ] Documentation complete
+
+---
+
+## Timeline
+
+*"When things happened!"*
+
+```
+Timeline Visualization:
+
+{CREATED_DATE}
+  │
+  ├─ Lisa Research      ────────── {LISA_DURATION}
+  │   └─ Completed: {LISA_COMPLETED_DATE}
+  │
+  ├─ Quimby Decision    ───── {QUIMBY_DURATION}
+  │   └─ Completed: {QUIMBY_COMPLETED_DATE}
+  │
+  ├─ Frink Planning     ─────── {FRINK_DURATION}
+  │   └─ Completed: {FRINK_COMPLETED_DATE}
+  │
+  ├─ Martin Docs        ──────── {MARTIN_DURATION}
+  │   └─ Completed: {MARTIN_COMPLETED_DATE}
+  │
+  ├─ Ralph Implementation ────────────────── {RALPH_DURATION}
+  │   └─ Status: {RALPH_STATUS}
+  │
+  └─ CBG Validation     ──── {CBG_DURATION}
+      └─ Status: {CBG_STATUS}
+
+Total Elapsed Time: {TOTAL_ELAPSED_TIME}
+```
+
+---
+
+## Related Work Items
+
+*"Other work items related to this one!"*
+
+### Depends On
+
+{DEPENDS_ON_ITEMS}
+
+### Blocks
+
+{BLOCKS_ITEMS}
+
+### Related
+
+{RELATED_ITEMS}
+
+---
+
+## Files Modified
+
+*"Files expected to be modified during implementation!"*
+
+### New Files
+
+```
+{NEW_FILES_LIST}
+```
+
+### Modified Files
+
+```
+{MODIFIED_FILES_LIST}
+```
+
+### Deleted Files
+
+```
+{DELETED_FILES_LIST}
+```
+
+---
+
+## Git Information
+
+*"Git-related information for this work item!"*
+
+### Branch Information
+
+| Field | Value |
+|-------|-------|
+| **Feature Branch** | `{FEATURE_BRANCH_NAME}` |
+| **Base Branch** | `{BASE_BRANCH}` |
+| **Created From** | `{BASE_COMMIT}` |
+
+### Commit Strategy
+
+**Commit Message Format**:
+```
+{commit_type}: {short_description}
+
+{longer_description}
+
+Phase: {phase_number}
+Session: {SESSION_ID}
+```
+
+**Example Commits** (from checklist):
+1. `{PHASE_1_COMMIT_MESSAGE}`
+2. `{PHASE_2_COMMIT_MESSAGE}`
+3. `{PHASE_3_COMMIT_MESSAGE}`
+4. Final: `completed {WORK_ITEM_TITLE}!`
+
+### Pull Request
+
+**Status**: {PR_STATUS}
+
+**PR Title**: `{WORK_ITEM_TITLE}`
+
+**PR Description**: (Links to this documentation)
+```markdown
+## Summary
+{One-line summary from requirements/problem.md}
+
+## Documentation
+See session documentation: [index.md]({DOCS_URL}/index.md)
+
+## Checklist
+- [x] Implementation complete (see [checklist]({DOCS_URL}/implementation/checklist.md))
+- [x] Tests passing (see [test-plan]({DOCS_URL}/testing/test-plan.md))
+- [x] Documentation updated
+- [x] Code reviewed
+
+## Related Issues
+Closes #{ISSUE_NUMBER}
+```
+
+**PR URL**: {PR_URL}
+
+---
+
+## Team Members
+
+*"Who worked on this!"*
+
+| Role | Name | Responsibilities |
+|------|------|------------------|
+| **Researcher** | Lisa Simpson | Codebase research, dependency analysis |
+| **Decision Maker** | Mayor Quimby | Complexity assessment |
+| **Planner** | Professor Frink | Implementation strategy, technical approach |
+| **Documenter** | Martin Prince | Comprehensive documentation |
+| **Implementer** | Ralph Wiggum | Code implementation |
+| **Validator** | Comic Book Guy | Code review, quality validation |
+| **Product Owner** | {PRODUCT_OWNER} | Requirements, acceptance |
+| **Tech Lead** | {TECH_LEAD} | Technical guidance, architecture |
+
+---
+
+## Notes and Observations
+
+*"Additional notes from the team!"*
+
+### Lisa's Research Notes
+
+{LISA_NOTES}
+
+### Mayor Quimby's Decision Rationale
+
+**Why {COMPLEXITY}?**
+
+{QUIMBY_RATIONALE}
+
+### Professor Frink's Technical Notes
+
+{FRINK_NOTES}
+
+### Martin's Documentation Notes
+
+**Documentation Quality**: ⭐⭐⭐⭐⭐
+**Completeness**: 100%
+**Organization**: Perfect hierarchical structure
+
+*"I've organized everything according to DITA standards with proper cross-references!"*
+
+### Ralph's Implementation Notes
+
+{RALPH_NOTES}
+
+### Comic Book Guy's Review Notes
+
+{CBG_NOTES}
+
+---
+
+## Lessons Learned
+
+*"What we learned from this work item!"*
+
+### What Went Well
+
+{WHAT_WENT_WELL}
+
+### What Could Be Improved
+
+{WHAT_COULD_IMPROVE}
+
+### Action Items for Future Work
+
+{FUTURE_ACTION_ITEMS}
+
+---
+
+## Appendices
+
+### Appendix A: Glossary
+
+| Term | Definition |
+|------|------------|
+| **DITA** | Darwin Information Typing Architecture - documentation standard |
+| **Work Item** | A unit of work (feature, task, or bugfix) |
+| **Session** | One complete Springfield workflow execution |
+| **Phase** | A stage in the Springfield workflow (research, planning, implementation, etc.) |
+
+### Appendix B: References
+
+- [Springfield Plugin Documentation](../../README.md)
+- [DITA Standards](https://www.oasis-open.org/committees/dita/)
+- [Original Task Description](task.txt)
+- [State YAML](state.yaml)
+
+### Appendix C: Change Log
+
+| Date | Change | Author |
+|------|--------|--------|
+| {CREATED_DATE} | Initial documentation created | Martin Prince |
+| {DATE} | {Change description} | {Author} |
+
+---
+
+## Quick Reference
+
+*"Quick links to the most important documents!"*
+
+### For Implementers (Ralph)
+1. Start here: **[Implementation Checklist](implementation/checklist.md)** ⭐
+2. Review: [Architecture](design/architecture.md)
+3. Testing: [Test Plan](testing/test-plan.md)
+
+### For Reviewers (Comic Book Guy)
+1. Requirements: [Problem](requirements/problem.md), [Success Criteria](requirements/success-criteria.md)
+2. Design: [Architecture](design/architecture.md), [Components](design/components.md)
+3. Testing: [Strategy](testing/strategy.md), [Test Plan](testing/test-plan.md)
+
+### For Product Owners
+1. Overview: [Index](index.md)
+2. Requirements: [Problem](requirements/problem.md), [Goals](requirements/goals.md)
+3. Progress: [Implementation Checklist](implementation/checklist.md)
+
+### For Future Maintainers
+1. Architecture: [Design](design/architecture.md)
+2. Data Models: [Data Models](design/data-models.md)
+3. Dependencies: [Dependencies](research/dependencies.md)
+
+---
+
+## Session Status
+
+**Current Phase**: {CURRENT_PHASE}
+**Overall Status**: {OVERALL_STATUS}
+**Next Action**: {NEXT_ACTION}
+
+**Last Updated**: {LAST_UPDATED}
+**Updated By**: {UPDATED_BY}
+
+---
+
+*"Everything you need to know about this session, organized perfectly and cross-referenced completely!"* - Martin Prince
+
+**Metadata Version**: 1.0
+**Generated**: {CREATED_DATE}
+**Documentation Standard**: DITA 1.3
+**Template Version**: multi-file-v2.0

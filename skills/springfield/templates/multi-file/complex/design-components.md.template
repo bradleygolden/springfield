@@ -1,0 +1,120 @@
+---
+$schema: https://raw.githubusercontent.com/jelovirt/org.lwdita/master/schemas/reference.xsd
+title: "Component Specifications: {WORK_ITEM_TITLE}"
+author: Martin Prince
+created: {CREATED_DATE}
+topic_type: reference
+session: {SESSION_ID}
+---
+
+# Component Specifications: {WORK_ITEM_TITLE}
+
+*"Let me break down each component with precision!"* - Martin Prince
+
+## Components Overview
+
+{COMPONENTS_SUMMARY}
+
+---
+
+## Component Details
+
+### Component 1: {COMPONENT_1_NAME}
+
+**Purpose**: {COMPONENT_1_PURPOSE}
+
+**Location**: `{COMPONENT_1_LOCATION}`
+
+**Responsibilities**:
+{COMPONENT_1_RESPONSIBILITIES}
+
+**Interface**:
+```{COMPONENT_1_LANGUAGE}
+{COMPONENT_1_INTERFACE}
+```
+
+**Dependencies**:
+{COMPONENT_1_DEPENDENCIES}
+
+**Configuration**:
+{COMPONENT_1_CONFIGURATION}
+
+---
+
+### Component 2: {COMPONENT_2_NAME}
+
+**Purpose**: {COMPONENT_2_PURPOSE}
+
+**Location**: `{COMPONENT_2_LOCATION}`
+
+**Responsibilities**:
+{COMPONENT_2_RESPONSIBILITIES}
+
+**Interface**:
+```{COMPONENT_2_LANGUAGE}
+{COMPONENT_2_INTERFACE}
+```
+
+**Dependencies**:
+{COMPONENT_2_DEPENDENCIES}
+
+**Configuration**:
+{COMPONENT_2_CONFIGURATION}
+
+---
+
+*[Continue for all components...]*
+
+---
+
+## Component Interactions
+
+{COMPONENT_INTERACTIONS_DESCRIPTION}
+
+```
+[Interaction Diagram]
+{COMPONENT_INTERACTIONS_DIAGRAM}
+```
+
+---
+
+## Shared Utilities
+
+{SHARED_UTILITIES_DESCRIPTION}
+
+**Common Functions**:
+{SHARED_FUNCTIONS_LIST}
+
+**Shared Types/Interfaces**:
+{SHARED_TYPES_LIST}
+
+---
+
+## Component Testing
+
+Each component should be tested independently:
+
+{COMPONENT_TESTING_STRATEGY}
+
+---
+
+## Component Checklist
+
+During implementation, ensure each component:
+
+- [ ] Has clear, single responsibility
+- [ ] Follows project naming conventions
+- [ ] Includes proper error handling
+- [ ] Has comprehensive type definitions
+- [ ] Includes unit tests
+- [ ] Documented with code comments
+- [ ] Validated against requirements
+
+---
+
+**Related Documents**:
+- [Architecture](architecture.md) - Overall system design
+- [Data Models](data-models.md) - Data structures used by components
+- [Implementation Plan](../implementation/plan.md) - How to build these components
+- [Testing Strategy](../testing/strategy.md) - Testing approach
+- [Back to Index](../index.md)

@@ -1,0 +1,295 @@
+---
+$schema: https://raw.githubusercontent.com/jelovirt/org.lwdita/master/schemas/reference.xsd
+title: "Data Models: {WORK_ITEM_TITLE}"
+author: Martin Prince
+created: {CREATED_DATE}
+topic_type: reference
+session: {SESSION_ID}
+---
+
+# Data Models: {WORK_ITEM_TITLE}
+
+*"Let me document the data structures with precision!"* - Martin Prince
+
+## Overview
+
+This document specifies all data models, schemas, and data structures needed for {WORK_ITEM_TITLE}.
+
+**Design Principle**: {DATA_MODEL_PRINCIPLE}
+
+---
+
+## Core Data Models
+
+### Model 1: {PRIMARY_MODEL_NAME}
+
+**Purpose**: {PRIMARY_MODEL_PURPOSE}
+
+**Schema**:
+```typescript
+interface {PRIMARY_MODEL_NAME} {
+  // Primary fields
+  id: string;
+
+  // Your fields here
+}
+```
+
+**Validation Rules**:
+- Required fields: {PRIMARY_MODEL_REQUIRED}
+- Optional fields: {PRIMARY_MODEL_OPTIONAL}
+- Constraints: {PRIMARY_MODEL_CONSTRAINTS}
+
+**Storage**: {PRIMARY_MODEL_STORAGE}
+
+---
+
+### Model 2: {SECONDARY_MODEL_NAME}
+
+**Purpose**: {SECONDARY_MODEL_PURPOSE}
+
+**Schema**:
+```typescript
+interface {SECONDARY_MODEL_NAME} {
+  // Primary fields
+  id: string;
+
+  // Your fields here
+}
+```
+
+**Validation Rules**:
+- Required fields: {SECONDARY_MODEL_REQUIRED}
+- Optional fields: {SECONDARY_MODEL_OPTIONAL}
+- Constraints: {SECONDARY_MODEL_CONSTRAINTS}
+
+**Storage**: {SECONDARY_MODEL_STORAGE}
+
+---
+
+## Relationships
+
+### Model Relationships
+
+```
+{PRIMARY_MODEL_NAME}
+    |
+    | {RELATIONSHIP_TYPE}
+    v
+{SECONDARY_MODEL_NAME}
+```
+
+**Relationship Description**:
+{RELATIONSHIP_DESCRIPTION}
+
+**Cardinality**: {RELATIONSHIP_CARDINALITY}
+**Referential Integrity**: {REFERENTIAL_INTEGRITY_RULES}
+
+---
+
+## Data Access Patterns
+
+### Pattern 1: {ACCESS_PATTERN_1_NAME}
+
+**Use Case**: {ACCESS_PATTERN_1_USE_CASE}
+
+**Query**:
+```sql
+{ACCESS_PATTERN_1_QUERY}
+```
+
+**Expected Performance**: {ACCESS_PATTERN_1_PERFORMANCE}
+
+---
+
+### Pattern 2: {ACCESS_PATTERN_2_NAME}
+
+**Use Case**: {ACCESS_PATTERN_2_USE_CASE}
+
+**Query**:
+```sql
+{ACCESS_PATTERN_2_QUERY}
+```
+
+**Expected Performance**: {ACCESS_PATTERN_2_PERFORMANCE}
+
+---
+
+## Data Validation
+
+### Input Validation
+
+| Field | Type | Validation | Error Message |
+|-------|------|-----------|---------------|
+| {FIELD_1_NAME} | {FIELD_1_TYPE} | {FIELD_1_VALIDATION} | {FIELD_1_ERROR} |
+| {FIELD_2_NAME} | {FIELD_2_TYPE} | {FIELD_2_VALIDATION} | {FIELD_2_ERROR} |
+| {FIELD_3_NAME} | {FIELD_3_TYPE} | {FIELD_3_VALIDATION} | {FIELD_3_ERROR} |
+
+### Business Logic Validation
+
+{BUSINESS_VALIDATION_RULES}
+
+---
+
+## Data Migration
+
+### Migration Strategy
+
+{MIGRATION_STRATEGY}
+
+### Backward Compatibility
+
+{BACKWARD_COMPATIBILITY_APPROACH}
+
+### Rollback Plan
+
+{ROLLBACK_PLAN}
+
+---
+
+## Database Schema (if applicable)
+
+### Tables
+
+#### Table: {TABLE_1_NAME}
+
+```sql
+CREATE TABLE {TABLE_1_NAME} (
+  id VARCHAR(255) PRIMARY KEY,
+  -- Add your columns here
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+```
+
+**Indexes**:
+{TABLE_1_INDEXES}
+
+---
+
+#### Table: {TABLE_2_NAME}
+
+```sql
+CREATE TABLE {TABLE_2_NAME} (
+  id VARCHAR(255) PRIMARY KEY,
+  -- Add your columns here
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+```
+
+**Indexes**:
+{TABLE_2_INDEXES}
+
+---
+
+## API Contracts
+
+### Data Transfer Objects (DTOs)
+
+#### Request DTO: {REQUEST_DTO_NAME}
+
+```typescript
+interface {REQUEST_DTO_NAME} {
+  // Request fields
+}
+```
+
+#### Response DTO: {RESPONSE_DTO_NAME}
+
+```typescript
+interface {RESPONSE_DTO_NAME} {
+  // Response fields
+}
+```
+
+---
+
+## Data Integrity
+
+### Constraints
+
+{DATA_CONSTRAINTS}
+
+### Cascade Rules
+
+{CASCADE_RULES}
+
+### Transaction Boundaries
+
+{TRANSACTION_BOUNDARIES}
+
+---
+
+## Performance Considerations
+
+### Indexing Strategy
+
+{INDEXING_STRATEGY}
+
+### Caching Strategy
+
+{CACHING_STRATEGY}
+
+### Query Optimization
+
+{QUERY_OPTIMIZATION}
+
+---
+
+## Data Model Testing
+
+### Test Cases
+
+- [ ] Test {PRIMARY_MODEL_NAME} creation with valid data
+- [ ] Test {PRIMARY_MODEL_NAME} creation with invalid data
+- [ ] Test {SECONDARY_MODEL_NAME} creation with valid data
+- [ ] Test {SECONDARY_MODEL_NAME} creation with invalid data
+- [ ] Test relationship creation
+- [ ] Test relationship deletion (cascade behavior)
+- [ ] Test access pattern 1 performance
+- [ ] Test access pattern 2 performance
+- [ ] Test validation rules enforcement
+- [ ] Test migration script (if applicable)
+
+---
+
+## Data Model Checklist
+
+**Pre-Implementation**:
+- [ ] Review requirements for all data needs
+- [ ] Identify all entities and relationships
+- [ ] Define validation rules
+- [ ] Plan indexing strategy
+
+**Implementation**:
+- [ ] Create schema definitions (TypeScript interfaces, SQL tables, etc.)
+- [ ] Implement validation logic
+- [ ] Create migration scripts (if needed)
+- [ ] Add indexes
+- [ ] Implement data access layer
+
+**Testing**:
+- [ ] Unit test validation rules
+- [ ] Integration test relationships
+- [ ] Performance test access patterns
+- [ ] Test migration scripts
+
+**Documentation**:
+- [ ] Document all models in this file
+- [ ] Add inline code documentation
+- [ ] Create example usage
+
+---
+
+## Related Documents
+
+- [Architecture](architecture.md) - Overall system architecture
+- [Components](components.md) - Component specifications
+- [Implementation Plan](../implementation/plan.md) - Implementation strategy
+- [Test Plan](../testing/test-plan.md) - Testing approach
+- [Back to Index](../index.md)
+
+---
+
+*"Every byte accounted for, every relationship documented! That's how you design data models!"* - Martin Prince
